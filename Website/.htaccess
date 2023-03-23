@@ -1,0 +1,6 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/pataasrk/dash.patatessevenler.com"
+PassengerBaseURI "/"
+PassengerPython "/home/pataasrk/virtualenv/dash.patatessevenler.com/3.8/bin/python"
+PassengerAppLogFile "/home/pataasrk/logs/pass.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END

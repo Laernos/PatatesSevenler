@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.block {
+    position: relative;
+    height: 80vh;
+    width: 70vh;
+
+}
+
+h1 {
+    font-family: 'Electrolize', sans-serif;
+    color: rgb(255, 218, 162);
+    font-size: 4vh;
+    position: absolute;
+    text-align: center;
+    
+}
+
+.loadtext {
+    position: absolute;
+    font-weight: 600;
+    font-family: 'Balsamiq Sans', cursive;
+    color: #000000;
+    font-size: 8vh;
+    text-align: center;
+    width: 100%;
+    top: 60%;
+}
+
+.block-1 {
+    background: url(img-one.png) no-repeat 50% 50%;
+    background-size: cover;
+    right: 90px;
+}
+
+.block-2 {
+    background: url(img-one.png) no-repeat 50% 50%;
+    background-size: cover;
+    right: 20px;
+}
+
+.block-3 {
+    background: url(img-one.png) no-repeat 50% 50%;
+    background-size: cover;
+    left: 40px;
+}
+
+.block-4 {
+    background: url(img-one.png) no-repeat 50% 50%;
+    background-size: cover;
+    left: 100px;
+}
+
+.block-5 {
+    background: url(img-two.png) no-repeat 50% 50%;
+    opacity: 0;
+    background-size: cover;
+    left: 150px;
+
+}
+
+.container {
+    margin-top: 17vh;
+    margin-left: 10vh;
+}
+
+.block-1 h1 {
+    bottom: 18vh;
+    left: 15vh;
+    color: white;
+    
+}
+
+.block-2 h1 {
+    bottom: 15vh;
+    left: 20vh;
+    color: white;
+}
+
+.block-3 h1 {
+    bottom: 18vh;
+    left: 15vh;
+    color: white;
+}
+
+.block-4 h1 {
+    bottom: 15vh;
+    left: 20vh;
+    color: white;
+}
+
+.block-5 h1 {
+    bottom: 0;
+    right: -60px;
+}
+
+
+
+@media only screen and (orientation: portrait) {
+    .container {
+        margin-left: 10vh;
+    }
+
+    .block {
+        height: 75vh;
+        width: 75vh;
+    }
+
+    .block-1 h1 {
+        bottom: 18vh;
+        left: 20vh;
+        color: white;
+        
+    }
+    
+    .block-2 h1 {
+        bottom: 15vh;
+        left: 25vh;
+        color: white;
+    }
+    
+    .block-3 h1 {
+        bottom: 18vh;
+        left: 20vh;
+        color: white;
+    }
+    
+    .block-4 h1 {
+        bottom: 15vh;
+        left: 25vh;
+        color: white;
+    }
+    
+  }
+
+  

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Patates Sevenler Dashboard</title>
+        <meta name="keywords" content="Discord, patates sevenler, Tanışma, Sohbet, discord sunucu bulma, oyun sunucuları, discord sunucusu, discord türk sunucuları, disboard türk, discord patates sevenler, tatlı patates sevenler, patates sevenler derneği">
+        <meta name="description" content="Patates Sevenler Discord Sunucusu Resmi Kontrol Paneli">  
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='bg.css')}}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/preloader.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='neon/neon.css')}}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico')}}">
+        <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='navbar/style.css')}}">
+
+    </head>
+    <body>
+        <nav class="top-right">
+            <a href="https://patatessevenler.com" target="_blank" style="text-decoration: none;" class="disc l1">
+                <div>Ana Sayfa</div>
+            </a>
+            <a href="https://docs.patatessevenler.com" target="_blank" class="disc l2">
+                <div>Destek</div>
+            </a>
+            <a href="https://patatessevenler.com/partnerlik" target="_blank" class="disc l3">
+                <div>Partnerlik</div>
+            </a>
+            <a href="https://instagram.com/patates_sevenler" target="_blank" class="disc l4">
+                <div>Daha Fazla</div>
+            </a>
+            <a class="disc l5 toggle">
+                Menü
+            </a>
+        </nav>
+        
+        <!-- Preloader -->
+				<div id="loading">
+					<div id="loading-center">
+						<div id="loading-center-absolute">
+							<div class="object" id="object_one"></div>
+							<div class="object" id="object_two"></div>
+							<div class="object" id="object_three"></div>
+							<div class="object" id="object_four"></div>
+						</div>
+                        <div class="loadtext">Hoş geldiniz,<br> {{ username }}</div>
+					</div>
+				</div>
+                <div class="logo">
+                    <img src="{{ avatar }}" alt="icon/logo" class="box">
+                    <div class="container2">
+                        <div class="flux">{{ username }} </div>
+                      </div>
+                </div>
+
+                <div class="area" >
+                    <ul class="circles">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                    </ul>
+        <!--End off Preloader -->
+        
+        <div class="svg-icon">
+            <div>  
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="90px" width="90px"></img>
+            </div>
+            <div>
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="50px" width="50px"></img>
+            </div>
+            <div>  
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="40px" width="40px" ></img>
+            </div>
+            <div>
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="100px" width="100px"></img>
+            </div>
+            <div> 
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="65px" width="65px"></img>
+            </div>
+            <div>   
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="70px" width="70px"></img>
+            </div>
+            <div>
+                <img src="https://i.ibb.co/ZKXXY15/patates.png" height="70px" width="70px"></img>
+            </div>       
+        </div>
+        
+        
+
+        
+        <div class="container">
+            <div class="block block-1">
+                <h1>Haftalık Mesaj: {{ haftamesaj }}</h1>
+            </div>
+            <div class="block block-2">
+                <h1>Haftalık Sesli: <br> {{ hour2 }} Saat {{ minute2 }} Dakika</h1>
+            </div>
+            <div class="block block-3">
+                <h1>Toplam Mesaj: {{ mesaj }}</h1>
+            </div>
+            <div class="block block-4">
+                <h1>Toplam Sesli: <br> {{ hours }} Saat {{ minutes }} Dakika</h1>
+            </div>
+            <div class="block block-5">
+                <h1></h1>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='index.js')}}"></script>
+        <script>
+            var blocks = document.getElementsByClassName("block");
+            var container = document.getElementsByClassName("container");
+            var hs = new HorizontalScroll.default({
+                blocks: blocks,
+                container: container,
+                isAnimated: true,
+                springEffect: 0.8,
+            });
+        </script>
+        <script src="{{ url_for('static', filename='assets/js2/vendor/jquery-1.11.2.min.js')}}"></script>
+        <script src="{{ url_for('static', filename='assets/js2/vendor/bootstrap.min.js')}}"></script>
+        <script src="{{ url_for('static', filename='assets/js2/bootsnav.js')}}"></script>
+        <script src="{{ url_for('static', filename='assets/js2/main.js')}}"></script>
+        <script src="{{ url_for('static', filename='navbar/script.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,132 @@
+.pytainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.filter {
+  display: none;
+}
+
+.python {
+  -webkit-filter: url(#wavy);
+          filter: url(#wavy);
+  width: 20rem;
+  height: 20rem;
+}
+
+.pytop {
+  fill: #5a189a;
+}
+
+.pybott {
+  fill: #7b2cbf;
+}
+/*# sourceMappingURL=styles.css.map */
+
+
+.svg-icon{
+  position:absolute ;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  opacity: 50;
+}
+
+.svg-icon div{
+  position:absolute ;
+  display:block ;
+}
+
+.svg-icon div:nth-child(1){
+  left:20%; 
+  animation:fall 15s linear infinite ;
+  animation-delay:-2s;
+  opacity: 40;
+}
+
+.svg-icon div:nth-child(2){
+  left:70%; 
+  animation:fall 15s linear infinite ;
+  animation-delay:-4s;
+  opacity: 60;
+}
+
+.svg-icon div:nth-child(3){
+  left:10%; 
+  animation:fall 20s linear infinite ;
+  animation-delay:-7s;
+  opacity: 80;
+}
+
+.svg-icon div:nth-child(4){
+  left:50%; 
+  animation:fall 18s linear infinite ; 
+  animation-delay:-5s;
+  opacity: 50;
+}
+
+
+.svg-icon div:nth-child(5){
+  left:85%; 
+  animation:fall 14s linear infinite ;
+  animation-delay:-5s;
+  opacity: 90;
+}
+
+.svg-icon div:nth-child(6){
+  left:15%; 
+  animation:fall 16s linear infinite ;
+  animation-delay:-10s;
+  opacity: 30;
+
+}
+
+.svg-icon div:nth-child(7){
+  left:90%; 
+  animation:fall 15s linear infinite ;
+  animation-delay:-4s;
+  opacity: 50;
+}
+
+@keyframes fall{
+  0% {
+      opacity:1;
+      top:-10%;
+      transform:translateX (20px) rotate(0deg);
+  }
+  20% {
+      opacity:0.8;
+      transform:translateX (-20px) rotate(45deg);
+  }
+  40% {
+
+      transform:translateX (-20px) rotate(90deg);
+  }
+  60% {
+      
+      transform:translateX (-20px) rotate(135deg); 
+  }
+  80% {
+  
+      transform:translateX (-20px) rotate(180deg);
+  }
+  100% {
+      
+      top:110%;
+      transform:translateX (-20px) rotate(225deg);
+  }
+}
+
+.svg-icon1 {
+  transform: rotateX(180deg);
+}

@@ -1,0 +1,113 @@
+body {
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+
+section {
+    height:100%;
+    width:100%;
+    position: absolute;  
+    background-image: url(https://images.unsplash.com/photo-1593062096033-9a26b09da705?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1050&q=80);
+    background-size: cover;
+}
+
+.svg-icon{
+    position:absolute ;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
+
+.svg-icon div{
+    position:absolute ;
+    display:block ;
+}
+
+.svg-icon div:nth-child(1){
+    left:20%; 
+    animation:fall 15s linear infinite ;
+    animation-delay:-2s;
+}
+
+.svg-icon div:nth-child(2){
+    left:70%; 
+    animation:fall 15s linear infinite ;
+    animation-delay:-4s;
+}
+
+.svg-icon div:nth-child(3){
+    left:10%; 
+    animation:fall 20s linear infinite ;
+    animation-delay:-7s;   
+}
+
+.svg-icon div:nth-child(4){
+    left:50%; 
+    animation:fall 18s linear infinite ; 
+    animation-delay:-5s;
+}
+
+.svg-icon div:nth-child(5){
+    left:85%; 
+    animation:fall 14s linear infinite ;
+    animation-delay:-5s;
+}
+
+.svg-icon div:nth-child(6){
+    left:15%; 
+    animation:fall 16s linear infinite ;
+    animation-delay:-10s;
+}
+
+.svg-icon div:nth-child(7){
+    left:90%; 
+    animation:fall 15s linear infinite ;
+    animation-delay:-4s;
+}
+
+@keyframes fall{
+    0% {
+        opacity:1;
+        top:-10%;
+        transform:translateX (20px) rotate(0deg);
+    }
+    20% {
+        opacity:0.8;
+        transform:translateX (-20px) rotate(45deg);
+    }
+    40% {
+
+        transform:translateX (-20px) rotate(90deg);
+    }
+    60% {
+        
+        transform:translateX (-20px) rotate(135deg); 
+    }
+    80% {
+    
+        transform:translateX (-20px) rotate(180deg);
+    }
+    100% {
+        
+        top:110%;
+        transform:translateX (-20px) rotate(225deg);
+    }
+}
+
+.svg-icon1 {
+    transform: rotateX(180deg);
+}
+
+h2 {
+    position:absolute ;
+    top:40%;
+    width:100%;
+    font-family: 'Courgette', cursive;
+    font-size:4em;
+    text-align:center;
+    transform:translate ;
+    color:#fff;
+    transform:translateY (-50%);
+}
