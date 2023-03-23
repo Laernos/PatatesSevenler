@@ -20,6 +20,9 @@
 * [Documentation for Members](https://laernos.gitbook.io/patates-sevenler/)
 * [Documentation for Moderators](https://laernos.gitbook.io/mod-docs/)
 
+## License
+
+This repository is licensed under the [MIT](LICENSE) If you plan to use any part of this source code in your own bot, I would be grateful if you would include some form of credit somewhere.
 
 ## Support
 
