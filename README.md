@@ -6,7 +6,7 @@
 
 
 # Patates Sevenler Discord Server
-.
+. sync testing
 
 
 ![Logo](https://i.imgur.com/OaqveQp.png)
