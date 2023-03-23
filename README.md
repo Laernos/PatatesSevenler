@@ -14,8 +14,8 @@
 
 ## Links
 
-* ~~[Website](https://www.patatessevenler.com/)~~
-* ~~[Dashboard](https://dash.patatessevenler.com/)~~
+* [Website](https://patates-website.vercel.app/)
+* [Dashboard](https://dashboard-html.vercel.app/)
 
 * [Documentation for Members](https://laernos.gitbook.io/patates-sevenler/)
 * [Documentation for Moderators](https://laernos.gitbook.io/mod-docs/)
