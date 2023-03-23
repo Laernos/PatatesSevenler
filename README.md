@@ -22,7 +22,7 @@
 
 ## License
 
-This repository is licensed under the [MIT](LICENSE) If you plan to use any part of this source code in your own bot, I would be grateful if you would include some form of credit somewhere.
+This repository is licensed under the [MIT](LICENSE) If you plan to use any part of this source code in your own server, I would be grateful if you would include some form of credit somewhere.
 
 ## Support
 
