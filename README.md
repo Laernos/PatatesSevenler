@@ -2,7 +2,7 @@
 
 [![Coded by Human](https://camo.githubusercontent.com/6ad868d8edb3c435e29d1dde82d432717c340c21b29849dd391ec3eb2a7cd477/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f436f646564253230427925323048756d616e2d3130302532352d627269676874677265656e)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Discord](https://img.shields.io/discord/700890186883530844?logo=discord&logoColor=ffffff&style=flat-square)](https://discord.gg/csVq5dFXTr)
+[![Discord](https://img.shields.io/discord/560140367362523136?logo=discord&logoColor=ffffff&style=flat-square)](https://discord.gg/csVq5dFXTr)
 
 
 # Patates Sevenler Discord Server
