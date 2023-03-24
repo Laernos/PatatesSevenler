@@ -1,0 +1,23 @@
+{{/*
+	Trigger: embed
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{addMessageReactions nil 855453273522569216 ":kanun:855435069938204692" ":classic:855432376011849738" "jazz:855432388423450685" ":pop:855432439681646622" ":kpop:855432398120419378" ":hiphop:855433175967072276" ":rap:855432355438526474" ":electro:855432342927835176" ":maloik:855436410361085953" ":arabesk:855434147183329280"}}
+
+{{addMessageReactions nil 855453404141584414 ":kanA:855223604971438141" ":kanAeksi:855223605340012584" ":kanb:855223606107701329" ":kanbeksi:855223606434856970" ":kanab:855223605537144852" ":kanabeksi:855223605872427038" ":kan0:855223572054409227" ":kan0eksi:855223604760412190"}}
+
+{{addMessageReactions nil 855453445631901697 ":rings1:855238672927424542" ":boy:855237748557611008" ":chat:855236929204650035" ":love:855236829559914536" ":heart1:855239095520460840" 
+":brokenheart:855236819200245801 "}}
+
+{{addMessageReactions nil 866140305560174645 ":cart:851270255590637569"}}
+
+{{addMessageReactions nil 866352594070405160 "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣" "🔟"}}
+{{addMessageReactions nil 866353275628552192 "🥔" "🔥" "💰" "🌸" ":kaalp:866121033340813322" "🍋" "🍉" "⭐" "♿" "💩"}}
+
+
+{{addMessageReactions nil 855453273522569216 ":cart:851270255590637569"}}
+{{addMessageReactions nil 829508201954279474 "🥺"}}

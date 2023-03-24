@@ -1,0 +1,104 @@
+{{/*
+	Trigger: sssban
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{addReactions "👍"}}
+{{ $user := .User }}
+{{$args := parseArgs 0 "**!kimsin <@kişi/id>**"
+    (carg "userid" "User Ping")
+}}
+{{ if $args.IsSet 0 }}
+	{{ $user = userArg ($args.Get 0) }}
+{{ end }}
+ 
+
+
+{{ $member := getMember $user.ID }}
+{{$Final:=0}}
+{{$Pos:=0}}
+{{range .Guild.Roles}}
+    {{- if in $member.Roles .ID -}}
+        {{- if and (lt $Pos .Position) (.Color) -}}
+            {{- $Pos = .Position -}}
+            {{- $Final = .Color -}}
+        {{- end -}}
+    {{- end -}}
+{{end}}
+
+{{$user := .User}}
+{{if ($args.Get 0)}}
+{{$user = userArg ($args.Get 0)}}
+{{end}}
+
+
+
+{{ $member := getMember $user.ID }}
+{{$createdAt := div $user.ID 4194304 | add 1420070400000 | mult 1000000 | toDuration | (newDate 1970 1 1 0 0 0).Add}}
+{{$checkDate := (dbGet $user.ID "dg").Value}}
+{{if or (hasRoleID 704401505444298762) (hasRoleID 560140473168297987) (hasRoleID 719250769152442408)}}
+{{else if and (ne $user.ID .User.ID) (dbGet $user.ID "kimsingizlilik")}}
+{{$embed := sdict 
+    "title" "Kişi Bilgileri"
+    "description" (print "```diff\n-BU KISININ BILGILERI GIZLENMISTIR!```")
+    "fields" (cslice
+            (sdict "name" "Discorda Katıldı:" "value" (print "`" ($createdAt.Format "02/01/2006") "`") "inline" true)
+            (sdict "name" "Sunucuya Katıldı:" "value" (print "`" ($member.JoinedAt.Parse.Format "02/01/2006") "`") "inline" true)
+            )
+    "color" $Final
+    "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+}}
+{{$a := sendMessageRetID nil (cembed $embed)}} 
+{{else}}
+{{$embed := sdict 
+    "title" "Kişi Bilgileri"
+    "description" (print ":fire: **İsim:**" " " (str (dbGet $user.ID "isim").Value) "\n:male_sign: **Cinsiyet:**" " " (str (dbGet $user.ID "cinsiyet").Value) "\n:calendar_spiral: **Yaş: ** " (str (dbGet $user.ID "yas").Value) "** \n:map: Memleket:**" " " (str (dbGet $user.ID "memleket").Value) "\n**🎂 Dgünü:**" " "  (or $checkDate "<:cancel:856339137850638346>"))
+    "color" $Final
+    "fields" (cslice
+            (sdict "name" "Discorda Katıldı:" "value" (print "`" ($createdAt.Format "02/01/2006") "`") "inline" true)
+            (sdict "name" "Sunucuya Katıldı:" "value" (print "`" ($member.JoinedAt.Parse.Format "02/01/2006") "`") "inline" true)
+
+            )
+
+    "thumbnail" (sdict "url" ($user.AvatarURL "1024"))
+    "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+    "footer" (sdict "text" "▶️  Diğer Sayfa⠀🗑️ Mesajı sil " "icon_url" "")
+}}
+{{if not (dbGet $user.ID "isim")}}
+{{$embed.Set "title" "🤐Tanışıksız Patates"}}
+{{$embed.Set "description" (print " ")}}
+{{end}}
+{{$a := sendMessageRetID nil (cembed $embed)}} 
+{{addMessageReactions nil $a "▶️" "🗑️"}}
+{{dbSet 0 "kimsindb" (sdict "Msg" (str $a) "User" (str .User.ID))}}
+{{dbSet .User.ID "kimsinkisidb" (str ($user.ID))}}
+{{end}}
+
+
+
+{{if or (hasRoleID 704401505444298762) (hasRoleID 560140473168297987) (hasRoleID 719250769152442408)}}
+{{$embed := sdict 
+    "title" "Kişi Bilgileri"
+    "description" (print ":fire: **İsim:**" " " (str (dbGet $user.ID "isim").Value) "\n:male_sign: **Cinsiyet:**" " " (str (dbGet $user.ID "cinsiyet").Value) "\n:calendar_spiral: **Yaş: ** " (str (dbGet $user.ID "yas").Value) "** \n:map: Memleket:**" " " (str (dbGet $user.ID "memleket").Value) "\n**🎂 Dgünü:**" " "  (or $checkDate "<:cancel:856339137850638346>"))
+    "color" $Final
+    "fields" (cslice
+            (sdict "name" "Discorda Katıldı:" "value" (print "`" ($createdAt.Format "02/01/2006") "`") "inline" true)
+            (sdict "name" "Sunucuya Katıldı:" "value" (print "`" ($member.JoinedAt.Parse.Format "02/01/2006") "`") "inline" true)
+            )
+
+    "thumbnail" (sdict "url" ($user.AvatarURL "1024"))
+    "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+    "footer" (sdict "text" "▶️  Diğer Sayfa⠀🗑️ Mesajı sil " "icon_url" "")
+}}
+{{if not (dbGet $user.ID "isim")}}
+{{$embed.Set "title" "🤐Tanışıksız Patates"}}
+{{$embed.Set "description" (print " ")}}
+{{end}}
+{{$a := sendMessageRetID nil (cembed $embed)}} 
+{{addMessageReactions nil $a "▶️" "🗑️"}}
+{{dbSet 0 "kimsindb" (sdict "Msg" (str $a) "User" (str .User.ID))}}
+{{dbSet .User.ID "kimsinkisidb" (str ($user.ID))}}
+{{end}}

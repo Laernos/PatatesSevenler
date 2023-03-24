@@ -1,0 +1,23 @@
+{{/*
+	Trigger: yardim
+	Trigger Type: Exact match
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{deleteMessage .Channel.ID (toInt (dbGet 0 "Bug").Value) 0}}{{sleep 1}}
+{{$embed := cembed 
+    "title" (joinStr "" "<a:mikrofon:748342941365567519>  Komutlar  <a:mikrofon:748342941365567519>") 
+    "color" 16711680 
+    "fields" (cslice 
+        (sdict "name" "<:bruh:789327584327893003>  Konuşmak için  <a:istebu:789322314117546034>  `.. <metin>`" "value" "⠀" "inline" false) 
+        (sdict "name" "🔇│Bu kanal seslide mikrofonunu kullanamayanlar için oluşturulmuştur." "value" "⠀\n Daha fazla yardıma ihtiyacınız varsa yetkililerden [destek](https://discord.com/channels/560140367362523136/736980158157684797) alabilirsiniz.	" "inline" false) 
+    ) 
+    "author" (sdict "name" "YARDIM" "url" "https://www.youtube.com/watch?v=q7uyKYeGPdE" "icon_url" "https://imgur.com/RnRFhta.gif") 
+    "footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+}}
+{{$a := sendMessageRetID nil $embed}}
+{{dbSet 0 "Bug" (toString $a)}}
+{{deleteTrigger 0}}
+{{deleteMessage nil $a 60}}

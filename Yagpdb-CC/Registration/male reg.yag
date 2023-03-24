@@ -1,0 +1,188 @@
+{{/*
+	Trigger: e
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 4 "**Örnek Kullanım:**\n `!e <@kişi/id> <isim> <yaş> <memleket>`"
+    (carg "userid" "User Ping")
+    (carg "string" "isim")
+    (carg "int" "Yas" 13 99)
+    (carg "string" "Memleket")
+
+}}
+{{ $user := userArg ($args.Get 0) }}
+{{if  (reFind "\\d" ($args.Get 1))}}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " **Kişinin ismi bir sayı olamaz, lütfen kontrol et!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if  (reFind "\\d" ($args.Get 3))}}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " **Kişinin memleketi bir sayı olamaz, lütfen kontrol et!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if not (or (hasRoleID 719250769152442408) (hasRoleID 755869130812424333) (hasRoleID 560140473168297987) (hasRoleID 704401505444298762) )}}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " **Kayıt etmek için yetkiniz bulunmamaktadır!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if (targetHasRoleID ($user).ID 596296252623421441) }}
+{{ $user := userArg ($args.Get 0) }}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print ($user.Mention) " **Zaten Kayıtlı Bir Üye!\nEğer yanlış kayıt yaptıysanız `!ee` komudunu kullanın!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if (targetHasRoleID ($user).ID 560141638354075671) }}
+{{ $user := userArg ($args.Get 0) }}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print ($user.Mention) " **Zaten Kayıtlı Bir Üye!\nEğer yanlış kayıt yaptıysanız `!kk` komudunu kullanın!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if (targetHasRoleID ($user).ID 707217352751710298) }}
+{{ $user := userArg ($args.Get 0) }}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " **Banlı bir üyeyi kayıt edemezsin!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if (targetHasRoleID ($user).ID 801530998604955678) }}
+{{ $user := userArg ($args.Get 0) }}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print ($user.Mention) " **İsmini düzeltmeden kayıt olamazsın!**")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+
+{{else if eq ($args.Get 3)  "Ağrı" "Ardahan" "Bingöl" "Bitlis" "Elazığ" "Erzincan" "Erzurum" "Hakkari" "Iğdır" "Kars" "Malatya" "Muş" "Tunceli" "Van" "ağrı" "ardahan" "bingöl" "bitlis" "elazığ" "erzincan" "erzurum" "hakkari" "ığdır" "kars" "malatya" "muş" "tunceli" "van"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 781740223334973450}}
+
+{{else if eq ($args.Get 3)  "Yalova" "Tekirdağ" "Sakarya" "Kocaeli" "Kırklareli" "İstanbul" "Edirne" "Çanakkale" "Bursa" "Bilecik" "Balıkesir" "yalova" "tekirdağ" "sakarya" "kocaeli" "kırklareli" "istanbul" "edirne" "çanakkale" "bursa" "bilecik" "balıkesir"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 781741092583768095}}
+
+{{else if eq ($args.Get 3)  "Artvin" "Rize" "Bayburt" "Trabzon" "Gümüşhane" "Giresun" "Ordu" "Tokat" "Amasya" "Samsun" "Sinop" "Çorum" "Kastamonu" "Bartın" "Karabük" "Zonguldak" "Düzce" "Bolu" "artvin" "rize" "bayburt" "trabzon" "gümüşhane" "giresun" "ordu" "tokat" "amasya" "samsun" "sinop" "çorum" "kastamonu" "bartın" "karabük" "zonguldak" "düzce" "bolu"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 740255002550862408}}
+
+{{else if eq ($args.Get 3)  "İzmir" "Afyon" "Aydın" "Denizli" "Kütahya" "Manisa" "Muğla" "Uşak" "izmir" "afyon" "aydın" "denizli" "kütahya" "manisa" "muğla" "uşak"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 781739661835370497}}
+
+{{else if eq ($args.Get 3)  "Nevşehir" "Niğde" "Ankara" "Konya" "Aksaray" "Kayseri" "Sivas" "Eskişehir" "Kırıkkale" "Karaman" "Kırşehir" "Yozgat" "Çankırı" "nevşehir" "niğde" "ankara" "konya" "aksaray" "kayseri" "sivas" "eskişehir" "kırıkkale" "karaman" "kırşehir" "yozgat" "çankırı"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 781739869117612072}}
+
+{{else if eq ($args.Get 3)  "Adana" "Antalya" "Burdur" "Hatay" "Isparta" "Kahramanmaraş" "Mersin" "Osmaniye" "adana" "antalya" "burdur" "hatay" "Isparta" "kahramanmaraş" "mersin" "osmaniye"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 781740056062197770}}
+
+{{else if eq ($args.Get 3)  "Gaziantep" "Diyarbakır" "Şanlıurfa" "Batman" "Adıyaman" "Siirt" "Mardin" "Kilis" "Şırnak" "gaziantep" "diyarbakır" "şanlıurfa" "batman" "adıyaman" "siirt" "mardin" "kilis" "şırnak"}}
+{{ $user := userArg ($args.Get 0) }}
+{{ $memleket := ($args.Get 3) }}
+{{giveRoleID $user.ID 584796012175163449}}
+{{end}}
+
+{{if not (or (hasRoleID 719250769152442408) (hasRoleID 755869130812424333) (hasRoleID 560140473168297987) (hasRoleID 704401505444298762) )}}
+{{else if (targetHasRoleID ($user).ID 596296252623421441) }}
+{{else if (targetHasRoleID ($user).ID 560141638354075671) }}
+{{else if (targetHasRoleID ($user).ID 801530998604955678) }}
+{{else if (targetHasRoleID ($user).ID 707217352751710298) }}
+{{else if (targetHasRoleID ($user).ID 755894119020363837) }}
+{{ $1:= "Hoş Geldiin Totoşş!"}} {{ $2:= "Hoş Geldiin Aslan Parçası!"}} {{ $3:= "Hoş Geldiin Aşkitopella!"}} {{ $4:= "Hoş Geldiin Tontişş!"}} {{ $5:= "Hoş Geldiin Ciğerim!"}} {{ $6:= "Hoş Geldiin Zeytin Gözlü!"}} {{ $7:= "Hoş Geldiin Kara Gözlü!"}} {{ $8:= "Hoş Geldiin Minnoş!"}} {{ $9:= "Hoş Geldiin Tonton!"}} {{ $10:= "Hoş Geldiin Fıstık!"}} {{ $11:= "Hoş Geldiin Paşaa!"}} {{ $12:= "Hoş Geldiin Koçç!"}} {{ $13:= "Hoş Geldiin Elmalı Turta!"}} {{ $14:= "Hoş Geldiin İnci Gözlü!"}} {{ $15:= "Hoş Geldiin Uğur böceği!"}} {{ $16:= "Hoş Geldiin Kiraz Dudaklı!"}} {{ $17:= "Hoş Geldiin Tanrıçaa!"}} {{ $18:= "Hoş Geldiin Yiğidimm!"}} {{ $19:= "Hoş Geldiin Al Yazmalı!"}} {{ $20:= "Hoş Geldiin Şapşik!"}} {{ $21:= "Hoş Geldiin Pandaaa!"}} {{ $22:= "Hoş Geldiin Nur Yüzlü!"}}
+
+{{ $at := ( cslice $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20 $21 $22) }}
+ {{ $br := (index (shuffle $at) 0)}}
+{{$time := 3600}}
+{{giveRoleID $user.ID 768471301689704458}}
+{{ takeRoleID $user.ID 768471301689704458 $time}}
+{{$embed := cembed 
+    "title" ""
+    "description" (print ($user.Mention) " " "**," $br "**")
+    "color" 1070490 }}
+{{$c := sendMessageRetID 592651311665643530 $embed}}
+{{end}}
+
+{{if not (or (hasRoleID 719250769152442408) (hasRoleID 755869130812424333) (hasRoleID 560140473168297987) (hasRoleID 704401505444298762) )}}
+{{else if (targetHasRoleID ($user).ID 596296252623421441) }}
+{{else if (targetHasRoleID ($user).ID 560141638354075671) }}
+{{else if (targetHasRoleID ($user).ID 801530998604955678) }}
+{{else if (targetHasRoleID ($user).ID 707217352751710298) }}
+
+{{else}}
+{{dbSet ($args.Get 0) "isim" ($args.Get 1)}}
+{{dbSet ($args.Get 0) "yas" (str ($args.Get 2))}}
+{{dbSet ($args.Get 0) "memleket" ($args.Get 3)}}
+{{dbSet ($args.Get 0) "moderator" (str (.User.ID))}}
+{{dbSet ($args.Get 0) "cinsiyet" "Erkek"}}
+{{$z := dbIncr .User.ID "erkekreg"  1 }}
+{{$x := dbIncr .User.ID "register"  1 }}
+{{ $user := userArg ($args.Get 0) }}
+{{ $isim := ($args.Get 1) }}
+{{ $yas := ($args.Get 2) }}
+{{ $memleket := ($args.Get 3) }}
+{{ $userBannedMention := ($user.Mention) }}
+
+
+{{ takeRoleID $user.ID 723671093843591249}}
+{{ takeRoleID $user.ID 741422492022866022}}
+{{ takeRoleID $user.ID 755894119020363837}}
+{{giveRoleID $user.ID 596296252623421441}}
+{{giveRoleID $user.ID 560142537923231767}}
+{{giveRoleID $user.ID 742929006189346937}}
+{{giveRoleID $user.ID 560140743612694529}}
+{{giveRoleID $user.ID 749353858693726379}}
+
+{{$embed := cembed 
+    "title" "<a:dogri:799057629652582478> Başarılı <a:dogri:799057629652582478>"
+    "description" (print (userArg (index .CmdArgs 0)).Mention " **Kayıt Edildi!**\n```" $isim " " $yas " " $memleket "```")
+    "color" 1070490
+	
+}}
+{{$b := sendMessageRetID nil $embed}}
+
+{{$embed := cembed 
+    "title" ":pencil: Kayıt :pencil:"
+    "description" (print "**Kişi Detayları**\n:fire: **İsim:**" " " $isim "\n:male_sign: **Cinsiyet:** Erkek\n:calendar_spiral: **Yaş: ** " $yas "** \n:map: Memleket:**" " " $memleket "\n \n<a:konfeti:723799887183085578> **Aramıza hoş geldin**" " " ($user.Mention) " " "<a:konfeti:723799887183085578>")
+    "color" 1070490
+    "thumbnail" (sdict "url" ($user.AvatarURL "1024"))
+    "author" (sdict "name"  .User.Username "icon_url" (.User.AvatarURL "64"))
+}}
+{{$a := sendMessageRetID 723984571800223846 $embed}}
+{{deleteTrigger 0}}
+{{deleteMessage nil $b 30}}
+{{end}}

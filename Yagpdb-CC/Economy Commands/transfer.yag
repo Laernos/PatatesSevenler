@@ -1,0 +1,64 @@
+{{/*
+	Trigger: transfer
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{ $name := "🥔" }}
+{{$args := parseArgs 2 "Kullanım: `!transfer <@kişi/id> <miktar>`"
+    (carg "userid" "user to give currency to")
+    (carg "int" "deger" 1 1000000000)
+    (carg "string" "Reason")
+}}
+
+{{ $user := userArg ($args.Get 0) }}
+{{ $dc := ""}} {{$x:= ""}}
+{{$b := ($args.Get 1)}}
+{{$as := (print "<@" ($args.Get 0) "> kişisine" " **" (humanizeThousands ($b)) "** " " " $name " " "gönderildi.")}}
+{{ $bal := dbGet .User.ID "miktar" }}
+
+
+{{if not (dbGet .User.ID "miktar")}}
+	{{$x = ($args.Get 1)}}
+{{else}}
+	{{$x = add ($bal.Value) ($args.Get 1)}}
+{{end}}
+
+{{if (gt ($args.Get 1) 15000)}}
+{{$b = (round (mult 0.90 ($args.Get 1)))}}
+{{$as = (print "<@" ($args.Get 0) "> kişisine **10%** komisyon kesilerek" " **" (humanizeThousands ($b)) "** " " " $name " " "gönderildi.")}}
+{{end}}
+
+{{if (gt (toInt $bal.Value) 30000)}}
+	{{$b = (round (mult 0.90 ($args.Get 1)))}}
+	{{$as = (print "<@" ($args.Get 0) "> kişisine günlük coin transfer sınırını geçtiğiniz icin **10%** komisyon kesilerek" " **" (humanizeThousands ($b)) "** " " " $name " " "gönderildi.")}}
+	{{end}}
+
+{{if ($args.Get 2)}}
+{{ $dc = (print "<@" .User.ID ">," " " "<@" ($args.Get 0) "> kişisine" " " "**" (humanizeThousands ($b)) "** " " " $name " " "gönderdi.\n```" ($args.Get 2) "```")    "footer" (sdict "text" (print "🆔" " " "" .User.ID)  "timestamp" currentTime)}}
+{{else}}
+{{ $dc = (print "<@" .User.ID ">," " " "<@" ($args.Get 0) "> kişisine" " " "**" (humanizeThousands ($b)) "** " " " $name " " "gönderdi.")    "footer" (sdict "text" (print "🆔" " " "" .User.ID)  "timestamp" currentTime)}}
+{{end}}
+
+{{if (targetHasRoleID ($user).ID 560141746764513283) }}
+{{$a := sendMessageRetID nil (print "> <:banned:868547150353662052> **" .User.Mention "**, botlara coin yollayamazsın!")}}
+{{else if eq .User.ID $user.ID}}
+{{$a := sendMessageRetID nil (print "> <:banned:868547150353662052> **" .User.Mention "**, kendine coin yollayamazsın!")}}
+{{ else if gt ($args.Get 1) 1 }}
+{{ if ge (toInt (dbGet .User.ID "replo").Value) ($args.Get 1) }}
+
+{{ sendMessage nil (cembed "author" (sdict "name" (print "Transfer: " .User.Username) "icon_url" "https://imgur.com/QkJBQy0.png") "title" "" "color" 3014151 "description" (print $as)) }} 
+{{ $givecoins := dbIncr ($args.Get 0) "replo" $b }} 
+{{ $newcoins := sub (toInt (dbGet .User.ID "replo").Value) ($args.Get 1) }}
+{{ sendMessage 816476665118195762 (cembed "author" (sdict "name" (print "Transfer: " .User.Username) "icon_url" "https://imgur.com/QkJBQy0.png") "title" "" "color" 16711680 "description" (print $dc ))}} 
+{{ dbSet .User.ID "replo" $newcoins }}
+{{ dbSetExpire .User.ID "miktar" $x 43200}}
+{{ else }} 
+{{ sendMessage nil (cembed "author" (sdict "name" (print "Transfer: " .User.Username) "icon_url" "https://imgur.com/QkJBQy0.png") "title" "" "color" 14232643 "description" (print  (humanizeThousands ($args.Get 1)) " " $name " " "iniz bulunmamaktadır!")) }} 
+{{ end }}
+{{ else }} {{ sendMessage nil (cembed "author" (sdict "name" (print "Transfer: " .User.Username) "icon_url" "https://imgur.com/QkJBQy0.png") "title" "" "color" 14232643 "description" (print "Miktar 1'den fazla olmalıdır!")) }} 
+{{ end }}
+
+{{deleteTrigger 0}}

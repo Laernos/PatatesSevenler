@@ -1,0 +1,83 @@
+{{/*
+	Trigger: ganyan
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$player := (dbGet .User.ID "replo").Value}}
+{{ $db := "replo" }}
+{{$args := parseArgs 2 "format is `!ganyan <at nuamarasi 1-5> <bahis miktari>` <a:katyir:831624428252823593>" (carg "int" "horse number") (carg "int" "bet number")}}
+{{$horse := $args.Get 0}}{{$bet := $args.Get 1}}
+{{if $player}}
+
+ {{if (lt $bet 10)}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**En düşük bahis 10 patatestir!** <a:katyir:831624428252823593>" )}}
+ {{else if (gt $bet 3000)}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**En yüksek bahis 3000 patatestir!** <a:katyir:831624428252823593>")}}
+{{else if gt $bet (toInt (dbGet $.User.ID $db).Value)}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**Yeterli patatesiniz bulunmamaktadır!** <a:katyir:831624428252823593>")}}
+{{ else if and (ge (toInt (dbGet $.User.ID $db).Value) $bet) (or (lt $horse 1) (gt $horse 4))}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**1 ile 5 arasındaki atları seçmelisiniz!** <a:katyir:831624428252823593>")}}
+{{else if and (ge (toInt (dbGet $.User.ID $db).Value) $bet) (gt $horse 0) (lt $horse 5)}}
+{{$win := randInt 1 5}} 
+{{if eq $win $horse}}
+{{$z := dbIncr .User.ID "replo"  (add  (mult 3 $bet))}}
+{{  $embed := cembed
+"description" (print "**" (.User.Mention) " Bahisini üçe katladı!!!\n🐴 " " " $win " ** *numaralı at yarışı kazandı!*\n **-------------------**\n**- KAZANDIN! -**\n**Kâr** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n" (mult 3 $bet) " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"  (humanizeThousands (dbGet .User.ID "replo").Value))
+"color" 9021952
+"author" (sdict "name" (print "Ganyan | Kumarbaz:" " " .User.Username ) )
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/730146727339884564/image0.gif")
+}}
+
+{{$embeed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " **"  $win "** " "numaralı at sayesinde" " **" (mult 3 $bet) " **" " 🥔 kazandı.")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/730146727339884564/image0.gif")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embeed}}
+
+{{$id := sendMessageRetID nil "Yarışa Hazırlanılıyor <a:katyir:831624428252823593>"}}{{sleep 1}}{{editMessage nil $id "Yarış basladı <a:katyir:831624428252823593>   <:final:868522436201689109>"}}{{sleep 1}}{{editMessage nil $id "Atlar yarışıyor <a:katyir:831624428252823593>   <:final:868522436201689109>"}}{{sleep 3}}{{editMessage nil $id "Üzerine oynadığın at kazandı!! <a:katyir:831624428252823593>"}}{{editMessage nil $id $embed}}
+
+{{else if ne $win $horse}}
+
+{{$z := dbIncr .User.ID "replo" (toInt (print "-" ($bet)))}}
+
+
+{{  $embed := cembed
+"description" (print "**" (.User.Mention) " bahisini kaybetti...\n🐴 " " " $win " ** *numaralı at yarışı kazandı!*\n **-------------------**\n**-  Kaybettin :( -**\n**Zarar** ⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n" $bet " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"  (humanizeThousands (dbGet .User.ID "replo").Value) )
+"Author" (sdict "name" "Horse Race")
+"color" 16711680
+"author" (sdict "name" (print "Ganyan | Kumarbaz:" " " .User.Username ) )
+"thumbnail" (sdict "url" "https://imgur.com/xXB7jZE.gif")
+}}
+
+{{$embeed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " **"  $horse "** " "numaralı at yüzünden" " **" $bet " **" " 🥔 kaybetti.")
+   "color" 16711680
+  "thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/730146727339884564/image0.gif")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embeed}}
+
+{{$id := sendMessageRetID nil "Yarışa Hazırlanılıyor <a:katyir:831624428252823593>"}}{{sleep 1}}{{editMessage nil $id "Yarış basladı <a:katyir:831624428252823593>   <:final:868522436201689109>"}}{{sleep 1}}{{editMessage nil $id "Atlar yarışıyor <a:katyir:831624428252823593>   <:final:868522436201689109>"}}{{sleep 3}}{{editMessage nil $id "Üzerine oynadığın at kaybetti!! <a:katyir:831624428252823593>"}}{{editMessage nil $id $embed}}
+
+{{else}} 
+{{$servericon := (joinStr "" "https://cdn.discordapp.com/icons/" (toString .Guild.ID) "/" .Guild.Icon ".png")}}
+{{  $embed := cembed 
+"description" (print "**Your journey has not yet begun!** " (.User.Mention) "\n*Type `-start` to begin your journey*")
+"color" (randInt 111111 999999)
+}}
+
+{{$id := (sendMessageNoEscapeRetID nil (complexMessage "content" "" "embed" $embed))}}
+
+{{end}}{{end}}{{end}}
+{{deleteResponse 5}}

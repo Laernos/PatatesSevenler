@@ -1,0 +1,37 @@
+{{/*
+	Trigger: kk
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 4 "**Örnek Kullanım:**\n `!kk <@kişi/id> <isim> <yaş> <memleket>`"
+    (carg "userid" "User Ping")
+    (carg "string" "isim")
+    (carg "int" "Yas" 13 99)
+    (carg "string" "Memleket")
+
+}}
+{{ $user := userArg ($args.Get 0) }}
+
+{{dbSet ($args.Get 0) "isim" ($args.Get 1)}}
+{{dbSet ($args.Get 0) "yas" (str ($args.Get 2))}}
+{{dbSet ($args.Get 0) "memleket" ($args.Get 3)}}
+{{dbSet ($args.Get 0) "moderator" (str (.User.ID))}}
+{{dbSet ($args.Get 0) "cinsiyet" "Gacı"}}
+
+{{ $user := userArg ($args.Get 0) }}
+{{ $isim := ($args.Get 1) }}
+{{ $yas := ($args.Get 2) }}
+{{ $memleket := ($args.Get 3) }}
+{{ $userBannedMention := ($user.Mention) }}
+
+
+{{$embed := cembed 
+    "title" "<a:dogri:799057629652582478> Başarılı <a:dogri:799057629652582478>"
+    "description" (print (userArg (index .CmdArgs 0)).Mention " **Kayıt Edildi!**\n```" $isim " " $yas " " $memleket "```")
+    "color" 1070490
+	
+}}
+{{$b := sendMessageRetID nil $embed}}

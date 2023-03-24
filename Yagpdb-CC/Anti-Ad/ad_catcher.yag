@@ -1,0 +1,77 @@
+{{/*
+	Trigger: (https?:\/\/)?(www\.)?((discord\.(gg|io|me|li)|discord(app)?\.com\/invite|invite\.gg))(\/|\\)[A-z+0-9]+
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$user := .User}}
+{{$embed := cembed 
+    "title" ""
+    "description" (print  $user.Mention " **Aq salağı böyle bir sunucuda reklam yapabiliceğini mi sandın sjsjsj 10sn sonra ban yiyosun G.O!**")
+    "color" 16711680
+    "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif")
+    "image" (sdict "url" "https://imgur.com/I2xUj2E.gif")
+}}
+{{$a := sendMessageRetID nil $embed}}
+{{deleteMessage nil $a 15}}
+{{deleteTrigger 0}}
+{{$dm := cembed 
+    "title" ""
+    "description" (print "**Selam reklamcı**" " " $user.Mention ", **\nHazır elin değmişken sana zahmet bizim sunucunun da reklamını yapsana! [patatessevenler.com](https://patatessevenler.com)**")
+    "color" 16711680
+    "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif")
+    "image" (sdict "url" "https://imgur.com/I2xUj2E.gif")
+}}
+{{sendDM $dm}}
+
+{{$b := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $b 1}}
+{{sleep 1}}
+{{$c := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $c 1}}
+{{sleep 1}}
+{{$d := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $d 1}}
+{{sleep 1}}
+{{$e := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $e 1}}
+{{sleep 1}}
+{{$f := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $f 1}}
+{{sleep 1}}
+{{$g := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $g 1}}
+{{sleep 1}}
+{{$h := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $h 1}}
+{{sleep 1}}
+{{$j := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $j 1}}
+{{sleep 1}}
+{{$k := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $k 1}}
+{{sleep 1}}
+{{$l := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $l 1}}
+{{sleep 1}}
+{{$m := sendMessageRetID 794775397878595594 (print "" $user.Mention "")}} 
+{{deleteMessage 794775397878595594 $m 1}}
+
+
+
+{{$user := .User}}
+{{ $member := getMember $user.ID }}
+
+{{ range $member.Roles }}
+    {{ takeRoleID $user.ID . }}
+{{ end }}
+
+{{giveRoleID $user.ID 707217352751710298}}
+
+{{sendMessage 743867397416419498 (print "╔═════🤖 ***___Ban___*** 🤖═════╗"
+"\n║**YETKİLİ** │ <@204255221017214977>"
+"\n║**KİŞİ**         │ " $user.Mention
+"\n║**SEBEP**     │ ` Kayıtta Reklam`"
+"\n╚═══════๑:shield:๑════════╝" )}}

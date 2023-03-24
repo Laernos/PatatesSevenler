@@ -1,0 +1,137 @@
+{{/*
+	Trigger: zar
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 2 "Örnek Kullanım: `!zar <bot/public> <bahis miktarı>` <a:attimzar:831249832235630633>" (carg "string" "type") (carg "int" "bet")}}
+{{$bet := or ($args.Get 1) 1}}
+{{$type := $args.Get 0}}
+
+{{ $db := "replo" }}
+
+{{if gt $bet (toInt (dbGet $.User.ID $db).Value)}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**Yeterli patatesiniz bulunmamaktadır!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+
+
+{{else if lt $bet 50}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**En düşük bahis 50 patatestir!** <a:attimzar:831249832235630633>" )}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+
+{{else if gt $bet 1000}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**En yüksek bahis 1000 patatestir!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+
+{{ else if ge (toInt (dbGet $.User.ID $db).Value) $bet }}
+{{if eq $type "bot"}}
+
+{{$dice1 :=  randInt 1 6}}{{$dice2 := randInt 1 6}}{{$dice3 :=  randInt 1 6}} {{$dice4 :=  randInt 1 6}}
+ {{if eq (add $dice1 $dice2) (add $dice3 $dice4)}}
+{{$embed := cembed 
+    "description" (print "**Zarlar atılıyorr.. Beklee... <a:zara:790273809650417684>**")
+   "color" (randInt 999999)
+"thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{sleep 5}}
+{{deleteMessage nil $d 0}}
+{{sendMessage nil (cembed "description" (joinStr "" .User.Mention " " "zarı attı 🎲 " $dice1 " & " $dice2 "\n**Bot** zarı attı 🎲 " $dice3 " & " $dice4 "\n**-------------------**\n**- BERABERE! -**")
+"color" (randInt 999999)
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/731223680683737258/image0.gif")
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) )
+)}}
+
+
+  {{else if gt (add $dice1 $dice2) (add $dice3 $dice4)}}
+{{$embed := cembed 
+    "description" (print "**Zarlar atılıyorr.. Beklee... <a:zara:790273809650417684>**")
+   "color" (randInt 999999)
+"thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+
+	}}
+{{$d := sendMessageRetID nil $embed}}
+
+{{sleep 5}}
+{{deleteMessage nil $d 0}}
+{{$z := dbIncr .User.ID "replo"  $bet }}
+{{sendMessage nil (cembed "description" (joinStr "" .User.Mention " zarı attı " " 🎲 **" $dice1 "** & **" $dice2 "**\n**Bot** zarı attı " " 🎲 **" $dice3 "** & **" $dice4 "**\n**-------------------**\n **- KAZANDIN! -**\n**Kâr** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n" $bet " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" (humanizeThousands (dbGet .User.ID "replo").Value))
+"color" (randInt 999999)
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/731223680683737258/image0.gif")
+"author" (sdict "name" (print "Zar Atma | Kumarbaz:" " " .User.Username ) )
+)}}
+{{$embed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  "Zar atarak" " **" $bet "** " " 🥔 kazandı.")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+
+{{else}}
+{{$embed := cembed 
+    "description" (print "**Zarlar atılıyorr.. Beklee... <a:zara:790273809650417684>**")
+   "color" (randInt 999999)
+"thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{sleep 5}}
+{{deleteMessage nil $d 0}}
+{{$z := dbIncr .User.ID "replo" (toInt (print "-" ($bet)))}}
+{{sendMessage nil (cembed "description" (joinStr ""  .User.Mention " zarı attı " " 🎲 **" $dice1 "** & **" $dice2 "**\n**Bot** zarı attı " " 🎲 **" $dice3 "** & **" $dice4 "**\n**-------------------**\n **-  Kaybettin :( -**\n**Zarar** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n-" $bet " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" (humanizeThousands (dbGet .User.ID "replo").Value))
+"color" 16711680
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/731223680683737258/image0.gif")
+"author" (sdict "name" (print "Zar Atma | Kumarbaz:" " " .User.Username ) )
+)}}
+
+{{$embed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  "Zar atarak" " **" $bet "** " " 🥔 kaybetti.")
+   "color" 16711680
+  "thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+
+{{end}}
+
+{{else if or (eq $type "public") (eq $type "open")}}
+
+
+
+{{if  not (dbGet .Channel.ID "dice").Value}}
+
+{{$m := sendMessageRetID nil (cembed "description" (joinStr "" .User.Mention " Sizi **" $bet "** 🥔 " "değerinde bir bahise davet ediyor.\n**Bahse girmek isteyen var mı?**\n🎲 ~ Kabul Et | İptal Et ~ ❌")
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) )
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/731223680683737258/image0.gif")
+"Color" (randInt 999999)
+)}}{{addMessageReactions nil $m "🎲" "❌"}}
+{{dbSetExpire .Channel.ID "dice" (sdict "challenger" (toString .User.ID) "message" $m "bet" (toInt $bet)) 60}}
+
+{{else}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**Zaten şu anda bir meydan okuma var!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 15}}
+{{deleteTrigger 15}}
+{{end}}
+
+{{else if or (ne $type "bot") (ne $type "public") (ne $type "open")}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "`!zar <bot/public> <bahis miktarı>`  <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 15}}
+{{deleteTrigger 15}}
+{{end}}
+{{end}}

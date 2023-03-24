@@ -1,0 +1,132 @@
+{{/*
+	Trigger: ^!(notlarim|notlarım)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$not1 := (str (dbGet .User.ID "not1isim").Value)}}
+{{$not2 := (str (dbGet .User.ID "not2isim").Value)}}
+{{$not3 := (str (dbGet .User.ID "not3isim").Value)}}
+{{$not11 := (print "**" $not1 "**")}} 
+{{$not22:= (print "**" $not2 "**")}} 
+{{$not33 := (print "**" $not3 "**")}} 
+{{$not111 := (str (dbGet .User.ID "not1tarih").Value)}}
+{{$not222 := (str (dbGet .User.ID "not2tarih").Value)}}
+{{$not333 := (str (dbGet .User.ID "not3tarih").Value)}}
+
+{{ $member := getMember .User.ID }}
+{{$Final:=0}}
+{{$Pos:=0}}
+{{range .Guild.Roles}}
+    {{- if in $member.Roles .ID -}}
+        {{- if and (lt $Pos .Position) (.Color) -}}
+            {{- $Pos = .Position -}}
+            {{- $Final = .Color -}}
+        {{- end -}}
+    {{- end -}}
+{{end}}
+
+{{if (reFind `^!(?i)(notlarim|notlarım)` .Cmd)}}
+{{$args := parseArgs 0 "Notunuzun ismini giriniz."
+  (carg "string" "notismi")}}
+
+{{if and (not ($args.Get 0)) (or ($not1) ($not2) ($not3))}}
+{{$embed := sdict 
+    "title" ""
+    "description" (print " <:number:830622022219726899>" " " $not11 " ⠀`" $not111 "`\n<:number1:830622032436789308>" " " $not22 " ⠀`" $not222 "`\n<:number2:830622040926322719>" " " $not33 " ⠀`" $not333 "`")   
+    "color" $Final
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+    "thumbnail" (sdict "url" "https://imgur.com/7GtbU8p.png")
+    "footer" (sdict "text" "!notlarım <notismi>" "icon_url" "")
+}}
+
+{{if and ($not1) (not ($not2)) (not ($not3))}}
+{{$embed.Set "description" (print "<:number:830622022219726899>" " " $not11 " ⠀`" $not111 "`\n<:number1:830622032436789308>\n <:number2:830622040926322719>")}}
+
+{{else if  and (not ($not1)) ($not2) (not ($not3))}}
+{{$embed.Set "description" (print "<:number:830622022219726899>" " " $not22 " ⠀`" $not222 "`\n<:number1:830622032436789308>\n <:number2:830622040926322719>")}}
+
+{{else if  and (not ($not1)) (not ($not2)) ($not3)}}
+{{$embed.Set "description" (print "<:number:830622022219726899>" " " $not33 " ⠀`" $not333 "`\n<:number1:830622032436789308>\n <:number2:830622040926322719>")}}
+
+{{else if  not (dbGet .User.ID "not1isim")}}
+{{$embed.Set "description" (print "<:number:830622022219726899>" " " $not22 " ⠀`" $not222 "`\n<:number1:830622032436789308>" " " $not33 " ⠀`" $not333 "`\n<:number2:830622040926322719>")}}
+
+{{else if not (dbGet .User.ID "not2isim")}}
+{{$embed.Set "description" (print "<:number:830622022219726899>" " " $not11 " ⠀`" $not111 "`\n<:number1:830622032436789308>" " " $not33 " ⠀`" $not333 "`\n<:number2:830622040926322719>")}}
+
+{{else if not (dbGet .User.ID "not3isim")}}
+{{$embed.Set "description" (print "<:number:830622022219726899>" " " $not11 "⠀ `" $not111 "`\n<:number1:830622032436789308>" " " $not22 "⠀ `" $not222 "`\n<:number2:830622040926322719>")}}
+{{end}}
+{{$a := sendMessageRetID nil (cembed $embed)}} 
+
+{{end}}{{end}}
+
+{{if (reFind `^!(?i)(notlarim|notlarım)` .Cmd)}}
+{{$args := parseArgs 0 "Notunuzun ismini giriniz."
+  (carg "string" "notismi")}}
+
+{{if and (not ($args.Get 0)) (not ($not1)) (not ($not2)) (not ($not3))}}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " **Hiçbir notunuz bulunmamaktadır!**")
+    "color" 16711680
+    "footer" (sdict "text" "!notal diyerek not alabilirsiniz." "icon_url" "")
+	}}
+{{$a := sendMessageRetID nil $embed}}
+{{deleteTrigger 0}}
+{{deleteMessage nil $a 10}}
+{{else if and ($args.Get 0) (not ($not1)) (not ($not2)) (not ($not3))}}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " **Hiçbir notunuz bulunmamaktadır!**")
+    "color" 16711680
+    "footer" (sdict "text" "!notal diyerek not alabilirsiniz." "icon_url" "")
+	}}
+{{$a := sendMessageRetID nil $embed}}
+{{deleteTrigger 0}}
+{{deleteMessage nil $a 10}}
+
+
+{{else if and ($args.Get 0) ($not1) (eq ($args.Get 0) $not1)}}
+{{$embed := cembed 
+    "title" (print $not1)
+    "description" (print "\n \n```" (str (dbGet .User.ID "not1").Value) "```")
+    "color" $Final
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+    "thumbnail" (sdict "url" "https://imgur.com/7GtbU8p.png")
+    "footer" (sdict "text" (print $not111 " " "tarihinde kaydedildi.") "icon_url" "")
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{else if and ($args.Get 0) ($not2) (eq ($args.Get 0) $not2)}}
+{{$embed := cembed 
+    "title" (print $not2)
+    "description" (print "\n \n```" (str (dbGet .User.ID "not2").Value) "```")
+    "color" $Final
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+    "thumbnail" (sdict "url" "https://imgur.com/7GtbU8p.png")
+    "footer" (sdict "text" (print $not222 " " "tarihinde kaydedildi.") "icon_url" "")
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{else if and ($args.Get 0) ($not3) (eq ($args.Get 0) $not3)}}
+{{$embed := cembed 
+    "title" (print $not3)
+    "description" (print "\n \n```" (str (dbGet .User.ID "not3").Value) "```")
+    "color" $Final
+    "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512"))
+    "thumbnail" (sdict "url" "https://imgur.com/7GtbU8p.png")
+    "footer" (sdict "text" (print $not333 " " "tarihinde kaydedildi.") "icon_url" "")
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{else if ($args.Get 0)}}
+{{$embed := cembed 
+    "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+    "description" (print .User.Mention " " "`" ($args.Get 0) "` isminde bir notunuz bulunmamaktadır!")
+    "color" 16711680
+	}}
+{{$a := sendMessageRetID nil $embed}}
+{{deleteTrigger 0}}
+{{deleteMessage nil $a 15}}
+{{end}}{{end}}

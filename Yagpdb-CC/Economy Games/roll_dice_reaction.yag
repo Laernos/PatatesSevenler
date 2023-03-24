@@ -1,0 +1,130 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$dice := sdict (or (dbGet .Reaction.ChannelID "dice").Value sdict)}}
+{{if and (ne (toString .Reaction.UserID)  (toString $dice.challenger)) (.ReactionAdded) (eq (toString .Reaction.MessageID) (toString $dice.message))}}
+{{ $db := "replo" }}
+{{if lt $dice.bet 50}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**En düşük bahis 50 patatestir!** <a:attimzar:831249832235630633>" )}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+ 
+{{else if gt $dice.bet 1000}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**En yüksek bahis 1000 patatestir!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+
+{{else if and (eq .Reaction.Emoji.Name "🎲") (ge (toInt (dbGet .Reaction.UserID $db).Value) $dice.bet)}}
+
+{{$dice1 :=  randInt 1 6}}{{$dice2 := randInt 1 6}}{{$dice3 :=  randInt 1 6}} {{$dice4 :=  randInt 1 6}}
+  {{if eq (add $dice1 $dice2) (add $dice3 $dice4)}}
+{{editMessage nil $dice.message (cembed 
+    "description" (print "**Zarlar atılıyorr.. Beklee... <a:zara:790273809650417684>**")
+   "color" (randInt 999999)
+"thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) ))
+
+	}}
+{{deleteAllMessageReactions nil .Reaction.MessageID}}
+{{sleep 5}}
+{{editMessage nil $dice.message (cembed "description" (joinStr "" "<@" $dice.challenger "> zarı attı 🎲 **" $dice1 "** & **" $dice2 "**\n<@" .Reaction.UserID "> zarı attı 🎲 ** " $dice3 "** & **" $dice4 "**\n**-------------------**\n**- BERABERE! -**")
+"color" (randInt 999999)
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/731223680683737258/image0.gif")
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) )
+)}}
+
+{{dbDel .Reaction.ChannelID "dice"}}
+
+  {{else if gt (add $dice1 $dice2) (add $dice3 $dice4)}}
+{{editMessage nil $dice.message (cembed 
+    "description" (print "**Zarlar atılıyorr.. Beklee... <a:zara:790273809650417684>**")
+   "color" (randInt 999999)
+"thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) ))
+
+	}}
+{{deleteAllMessageReactions nil .Reaction.MessageID}}
+{{sleep 5}}
+{{$z := dbIncr (toInt $dice.challenger) "replo"  $dice.bet }}
+{{$z := dbIncr .Reaction.UserID "replo" (toInt (print "-" ($dice.bet)))}}
+{{editMessage nil $dice.message (cembed "description" (joinStr "" "<@" $dice.challenger "> zarı attı 🎲 **" $dice1 "** & **" $dice2 "**\n<@" .Reaction.UserID "> zarı attı 🎲 **" $dice3 "** & **" $dice4 "**\n**-------------------**\n<@" $dice.challenger "> **- KAZANDI! -**\n**Kâr** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n" $dice.bet " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" (humanizeThousands (dbGet (toInt $dice.challenger) "replo").Value))
+"color" (randInt 999999)
+"thumbnail" (sdict "url" ((userArg $dice.challenger).AvatarURL "1024"))
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) )
+)}}
+{{dbDel .Reaction.ChannelID "dice"}}
+{{$embed := cembed 
+   "title" ""
+   "description" (print "<@" $dice.challenger "> , " " <@" .Reaction.UserID ">  ile zar atarak" " **" $dice.bet "** " " 🥔 kazandı.")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+  "author" (sdict "name"  (userArg $dice.challenger).String "icon_url" ((userArg $dice.challenger).AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+
+{{else}}
+{{editMessage nil $dice.message (cembed 
+    "description" (print "**Zarlar atılıyorr.. Beklee... <a:zara:790273809650417684>**")
+   "color" (randInt 999999)
+"thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) ))
+
+	}}
+{{deleteAllMessageReactions nil .Reaction.MessageID}}
+{{sleep 5}}
+{{$z := dbIncr .Reaction.UserID "replo"  $dice.bet }}
+{{$z := dbIncr (toInt $dice.challenger) "replo" (toInt (print "-" ($dice.bet)))}}
+{{editMessage nil $dice.message (cembed "description" (joinStr "" "<@" $dice.challenger "> zarı attı 🎲 **" $dice1 "** & **" $dice2 "**\n<@" .Reaction.UserID "> zarı attı 🎲 **" $dice3 "** & **" $dice4 "**\n**-------------------**\n<@" .Reaction.UserID "> **- KAZANDI! -**\n**Kâr** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n" $dice.bet " ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" (humanizeThousands (dbGet .Reaction.UserID "replo").Value))
+"color" (randInt 999999)
+"thumbnail" (sdict "url" (.User.AvatarURL "1024"))
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) )
+)}}
+{{dbDel .Reaction.ChannelID "dice"}}
+{{$embed := cembed 
+   "title" ""
+   "description" (print "<@" $dice.challenger "> , " " <@" .Reaction.UserID ">  ile zar atarak" " **" $dice.bet "** " " 🥔 kaybetti.")
+   "color" 16711680
+  "thumbnail" (sdict "url" "https://imgur.com/umI4m2y.gif")
+  "author" (sdict "name"  (userArg $dice.challenger).String "icon_url" ((userArg $dice.challenger).AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+{{end}}
+
+{{else if and (eq .Reaction.Emoji.Name "🎲") ($dice.challenger) (gt $dice.bet (toInt (dbGet .Reaction.UserID $db).Value))}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**Yeterli patatesiniz bulunmamaktadır!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+
+{{else if and (eq .Reaction.Emoji.Name "❌") ($dice.message)}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**Kendiniz tarafından başlatılmayan bir meydan okumayı iptal edemezsiniz!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+{{end}}
+{{else}}
+
+{{if and (eq .Reaction.Emoji.Name "🎲") ($dice.challenger)}}
+{{$a := sendMessageRetID nil (print  .User.Mention " " "**Kendi meydan okumanı kabul edemezsin!** <a:attimzar:831249832235630633>")}}
+{{deleteMessage nil $a 10}}
+{{deleteTrigger 10}}
+
+{{else if and (eq .Reaction.Emoji.Name "❌") $dice.message}}
+{{editMessage nil $dice.message (cembed "title" "İptal Edildi!"
+"Description" "*Meydan okuma iptal edildi!*"
+"color" 16711680
+"author" (sdict "name" (print "Zar Atma | Meydan Okuma" ) )
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/727552413644619858/731223680683737258/image0.gif")
+)}}
+{{deleteAllMessageReactions nil .Reaction.MessageID}}
+{{dbDel .Reaction.ChannelID "dice"}}
+{{else if not (dbGet .Channel.ID "dice").Value}}
+{{end}}{{end}}
+{{deleteMessageReaction nil .Reaction.MessageID .Reaction.UserID "🎲" "❌"}}

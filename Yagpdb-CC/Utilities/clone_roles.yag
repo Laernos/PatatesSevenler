@@ -1,0 +1,26 @@
+{{/*
+	Trigger: rolkopyala
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$perms := "Administrator"}}
+{{if (in (split (index (split (exec "viewperms") "\n") 2) ", ") $perms)}}
+	{{$prefix := index (reFindAllSubmatches `Prefix of \x60\d+\x60: \x60(.+)\x60` (exec "prefix")) 0 1}}
+	{{$args := parseArgs 2 (print "Usage: " $prefix "cloneroles <FromUser> <ToUser>")
+		(carg "userid" "User")
+		(carg "userid" "User")}}
+{{$x := sendMessageRetID nil (cembed "author" (sdict "name" (print "Yükleniyor...") "icon_url" "https://cdn.discordapp.com/emojis/585829014384541716.gif"))}}
+{{$from := slice (getMember ($args.Get 0)).Roles}}
+{{$to := slice (getMember ($args.Get 1)).Roles}}
+{{$added := ""}}
+{{$removed := ""}}
+{{$t1 := (getMember 204255221017214977).Roles}}{{$yagpos := 0}}{{$yagid := 0}}{{range .Guild.Roles}}{{$id := .ID}}{{$pos := .Position}}{{$name := .Name}}{{range $t1}}{{if eq $id .}}{{if gt $pos $yagpos}}{{$yagpos = $pos}}{{$yagid = $id}}{{end}}{{end}}{{end}}{{end}}{{range .Guild.Roles}}{{$id := .ID}}{{$pos := .Position}}{{if not (eq $yagid 0)}}{{range $to}}{{if not (in $from .)}}{{if eq $id .}}{{if ge $pos $yagpos}}{{$removed = print $removed "<:excl:565142262401728512><@&" . ">\n"}}{{else}}{{$removed = print $removed "<:cross:705738821110595607><@&" . ">\n"}}{{takeRoleID ($args.Get 1) .}}{{end}}{{end}}{{end}}{{end}}{{range $from}}{{if not (in $to .)}}{{if eq $id .}}{{if ge $pos $yagpos}}{{$added = print $added "<:excl:565142262401728512><@&" . ">\n"}}{{else}}{{$added = print $added "<:checkmark:705738821425299527><@&" . ">\n"}}{{giveRoleID ($args.Get 1) .}}{{end}}{{end}}{{end}}{{end}}{{end}}{{end}}
+	{{$userfrom := userArg ($args.Get 0)}}
+	{{$userto := userArg ($args.Get 1)}}
+	{{editMessage nil $x (cembed "title" (print "Patates Sevenler "  $userfrom.Username " ⫸ " $userto.Username) "description" (print "Tüm roller " $userfrom.Mention " kopyalandı ve " $userto.Mention "'aktarıldı") "fields" (cslice (sdict "name" "Bilgi" "value" "<:checkmark:705738821425299527> - Eklendi\n<:cross:705738821110595607> - Silindi\n<:excl:565142262401728512> - Eksik Yetki" "inline" false) (sdict "name" "Eklenen Roller" "value" (print $added "\uFEFF") "inline" true)))}}
+{{else}}
+	{{sendMessage nil (cembed "title" "Eksik Yetki" "description" (print "<:cross:705738821110595607> Bu komudu kullanmak icin  `" $perms "` yetkileriniz eksik!") "color" 0xDD2E44) }}
+{{end}}

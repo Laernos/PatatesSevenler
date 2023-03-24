@@ -1,0 +1,15 @@
+{{/*
+	Trigger: hawli
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$desc:=""}}{{$title:="OOO HAWLİ"}}{{$user:=""}}{{$footer:=print .User.Username " " (dbIncr .User.ID "hawli" 1) " defa hawli oldu!"}}{{$color:=123456}}{{$position:=0}}{{$hugImages:=cslice "https://s7.gifyu.com/images/ezgif.com-video-to-gif298c34e697301c0a.gif"}}
+{{range .Guild.Roles}}
+	{{- if and (in $.Member.Roles .ID) .Color (lt $position .Position)}}
+		{{- $position =.Position}}{{$color =.Color}}
+	{{- end -}}
+{{end}}
+{{sendMessage nil (cembed "title" $title "description" $desc "image" (sdict "url" (index (shuffle $hugImages) 0)) "color" $color "author" (sdict "name"  .User.Username "icon_url" (.User.AvatarURL "64")) "footer" (sdict "text" $footer))}}

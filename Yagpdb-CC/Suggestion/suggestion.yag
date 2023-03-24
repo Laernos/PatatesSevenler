@@ -1,0 +1,145 @@
+{{/*
+	Trigger: .*
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if eq .Channel.ID 813034318913470505}}
+    {{ $color := 0x4B0082 }}
+    {{ $autoDel := 0 }}
+    
+     
+    {{ if .ExecData.Key }}
+        {{ if (dbGet 0 .ExecData.Key).ExpiresAt }}
+            {{ deleteMessage nil .ExecData.ID 0 }}
+            {{ dbDel 0 (print "sugs|" .ExecData.sugCount) }}
+        {{ end }}
+    {{ else }}
+     
+        {{ if and (not (reFind `\A-s(ug|uggestion)?\s?\w+` .Cmd)) }}
+            {{ $sugCount := 0 }}
+            {{ if ($s := (dbGet 0 "sugCount").Value) }}
+                {{ $sugCount = add 1 $s }}
+                {{ $_ := dbIncr 0 "sugCount" 1}}
+            {{ else }}
+                {{ dbSet 0 "sugCount" 1 }}
+                {{ $sugCount = 1 }}
+            {{ end }}
+     
+            {{ $embed := sdict 
+                  "Author" (sdict "Icon_URL" (.User.AvatarURL "256") "Name" .User.String)
+                "Title" (print "Öneri #" $sugCount)
+                "Description" .Cmd
+                  "Fields" (cslice)
+                "Color" $color
+                "Timestamp" currentTime
+                "Footer" (sdict "Text" (print .User.ID))
+             }}
+     
+          {{ $filegex := `https?://(?:\w+\.)?[\w-]+\.[\w]{2,3}(?:\/[\w-_.]+)+\.(png|jpe?g|gif|webp|mp4|mkv|mov|wav)` }}
+          {{ $attachLinks := cslice }}
+            {{ range .Message.Attachments }}
+                {{- if reFind $filegex .URL -}}
+                    {{ $attachLinks = $attachLinks.Append .URL }}
+                {{ end }}
+            {{ end }}
+     
+            {{ $links := $attachLinks.AppendSlice (reFindAll $filegex .Message.Content) }}
+            {{ range $i,$v := $links }}
+                {{ $name := reFind `/[^/]+$` $v }} {{ $name = slice $name 1 }}
+                {{ if reFind `(?:png|jpg|jpeg|gif|webp|tif)$` $v }}
+                    {{ $embed.Set "Image" (sdict "url" $v) }}
+                {{ end }}
+                {{ $val := print (add $i 1) " **»** [" $name "](" $v ")" }}
+                {{ if eq 1 (len $embed.Fields) }}
+                    {{ (index $embed.Fields 0).Set "Value" (print (index $embed.Fields 1).Value "\n" $val) }}
+                {{ else }}
+                    {{ $embed.Set "Fields" (cslice 
+                            (sdict "Name" "Attachments" "Value" $val "Inline" false)
+                    ) }}
+                {{ end }}
+            {{ end }}
+        
+            {{ $sugID := sendMessageRetID nil (cembed $embed) }}
+            {{ editMessage nil $sugID .User.Mention }}
+            {{ addMessageReactions nil $sugID ":checkgreen:796925441771438080" ":crossred:796925441490681889" }}
+        
+            {{ if $autoDel }}
+                {{ dbSet 0 (print "sugs|" $sugCount) (toString $sugID) }}
+                {{ scheduleUniqueCC .CCID .Channel.ID $autoDel $sugCount (sdict "sugCount" $sugCount "Key" (print "sugs|" $sugCount) "ID" $sugID) 	}}
+            {{ else }}
+                {{ dbSet 0 (print "sugs|" $sugCount) (toString $sugID) }}
+            {{ end }}
+     
+            {{ deleteTrigger 1 }}
+        {{ end }}
+    {{ end }}
+    {{ end }}
+    
+    
+    {{$log_channel := 811657998811267112}}
+    {{$extension := ".png" }}{{if reFind "a_" .Guild.Icon}}{{$extension = ".gif" }}{{end}}
+    {{$serverAvatar := (print "https://cdn.discordapp.com/icons/" .Guild.ID "/" .Guild.Icon $extension "?size=512")}}{{/*getting the server avatar*/}}
+    {{$desc := or .Message.Content ""}}
+    {{$title := (or (and $desc "**Açıklama :**") "")}}
+    {{$check := true}}{{/*a check for .mp4 and other video files which wont get shown in the embed*/}}
+    {{range .Message.Attachments}}
+        {{if (reFind `(?i)\.(?:mp4|webm|mov)` .Filename)}}
+            {{$check = false}}
+        {{end}}
+        {{if $check}}
+            {{$embed := cembed
+            "image" (sdict "url" .ProxyURL)
+            "description" (print $title "\t" $desc "\n\n **Gönderildiği Kanal:** \t " "  <#" $.Channel.ID "> ([Mesaja Git](https://discordapp.com/channels/" $.Server.ID "/" $.Channel.ID "/" $.Message.ID "/))")
+            "color" (randInt 111111 999999)
+            "author" (sdict "name" $.User.String "icon_url" ($.User.AvatarURL "512"))
+            "footer" (sdict "text" (print "🆔 " $.User.ID) "icon_url" "")
+            "timestamp" currentTime}}
+            {{sendMessage $log_channel  $embed}}
+    {{end}}{{end}}
+    
+    {{if or (hasRoleID 801530973467705395) (hasRoleID 707217352751710298) (hasRoleID 755894119020363837)}}
+    {{else if not (hasRoleID 560140743612694529)}}
+    
+    {{giveRoleID .User.ID 768471301689704458}}
+    {{takeRoleID .User.ID 768471301689704458 3600}}
+    
+    {{giveRoleID .User.ID 560140743612694529}}
+    {{giveRoleID .User.ID 723671093843591249}}
+    {{giveRoleID .User.ID 742929006189346937}}
+    {{giveRoleID .User.ID 749353858693726379}}
+    
+    {{$embed := cembed 
+        "title" "Hey, Patates Patates Sevenler:potato:'e hoş geldin reizz! 🥳"
+        "description" (print .User.Mention " Sesli kanallara girip, bizlerle tanışırsan ***___🤐Tanışıksız Patates___*** rolünden, ve onun kısıtlamalarından kurtulabilirsin!\n[🌐](https://patatessevenler.com/) [patatessevenler.com](https://patatessevenler.com/)")
+        "color" 4437377
+        "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif")
+    }}
+    {{ sendDM $embed }}
+    
+      {{$a := sendMessageRetID 832810844860842024 (print .User.Mention)}}
+      {{deleteMessage 832810844860842024 $a 0}}
+    {{end}}
+    
+    {{$r:=""}}{{$b:=""}}
+    {{$a:=(str (dbGet .User.ID "counting_tracker").Value)}}
+    {{if eq .Channel.ID 776210043845869608}}
+    {{if and (eq $a "40") (not (hasRoleID 776210736896540702)) (not (hasRoleID 776225324932792351)) (not (hasRoleID 776225495385112607))}}
+    {{$r = 776210736896540702}}
+    {{$b = (print "> <a:yuzler:802030486159360008> " .User.Mention ",  Tebrikler **" $a "** defa sayarak `📏Sözelci Patates` rolünü kazandın! ")}}
+    {{else if and (eq $a "45")  (not (hasRoleID 776225324932792351)) (not (hasRoleID 776225495385112607))}}
+    {{$r = 776225324932792351}}
+    {{$b = (print "> <a:yuzler:802030486159360008> " .User.Mention ",  Tebrikler **" $a "** defa sayarak `📐Sayısalcı Patates` rolünü kazandın! ")}}
+    {{takeRoleID .User.ID 776210736896540702}}
+    {{else if and (eq $a "50")  (not (hasRoleID 776210736896540702)) (not (hasRoleID 776225495385112607))}}
+    {{$r = 776225495385112607}}
+    {{$b = (print "> <a:yuzler:802030486159360008> " .User.Mention ",  Tebrikler **" $a "** defa sayarak `🧠Einstein Patates` rolünü kazandın! ")}}
+    {{takeRoleID .User.ID 776225324932792351}}
+    {{end}}
+    {{$c := sendMessageRetID nil $b}}
+    {{giveRoleID .User.ID $r}}
+    {{deleteMessage nil $c 15}}
+    {{$z := dbIncr .User.ID "replo"  10 }}
+    {{end}}

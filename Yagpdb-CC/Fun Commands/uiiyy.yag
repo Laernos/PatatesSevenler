@@ -1,0 +1,15 @@
+{{/*
+	Trigger: uiiyy
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$desc:=""}}{{$title:="UİİİİYY HAMSİLER TAVADA AZ BEKLE UŞAĞUM"}}{{$user:=""}}{{$footer:=print .User.Username " " (dbIncr .User.ID "hamsi" 1) " defa hamsilendi!"}}{{$color:=123456}}{{$position:=0}}{{$hugImages:=cslice "https://media2.giphy.com/media/2dcKbqUMhZEfm1Lu6i/giphy.gif?cid=19f5b51a4e1dc654dd1202eddd48e7e9764a17a75ded5755&rid=giphy.gif"}}
+{{range .Guild.Roles}}
+	{{- if and (in $.Member.Roles .ID) .Color (lt $position .Position)}}
+		{{- $position =.Position}}{{$color =.Color}}
+	{{- end -}}
+{{end}}
+{{sendMessage nil (cembed "title" $title "description" $desc "image" (sdict "url" (index (shuffle $hugImages) 0)) "color" $color "author" (sdict "name"  .User.Username "icon_url" (.User.AvatarURL "64")) "footer" (sdict "text" $footer))}}

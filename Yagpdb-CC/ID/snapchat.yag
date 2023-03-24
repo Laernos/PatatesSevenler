@@ -1,0 +1,20 @@
+{{/*
+	Trigger: snapchat
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "**Örnek Kullanım:** `!snapchat <hesabınız>`"
+    (carg "string" "snap")
+}}
+{{dbSet .User.ID "snapchat" ($args.Get 0)}}
+{{$embed := cembed 
+    "title" "<:snap:829698444154765402>  Snapchat  <:snap:829698444154765402>"
+    "description" (print .User.Mention " Snapchat hesabınız" " `" (str (dbGet .User.ID "snapchat").Value) "` " "olarak kimliğinize eklenmiştir.")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+{{$a := sendMessageRetID 786000208706273360 (print " ___" .User.Mention "___\n> <:snap:829698444154765402> `" ($args.Get 0) "`")}}

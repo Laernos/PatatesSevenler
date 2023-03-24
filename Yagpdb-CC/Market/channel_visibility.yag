@@ -1,0 +1,134 @@
+{{/*
+	Trigger: Added + Removed reactions
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$user := (.Reaction.UserID) }}
+{{$cid := 867613435406319616}}{{$mid := ""}}{{$en := .Reaction.Emoji.Name}}{{$an := .Reaction.Emoji.ID}}
+{{$coin := (dbGet $user "replo").Value}}
+{{$id:= ""}}
+{{$rol:= ""}}
+{{$t := ""}}
+{{$d := ""}}
+{{$th := ""}}
+{{$renklistesi:= ""}}
+
+{{if not (dbGet .User.ID "renklistesi")}}
+    {{dbSet .User.ID "renklistesi" cslice}}
+{{end}}
+
+{{$renklistesi := cslice.AppendSlice (dbGet .User.ID "renklistesi").Value}}
+
+{{if eq .Message.ID 867613887636439060}}
+{{$t = "🏅 COİN LOG"}} {{$id = "coinlog"}} {{$rol = "753058011420819587"}}
+{{$d = "**Bunca coin nereye gidip geliyor?\nBak bakalım!**"}}
+{{$th = "https://imgur.com/UW7PhjM.gif"}}
+{{$mid = "867613887636439060"}}
+{{else if eq .Message.ID 867613888643727450}}
+{{$t = "🤖 OTO MOD"}} {{$id = "otomod"}} {{$rol = "752254347181686893"}}
+{{$d = "**Kimin neden susturulduğunu merak mı ediyorsun?\nHadi merakını gider!**"}}
+{{$th = "https://imgur.com/VOUoVfp.gif"}}
+{{$mid = "867613888643727450"}}
+{{else if eq .Message.ID 867613890300477450}}
+{{$t = "🔧 KOMUT"}} {{$id = "komut"}} {{$rol = "752254596067622994"}}
+{{$d = "**Kimse görmeden komut kullanmak mı istiyorsun?\nHadi ne duruyosun!**"}}
+{{$th = "https://imgur.com/G7t6Isl.gif"}}
+{{$mid = "867613890300477450"}}
+{{else if eq .Message.ID 867613891781853214}}
+{{$t = "📛 BAN BİLGİ"}} {{$id = "banbilgi"}} {{$rol = "752254073662603264"}}
+{{$d = "**Kim neden ban yemiş acabaa?\nÖğrenmeye ne dersin?**"}}
+{{$th = "https://imgur.com/B9yOQc2.gif"}}
+{{$mid = "867613891781853214"}}
+{{else if eq .Message.ID 867613893270831134}}
+{{$t = "❗ GİZLİ BÖLGE"}} {{$id = "gizlibolge"}} {{$rol = "752253347637100575"}}
+{{$d = "**Kim ne zaman kiminle ne yapmış?\nBilmek istemez miydin?**"}}
+{{$th = "https://imgur.com/sb4hy0D.gif"}}
+{{$mid = "867613893270831134"}}
+{{end}}
+
+{{$embed := sdict
+    "title" (print $t)
+    "description" (print $d)
+    "color" 595008
+    "thumbnail" (sdict "url" (print $th))
+    "image" (sdict "url" "https://imgur.com/Exlglmf.gif")
+     "footer" (sdict "text" "Ücret: 30,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")
+	}}
+
+{{if .ReactionAdded}}
+{{if (in $renklistesi $id)}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/koKRjjq.png")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "kanalının izni sende zaten olduğu için verildi güle güle kullan.") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{giveRoleID .User.ID $rol}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" (sdict "url" (print $th))}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 30,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+{{editMessage $cid $mid (cembed $embed)}}
+
+{{else if or (and (hasRoleID 719250769152442408) (ne .Message.ID 867613893270831134)) (and (hasRoleID 801530993982308402) (ne .Message.ID 867613893270831134) (ne .Message.ID 867613891781853214)) (and (or (hasRoleID 801531017323479120) (hasRoleID 755869130812424333) (hasRoleID 801531016669429830)) (eq .Message.ID 867613890300477450))}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/W4PKESC.png")}}
+{{$embed.Set "color" 16711680}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " "Yetkililer bu özelliği satın alamazlar!") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" (sdict "url" (print $th))}}
+{{$embed.Set "color" 595008}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 30,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteMessageReaction $cid $mid .User.ID ":cart:851270255590637569"}}
+
+{{else if  (ge (toInt $coin) 30000)}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/kBBT5Jd.png")}}
+{{$embed.Set "color" 4649232}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "kanalının iznini satın aldın keselerine bereket.") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{$z := dbIncr .User.ID "replo" (toInt (print "-" (30000)))}}
+{{giveRoleID .User.ID $rol}}
+  {{$renklistesi = $renklistesi.Append $id}}
+  {{dbSet .User.ID "renklistesi" $renklistesi}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" (sdict "url" (print $th))}}
+{{$embed.Set "color" 595008}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 30,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{$emmbed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", " $id " " "kanalinin iznini 30,000 🥔 ödeyerek satın aldı.")
+   "color" 16711680
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $emmbed}}
+
+{{else if  (lt (toInt $coin) 30000)}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/PNUDX7X.png")}}
+{{$embed.Set "color" 16711680}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "kanalının iznini alabilmek için yeterli coinin yok!") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" (sdict "url" (print $th))}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 30,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+{{$embed.Set "color" 595008}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteMessageReaction $cid $mid .User.ID ":cart:851270255590637569"}}
+{{end}}{{end}}
+{{if .ReactionAdded}}
+{{else if or (and (hasRoleID 753058011420819587) (eq .Message.ID 867613887636439060)) (and (hasRoleID 752254347181686893) (eq .Message.ID 867613888643727450)) (and (hasRoleID 752254596067622994) (eq .Message.ID 867613890300477450)) (and (hasRoleID 752254073662603264) (eq .Message.ID 867613891781853214)) (and (hasRoleID 752253347637100575) (eq .Message.ID 867613893270831134))}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/nU6acf5.png")}}
+{{$embed.Set "color" 16711680}}
+{{$embed.Set "description" (print "**DİKKAT\n \nEmojiye olan tepkinizi kaldırdığınz için artık " $id " kanalını göremeyeceksiniz!**")}}
+{{$embed.Set "footer" (sdict "text" "" "icon_url" (.User.AvatarURL "256"))}}
+{{ takeRoleID .User.ID $rol}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" (sdict "url" (print $th))}}
+{{$embed.Set "description" (print $d)}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 30,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+{{$embed.Set "color" 595008}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{end}}

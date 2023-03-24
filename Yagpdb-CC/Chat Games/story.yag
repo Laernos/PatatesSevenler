@@ -1,0 +1,37 @@
+{{/*
+	Trigger: \A
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if eq .Channel.ID 870345188197937183}}
+    {{ $words := 3 }}
+    {{ $ignored_roles := cslice 763447831829938176 764103587223044116 778952687986802698 764054381535821825 775003755842109440 }}
+    
+    {{ $twice := "Kendi başına hikaye yazamazsın!" }}
+    
+    {{ $r := true }}{{ range .Member.Roles }}{{ if in $ignored_roles . }}{{ $r = false }}{{ end }}{{ end }}
+    {{ if $r }}
+        {{ $s := sdict }}{{ with (dbGet 20 "story-channel").Value }}{{ $s = sdict . }}{{ end }}
+        {{ if not $s }}
+            {{ dbSet 20 "story-channel" (sdict "l" 0) }}
+            {{ addReactions "☑" }}
+            {{ print .User.Mention ", <#" .Channel.ID "> is all set up as your " $words "-word-channel!" }}
+        {{ else if eq $s.l .User.ID }}
+            {{ addReactions "👎" }}
+            {{ deleteTrigger 1 }}
+            {{ print "> <:fairytale:870343932331036813> " .User.Mention ", " $twice }}
+            {{ deleteResponse 5 }}
+    {{else if not (ge (len .Args) 5)}}
+            {{ addReactions "❌" }}
+            {{ deleteTrigger 1 }}
+            {{ print "> <:fairytale:870343932331036813> " .User.Mention ", Lütfen hikayeyi devam ettirebilmek için 5 den fazla kelime kulllanın." }}
+            {{ deleteResponse 5 }}
+        {{ else }}
+            {{ $s.Set "l" .User.ID }}
+            {{ $s.Set (str .User.ID) (add ($s.Get (str .User.ID)) 1) }}
+            {{ dbSet 20 "story-channel" $s }}
+        {{ end }}
+    {{ end }}{{ end }}

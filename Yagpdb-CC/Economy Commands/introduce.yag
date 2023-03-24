@@ -1,0 +1,30 @@
+{{/*
+	Trigger: .*
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if eq .Channel.ID 778278777007767562}}
+    {{dbSet .User.ID "dec" .Message.Content}}
+    {{if not (dbGet .User.ID "deccooldown")}}
+      {{$z := dbIncr .User.ID "replo"  3000 }}
+      {{$a := sendMessageRetID nil (print "> <:personalitysearch:869561519355076679> **" .User.Username "**, " "**3,000** coin kazandı. (`" (humanizeThousands (dbGet .User.ID "replo").Value) "🥔`)")}}
+      {{deleteMessage nil $a 5}}
+    {{dbSet .User.ID "deccooldown" 1}}
+    {{$embed := cembed 
+       "title" ""
+       "description" (print .User.Mention ", "  " "  " kendini tanıttığı için **3,000** rep kazandı.")
+       "color" 16711680
+       "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+    }}
+    {{$b := sendMessageRetID 816476665118195762 $embed}}
+    {{end}}{{end}}
+    
+    {{$r:=""}}{{$b:=""}}
+    {{$a:=(str (dbGet .User.ID "counting_tracker").Value)}}
+    
+    

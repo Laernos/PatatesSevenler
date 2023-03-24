@@ -1,0 +1,72 @@
+{{/*
+	Trigger: .*
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if eq .Channel.ID 592651311665643530}}
+    {{$z := dbIncr 0 "yazisanmesaj"  1}}
+    {{$chatkisiler := 0}}
+    {{$ded := (dbGet 0 "deadchatkisiler").Value}}
+    {{if not (dbGet 0 "chatkisiler")}}
+        {{dbSet 0 "chatkisiler" cslice}}
+    {{end}}
+    {{$chatkisiler:= cslice.AppendSlice (dbGet 0 "chatkisiler").Value}}
+    
+    {{if and (dbGet 0 "chatodul") (not (in $chatkisiler .User.ID)) (lt (toInt $ded) 3)}}
+    {{$y := dbIncr .User.ID "replo"  1000 }}
+    {{$a := sendMessageRetID nil (print "> <:sign:869544291465318452> **" .User.Username "**, " "**1,000** coin kazandın. (`" (humanizeThousands (dbGet .User.ID "replo").Value) "🥔`)")}}
+      {{deleteMessage nil $a 5}}
+      {{$chatkisiler = $chatkisiler.Append .User.ID}}
+      {{dbSet 0 "chatkisiler" $chatkisiler}}
+    {{$t := dbIncr 0 "deadchatkisiler" 1}}
+    {{$embed := cembed 
+       "title" ""
+       "description" (print .User.Mention ", "  " "  " dead chatten **1,000** 🥔 kazandı.")
+       "color" 2948615
+       "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+    }}
+    {{$b := sendMessageRetID 816476665118195762 $embed}}
+    {{end}}
+    
+    {{if eq (toInt $ded) 3}}
+       {{dbDel 0 "chatodul"}}
+    {{dbDel 0 "odulzamani"}}
+    {{end}}
+    
+    
+    
+    
+    
+    {{end}}
+    
+    {{$soruodul:= 0}}
+    {{$text := .Message.Content}}
+    
+    {{if eq .Channel.ID 819774785944813599}}
+    {{if ge (len $text) 5}}
+    {{if not (dbGet 0 "soruodul")}}
+        {{dbSet 0 "soruodul" cslice}}
+    {{end}}
+    {{$soruodul := cslice.AppendSlice (dbGet 0 "soruodul").Value}}
+    {{if not (in $soruodul .User.ID)}}
+    {{$y := dbIncr .User.ID "replo"  1000 }}
+    {{$a := sendMessageRetID nil (print "> <:sorular:869554836536950834> **" .User.Username "**, " "**1,000** coin kazandın. (`" (humanizeThousands (dbGet .User.ID "replo").Value) "🥔`)")}}
+      {{deleteMessage nil $a 5}}
+      {{$soruodul = $soruodul.Append .User.ID}}
+      {{dbSet 0 "soruodul" $soruodul}}
+    {{$embed := cembed 
+       "title" ""
+       "description" (print .User.Mention ", "  " "  " günün sorusundan **1,000** 🥔 kazandı.")
+       "color" 2948615
+       "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+    }}
+    {{$b := sendMessageRetID 816476665118195762 $embed}}
+    {{end}}{{end}}{{end}}
+    

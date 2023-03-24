@@ -1,0 +1,47 @@
+{{/*
+	Trigger: dilen
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$name := "🥔" }} 
+{{ $people := (cslice "Erdoğan" "Bülent ersoy" "Acun" "Trump" "Jaan Yaman" "Alişan" "Müge Anli" "Esra Erol" "Serdar Ortaç" "Aleyna Tilki" "Jimin" "Arda Turan" "Biz burdayız dayı" "Jordi" "maykıl jordn") }} {{/* Names of random people that could give you coins, you can add as many as you like*/}}
+{{ $cooldown := 7200 }} 
+{{ $minW := 300 }}
+{{ $maxW := 500}} 
+{{ $person := (index (shuffle $people) 0) }}
+{{ $bal := dbGet .User.ID "replo" }}
+{{ $newc := randInt $minW $maxW }}
+{{ if (dbGet .User.ID "begcooldown") }}
+{{ sendMessage nil (cembed "author" (sdict "name" (print "Dilenci: " .User.Username) "icon_url" "https://imgur.com/CTgiiMT.png") "title" "" "color" 16647943 "description" (print "Yeniden dilenebilmek için **" (humanizeDurationSeconds ((dbGet .User.ID "begcooldown").ExpiresAt.Sub currentTime)) "** beklemelisin!")) }} 
+{{ else }} {{ dbSetExpire .User.ID "begcooldown" 1 $cooldown }} {{ $rand := randInt 1 100 }}
+{{if lt (toInt $bal.Value) 30}}
+{{ sendMessage nil (cembed "author" (sdict "name" (print "Dilenci: " .User.Username) "icon_url" "https://imgur.com/CTgiiMT.png") "title" "" "color" 16647943 "description" (print  "Dilenmek icin en az **30** coine ihtiyacın var!\nÇuvalında**" " " (dbGet .User.ID "replo").Value " " "**🥔 var"))}}
+{{ else if lt $rand 30 }}
+{{ $lostmoney := dbIncr .User.ID "replo" -30 }}{{ sendMessage nil (cembed "author" (sdict "name" (print "Dilenci: " .User.Username) "icon_url" "https://imgur.com/CTgiiMT.png") "title" "" "color" 16647943 "description" (print  "Show tv zabıtaları çağırdı, malesef **30** 🥔 ceza yedin!\nArtık çuvalında**" " " (humanizeThousands (dbGet .User.ID "replo").Value) " " "**🥔 var."))}}
+{{$embed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  "Dilenerek" " **30** " " 🥔 kaybetti.")
+   "color" 16711680
+  "thumbnail" (sdict "url" "https://imgur.com/Jl3ByhN.png")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+{{ else }}
+{{ $win := randInt $minW $maxW }} {{ $shush := dbIncr .User.ID "replo" $win }} {{ sendMessage nil (cembed "author" (sdict "name" (print "Dilenci: " .User.Username) "icon_url" "https://imgur.com/CTgiiMT.png") "title" "" "color" 3014151 "description" (print "**" $person "** " "sana acıdı ve **" $win "** " $name " " "verdi.\nArtık çuvalında**" " " (humanizeThousands (dbGet .User.ID "replo").Value) " " "**🥔 var")) }}
+{{$embed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  "Dilenerek" " **" $win "** " " 🥔 kazandı.")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://imgur.com/Jl3ByhN.png")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+ {{ end }}
+ {{ end }}

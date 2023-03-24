@@ -1,0 +1,101 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$user := (.Reaction.UserID) }}
+{{$cid := 867727389080420373}}{{$mid := 867750343256047637}}{{$en := .Reaction.Emoji.Name}}
+{{$coin := (dbGet $user "replo").Value}}
+{{$id:= 0}}
+{{$rol:= 0}}
+{{$renklistesi:= 0}}
+{{$resim := (sdict "url" "https://imgur.com/XW6PQ25.png")}}
+{{$rr:= 0}}
+{{$reactions := cslice "🖤" "🎱" "♟️" "🕸️" "🏐" "🤍"}}
+{{$roller := cslice  747921931403001986 747922043810349197 747922062080868372 747922266456719421 747922342998704211 747923142110085121 747923218152816731 747923293016817724 747923853887406080 747923407248556043 747922551719854092 747922699535384687 747922828363563052 747922760231288872 747922620535537795 747925223197638768 747925354785800362 747925412210016327 747925572394418217 747925621371568301 747924361041936455 747924537588580363 747924476402073710 747924590617166006 747924750185005228 747926535268466729 747926773424980129 747926832480780399 747926896129343580 747926966400712734 747926043381465169 747926176349290506 747926297841369188 747926342787661964 747926417966104716 752247113206988871 752248570895269898 752247933654663411 752247725487292436 752250075492778086 752247242458529852}}
+
+{{if not (dbGet .User.ID "renklistesi")}}
+    {{dbSet .User.ID "renklistesi" cslice}}
+{{end}}
+{{$renklistesi := cslice.AppendSlice (dbGet .User.ID "renklistesi").Value}}
+
+{{$embed := sdict
+    "title" "KIRMIZI RENK PANELİ"
+    "description" (print " 🍎 ⠀**-**⠀ <@&747921931403001986>\n \n🦀 ⠀**-**⠀ <@&747922043810349197>\n \n🧱 ⠀**-**⠀ <@&747922062080868372>\n \n😡 ⠀**-**⠀ <@&747922266456719421>\n \n🐦 ⠀**-**⠀ <@&747922342998704211>")
+    "color" 16711680
+    "thumbnail" (sdict "url" "https://imgur.com/sCzoQ5A.png")
+    "image" (sdict "url" "https://cdn.discordapp.com/attachments/785136323567681576/867726803572621312/AS_divider.gif")
+     "footer" (sdict "text" "Her bir renk 1000 coindir. " "icon_url" "https://imgur.com/7UuDGyR.png")
+	}}
+{{if eq .Message.ID 867750343256047637}}
+{{if eq $en "🖤"}}{{$id = "siyah"}}{{$rol = 752247113206988871}}{{end}}{{if eq $en "🎱"}}{{$id = "quartz"}}{{$rol = 752248570895269898}}{{end}}{{if eq $en "♟️"}}{{$id = "arsenic"}}{{$rol = 752247933654663411}}{{end}}{{if eq $en "🕸️"}}{{$id = "gray"}}{{$rol = 752247725487292436}}{{end}}{{if eq $en "🏐"}}{{$id = "pearl"}}{{$rol = 752250075492778086}}{{end}}{{if eq $en "🤍"}}{{$id = "beyaz"}}{{$rol = 752247242458529852}}{{end}}
+{{if eq $en "🖤" "🎱" "♟️" "🕸️" "🏐" "🤍"}}
+{{$embed.Set "title" "SİYAH - BEYAZ RENK PANELİ"}}
+{{$embed.Set "color" 5263441}}
+{{$rr = 5263441}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/IktMYM1.png")}}
+{{$embed.Set "description"  (print " 🖤 ⠀**-**⠀ <@&752247113206988871>\n \n🎱 ⠀**-**⠀ <@&752248570895269898>\n \n♟️ ⠀**-**⠀ <@&752247933654663411>\n \n🕸️ ⠀**-**⠀ <@&752247725487292436>\n \n🏐 ⠀**-**⠀ <@&752250075492778086>\n \n🤍 ⠀**-**⠀ <@&752247242458529852>")}}
+{{end}}
+
+
+{{if (in $renklistesi $id)}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/koKRjjq.png")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "rolü sende zaten olduğu için verildi güle güle kullan.") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{giveRoleID .User.ID $rol}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" $resim}}
+{{$embed.Set "color" $rr}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 10,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{else if  (ge (toInt $coin) 10000)}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/kBBT5Jd.png")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "rolünü satın aldın keselerine bereket.") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{$z := dbIncr .User.ID "replo" (toInt (print "-" (10000)))}}
+{{giveRoleID .User.ID $rol}}
+  {{$renklistesi = $renklistesi.Append $id}}
+  {{dbSet .User.ID "renklistesi" $renklistesi}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" $resim}}
+{{$embed.Set "color" $rr}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 10,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{$emmbed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", " $id " " "renk rolünü **6.000** 🥔 ödeyerek satın aldı.")
+   "color" 16711680
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $emmbed}}
+
+{{else if  (lt (toInt $coin) 10000)}}
+{{$embed.Set "thumbnail" (sdict "url" "https://imgur.com/PNUDX7X.png")}}
+{{$embed.Set "color" 16711680}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "rolünü alabilmek için yeterli coinin yok!") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{sleep 5}}
+{{$embed.Set "thumbnail" $resim}}
+{{$embed.Set "color" $rr}}
+{{$embed.Set "footer" (sdict "text" "Ücret: 10,000 🥔" "icon_url" "https://imgur.com/7UuDGyR.png")}}
+		{{editMessage $cid $mid (cembed $embed)}}
+	{{deleteMessageReaction $cid $mid .User.ID .Reaction.Emoji.Name}}
+{{end}}
+{{if and (or (in $renklistesi $id) (ge (toInt $coin) 10000))}}
+{{range $roller}}
+        {{if (not (in $rol .))}}
+            {{removeRoleID .}}
+        {{end}}
+    {{end}} 
+
+   {{$whitelist := .Reaction.Emoji.Name}}
+    {{range $reactions}}
+        {{if (not (in $whitelist .))}}
+            {{deleteMessageReaction $cid $mid $.User.ID .}}
+        {{end}}        {{end}}
+    {{end}} {{end}}

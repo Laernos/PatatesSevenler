@@ -1,0 +1,105 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$user := (.Reaction.UserID) }}
+{{$cid := 832810844860842024}}{{$mid := 857647635682558042}}{{$en := .Reaction.Emoji.Name}}{{$an := .Reaction.Emoji.ID}}{{$s := ""}}{{$ay := ""}}
+
+{{$embed := sdict
+    "title" ""
+    "description" (print "**Lütfen doğduğunuz günün tarihinin ilk hanesini seçiniz.\n \n Doğum Tarihiniz:** ⠀⠀⠀⠀ / \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<a:ustcorser:856316409244286996><:ustcorser:856317307504295956> ⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  \nEğer tarih tek haneli ise başına **0** ekleyerek giriniz! (Örn : 01/Ocak)")
+    "color" 3451345
+    "author" (sdict "name" "DOĞUM GÜNÜ & BURÇ" "icon_url" "https://imgur.com/CdX3wYm.png")
+    "thumbnail" (sdict "url" "https://imgur.com/2VAuWjN.png")
+    "image" (sdict "url" "https://cdn.discordapp.com/attachments/785136323567681576/838426271213027348/divider.gif")
+	}}
+
+{{if (eq $en "🍎")}}
+{{$embed.Set "description" "**Lütfen doğduğunuz günün tarihinin ilk hanesini seçiniz.\n \n Doğum Tarihiniz:** ⠀⠀⠀⠀ / \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<a:ustcorser:856316409244286996><:ustcorser:856317307504295956> ⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  \nEğer tarih tek haneli ise başına **0** ekleyerek giriniz! (Örn : 01/Ocak)"}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteAllMessageReactions $cid $mid}}
+{{addMessageReactions nil $mid "0️⃣" "1️⃣" "2️⃣" "3️⃣"}}
+{{else if (eq $en "🦀")}}
+{{dbDel .User.ID "d1"}}
+{{dbDel .User.ID "d2"}}
+{{dbDel .User.ID "dg"}}
+{{end}}
+
+
+{{if (eq $en "0️⃣")}}{{$s = "0"}}{{else if (eq $en "1️⃣")}}{{$s = "1"}}{{$ay = "Ocak"}}{{else if (eq $en "2️⃣")}}{{$s = "2"}}{{$ay = "Şubat"}}{{else if (eq $en "3️⃣")}}{{$s = "3"}}{{$ay = "Mart"}}{{else if (eq $en "4️⃣")}}{{$s = "4"}}{{$ay = "Nisan"}}{{else if (eq $en "5️⃣")}}{{$s = "5"}}{{$ay = "Mayıs"}}{{else if (eq $en "6️⃣")}}{{$s = "6"}}{{$ay = "Haziran"}}{{else if (eq $en "7️⃣")}}{{$s = "7"}}{{$ay = "Temmuz"}}{{else if (eq $en "8️⃣")}}{{$s = "8"}}{{$ay = "Ağustos"}}{{else if (eq $en "9️⃣")}}{{$s = "9"}}{{$ay = "Eylül"}}{{else if (eq $en "🔟")}}{{$ay = "Ekim"}}{{else if (eq $an 855988690208030720)}}{{$ay = "Kasım"}}{{else if (eq $an 855988690103173150)}}{{$ay = "Aralık"}} {{end}}
+
+{{if or (eq $en "0️⃣" "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣" "🔟") (eq $an 855988690208030720 855988690103173150) }}
+{{if (dbGet .User.ID "dg")}}
+{{$embed.Set "description" (print "**Daha önce doğum tarihinizi belirlediniz!\n \n Doğum Tarihiniz:**⠀" (dbGet .User.ID "dg").Value "\n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688><:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>\n Eğer doğum gününüz yanlış ise <#851308144180199464> kanalıdan yetkililerle iletişime geçiniz.")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username) "icon_url" (.User.AvatarURL "256"))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteAllMessageReactions $cid $mid}}
+{{sleep 5 }}
+{{$embed.Set "description" (print "**Lütfen doğduğunuz günün tarihinin ilk hanesini seçiniz.\n \n Doğum Tarihiniz:** ⠀⠀⠀⠀ / \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<a:ustcorser:856316409244286996><:ustcorser:856317307504295956> ⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  \nEğer tarih tek haneli ise başına **0** ekleyerek giriniz! (Örn : 01/Ocak)")}}
+{{$embed.Set "footer" (sdict "text" "" "icon_url" (.User.AvatarURL "256"))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{addMessageReactions nil $mid "0️⃣" "1️⃣" "2️⃣" "3️⃣"}}
+{{else if not (dbGet .User.ID "d1")}}
+{{dbSet .User.ID "d1" $s}}
+{{$embed.Set "description" (print "**Lütfen doğduğunuz günün tarihinin ilk hanesini seçiniz.\n \n Doğum Tarihiniz:**⠀" (dbGet .User.ID "d1").Value " ⠀⠀⠀/ \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<:ustcorser:856317307504295956><a:ustcorser:856316409244286996> ⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  \nEğer tarih tek haneli ise başına **0** ekleyerek giriniz! (Örn : 01/Ocak)")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username) "icon_url" (.User.AvatarURL "256"))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteMessageReaction $cid $mid .User.ID .Reaction.Emoji.Name}}
+{{if (eq $en "1️⃣" "2️⃣")}}
+{{addMessageReactions nil $mid "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣"}}
+{{else if (eq $en "0️⃣")}}
+{{deleteAllMessageReactions $cid $mid "0️⃣"}}
+{{addMessageReactions nil $mid "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣"}}
+{{else if (eq $en "3️⃣")}}
+{{deleteAllMessageReactions $cid $mid "2️⃣" "3️⃣"}}
+{{end}}
+{{else if and (dbGet .User.ID "d1") (not (dbGet .User.ID "d2"))}}
+{{dbSet .User.ID "d2" $s}}
+{{$embed.Set "description" (print "**Harika şimdi doğdugun ayı seçebilirsin. \n \n Doğum Tarihiniz:** " (dbGet .User.ID "d1").Value " " (dbGet .User.ID "d2").Value " ⠀/ \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<:uzunyeni:856318551442587688> ⠀<a:uzunyeni:856318562326675476><a:uzunyeni:856318562326675476>\n1️⃣ : Ocak⠀⠀ ⠀ 7️⃣ : Temmuz\n 2️⃣ : Şubat⠀ ⠀⠀8️⃣ : Ağustos\n 3️⃣ : Mart⠀⠀⠀⠀9️⃣ : Eylül\n 4️⃣ : Nisan⠀⠀ ⠀🔟 : Ekim\n 5️⃣ : Mayıs⠀⠀⠀<:11:855988690208030720> : Kasım\n 6️⃣ : Haziran⠀⠀<:12:855988690103173150> : Aralık")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username) "icon_url" (.User.AvatarURL "256"))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteAllMessageReactions $cid $mid "0️⃣"}}
+{{deleteMessageReaction $cid $mid .User.ID .Reaction.Emoji.Name}}
+{{addMessageReactions nil $mid "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣" "🔟" ":11:855988690208030720" ":12:855988690103173150"}}
+{{else if  and (dbGet .User.ID "d1") (dbGet .User.ID "d2")}}
+{{dbSet .User.ID "ay" $ay}}
+{{$embed.Set "description" (print "**Doğum Tarihiniz:**" "  " (str (dbGet .User.ID "d1").Value) (str (dbGet .User.ID "d2").Value) " " (str (dbGet .User.ID "ay").Value) "\n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  **\nOnaylıyor musunuz?**")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username "⠀⠀⠀✅ Onayla    ❌ İptal Et") "icon_url" (.User.AvatarURL "256"))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteAllMessageReactions $cid $mid}}
+{{addMessageReactions nil $mid "✅" "❌"}}
+{{end}} {{end}} 
+
+{{if (eq $en "✅" "❌")}}
+{{if (eq $en "✅")}}
+{{$embed.Set "description" (print "**Doğum tarihinizi başarıyla onayladınız, teşekkürler.**")}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username) "icon_url" (.User.AvatarURL "256"))}}
+{{deleteAllMessageReactions $cid $mid}}
+{{$dg := (print  (str (dbGet .User.ID "d1").Value) (str (dbGet .User.ID "d2").Value) " " (str (dbGet .User.ID "ay").Value))}}
+{{dbSet .User.ID "dg" $dg}}
+{{$dgg := (print  (str (dbGet .User.ID "d1").Value) (str (dbGet .User.ID "d2").Value))}}
+{{dbSet .User.ID "dgg" $dgg}}
+{{dbDel .User.ID "d1"}}
+{{dbDel .User.ID "d2"}}
+{{sleep 5}}
+{{$embed.Set "description" (print "**Lütfen doğduğunuz günün tarihinin ilk hanesini seçiniz.\n \n Doğum Tarihiniz:** ⠀⠀⠀⠀ / \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<a:ustcorser:856316409244286996><:ustcorser:856317307504295956> ⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  \nEğer tarih tek haneli ise başına **0** ekleyerek giriniz! (Örn : 01/Ocak)")}}
+{{$embed.Set "footer" (sdict "text" "" "icon_url" (.User.AvatarURL "256"))}}
+{{else if (eq $en "❌")}}
+{{$embed.Set "description" (print "**Doğum tarihi seçiminizi başarıyla iptal ettiniz, teşekkürler.**")}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username) "icon_url" (.User.AvatarURL "256"))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteAllMessageReactions $cid $mid}}
+{{dbDel .User.ID "d1"}}
+{{dbDel .User.ID "d2"}}
+{{sleep 5 }}
+{{$embed.Set "description" (print "**Lütfen doğduğunuz günün tarihinin ilk hanesini seçiniz.\n \n Doğum Tarihiniz:** ⠀⠀⠀⠀ / \n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<a:ustcorser:856316409244286996><:ustcorser:856317307504295956> ⠀<:uzunyeni:856318551442587688><:uzunyeni:856318551442587688>  \nEğer tarih tek haneli ise başına **0** ekleyerek giriniz! (Örn : 01/Ocak)")}}
+{{$embed.Set "footer" (sdict "text" "" "icon_url" (.User.AvatarURL "256"))}}
+{{end}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{addMessageReactions nil $mid "0️⃣" "1️⃣" "2️⃣" "3️⃣"}}
+{{end}}

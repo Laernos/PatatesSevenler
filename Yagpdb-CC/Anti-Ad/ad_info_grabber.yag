@@ -1,0 +1,27 @@
+{{/*
+	Trigger: \A(?:\s?)(https://)?discord\.(gg|com/invite)/[^\s]{8,10}(?:\s?)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{ $id := sendMessageRetID nil (print .Cmd "#") }}
+{{ sleep 1 }}
+{{ $invite := structToSdict (index (getMessage nil $id).Embeds 0) }}
+
+{{ deleteMessage nil $id 0 }}
+
+{{ $name := reReplace `(Join\sthe\s|\sDiscord\sServer!)` $invite.Title "" }}
+{{ $members := reFindAll `\d+` $invite.Description }} {{ $members = print "Üye Sayısı: **" (index $members (sub (len $members) 1)) "**" }}
+
+{{ $embed := sdict
+	"Author" (sdict "icon_url" (.User.AvatarURL "256") "Name" .User.String)
+    "Thumbnail" (sdict "url" $invite.Thumbnail.URL)
+	"Title" $name
+  	"URL" .Cmd
+  	"Description" $members
+  	"Color" 0x4B0082
+}}
+{{ sendMessage 819035452979544064 (cembed $embed) }}
+{{ deleteTrigger 0 }}

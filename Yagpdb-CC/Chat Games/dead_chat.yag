@@ -1,0 +1,22 @@
+{{/*
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$msg := (dbGet 0 "yazisanmesaj").Value}}
+ 
+{{if and (not (dbGet 0 "odulzamani")) (lt (toInt $msg) 15)}}
+{{$x := sendMessageNoEscapeRetID nil (complexMessage "content" "<@&801531583260524561>" "embed" (cembed
+    "title" "💀 Bitmiş Çet"
+    "description" (print "**Çete mesaj atan ilk 3 kişi 1,000 🥔 kazanacaktır!**")
+"color" 16711680 
+   "footer" (sdict "text" "Emojiyle bitmiş çet etiket ayarlarınızı yapın!" "icon_url" "https://imgur.com/2NYVSbG.gif")
+	))}}
+{{addMessageReactions nil $x  ":rengreng:834534820805214258"}}
+ 
+{{dbSet 0 "chatodul" true}}
+{{dbDel 0 "chatkisiler"}}
+{{dbSet 0 "odulzamani" "bitti"}}
+{{dbDel 0 "deadchatkisiler"}}
+{{end}}
+{{dbDel 0 "yazisanmesaj"}}

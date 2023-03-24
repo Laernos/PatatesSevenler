@@ -1,0 +1,17 @@
+{{/*
+	Trigger: vergi
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$o := ""}}
+{{if not (dbGet .User.ID "dailycooldowwn")}}
+{{$o = (cembed "author" (sdict "name" (print "Vergi: " .User.Username) "icon_url" "https://imgur.com/vq1bX3o.png") "title" "" "color" 16647943 "description" (print "Henüz hiçbir vergi bilginiz bulunmamaktadır!"))}}
+{{else}}
+{{$o = (cembed "author" (sdict "name" (print "Vergi: " .User.Username) "icon_url" "https://imgur.com/vq1bX3o.png") "title" "" "color" 16647943 "description" (print "Bir sonraki verginiz **" (humanizeDurationMinutes ((dbGet .User.ID "dailycooldowwn").ExpiresAt.Sub currentTime)) "** sonra kesilecektir."))}}
+{{end}}
+{{$A:=sendMessageRetID nil $o}}
+{{deleteMessage nil $A 15}}
+{{deleteTrigger 0}}

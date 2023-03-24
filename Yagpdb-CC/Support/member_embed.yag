@@ -1,0 +1,18 @@
+{{/*
+	Trigger: sss
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$x := sendMessageRetID nil (cembed
+"title" "Sık Sorulan Sorular"
+ "description" "Aşağıdaki emojilere basarak soruların cevaplarını öğrenebilirsiniz!" 
+"author" (sdict "name" "DESTEK" "url" "https://www.youtube.com/watch?v=q7uyKYeGPdE" "icon_url" "https://imgur.com/TdzqysZ.gif") 
+"footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+"fields" (cslice 
+        (sdict "name" "⠀" "value" "**1️⃣ Patates Sevenler ne amaçla kuruldu?\n2️⃣ Neden Patates?\n3️⃣ Nasıl yetkili olurum?\n4️⃣ Nasıl partner olabilirim?\n5️⃣ Yaş ortalamanız kaç?\n6️⃣ Sunucunuza botumu ekler misiniz?\n7️⃣ Rolleriniz neden böyle?\n8️⃣ Hangi kanal ne işe yarıyor?\n9️⃣ Amdin bunu nasıl yaptınız?\n🔟 Amdinim böyle sunucu yapmayı nereden öğrendi?**" "inline" true) 
+    ) 
+"color" 16711680)}}
+{{addMessageReactions nil $x "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "8️⃣" "9️⃣" "🔟"}}

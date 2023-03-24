@@ -1,0 +1,20 @@
+{{/*
+	Trigger: instagram
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "**Örnek Kullanım:** `!instagram <hesabınız>`"
+    (carg "string" "insta")
+}}
+{{dbSet .User.ID "instagram" ($args.Get 0)}}
+{{$embed := cembed 
+    "title" "<:insta:829699064534663219>  Instagram  <:insta:829699064534663219>"
+    "description" (print .User.Mention " Instagram hesabınız" " `" (str (dbGet .User.ID "instagram").Value) "` " "olarak kimliğinize eklenmiştir.")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+{{$a := sendMessageRetID 786000208706273360 (print " ___" .User.Mention "___\n> <:insta:829699064534663219> `" ($args.Get 0) "`")}}

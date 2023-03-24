@@ -1,0 +1,123 @@
+{{/*
+	Trigger: yazitura
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{ $c := 821498136350294046 }}
+{{ $minbet := 10 }}
+{{ $maxbet := 500 }}
+{{ $db := "replo" }}
+{{ $cooldown := 5 }}
+
+{{ $prefix := index (reFindAllSubmatches `Prefix of \x60\d+\x60: \x60(.+)\x60` (exec "prefix")) 0 1 }}{{ $cp := "" }}{{ $m := 0 }}{{ $bet := "" }}{{ $err := false }}{{ $img := "https://cdn.discordapp.com/attachments/707661790443733022/782710794634264616/d74906d39a1964e7d07555e7601b06ad.gif" }}{{ $cap := "https://cdn.discordapp.com/attachments/707661790443733022/782713935341027358/cap.png" }}{{ $pajura := "https://cdn.discordapp.com/attachments/707661790443733022/782713937979637760/pajura.png" }}{{ $embed:= sdict }}{{ $fields := cslice }}{{ $embed.Set "author" (sdict "name" .User.Username "icon_url" (.User.AvatarURL "256"))}}
+{{ if not .ExecData }}
+    {{ if eq (len .CmdArgs) 2 }}
+        {{ with reFind `\A(?i)(yazı|tura)\z` (index .CmdArgs 0) }}
+            {{ $cp = . | lower }}
+            {{ with reFindAll `\d+` (index $.CmdArgs 1) }}
+                {{ $bet = index . 0 | toInt }}
+                {{ if ge $bet $minbet }}
+                    {{ if le $bet $maxbet }}
+                        {{ if not (dbGet $.User.ID "cd_coinflip") }}
+                            {{ if ge (toInt (dbGet $.User.ID $db).Value) $bet }}
+                                {{ if not (dbGet $.User.ID "isrolling_cf") }}
+                                    {{ dbSet $.User.ID "isrolling_cf" true }}
+                                    {{ $embed.Set "thumbnail" (sdict "url" $img) }}
+                                    {{ $embed.Set "color" 16765696 }}
+                                    {{ $embed.Set "description" "**Para dönüyoor... Beklee...**" }}
+                                    {{ $m = sendMessageRetID nil (cembed $embed) }}
+                                    {{ execCC $.CCID nil 3 (sdict "m" $m "b" $bet "c" $cp )}}
+                                {{ else }}
+                                    {{ $embed.Set "description" "Bu komutu, son bozuk para dönmeyi bıraktığında kullanabilirsiniz! <a:coin:831311472528326696>" }}
+                                    {{ $embed.Set "color" 16488706 }}
+                                    {{ $err = true }}
+                                {{ end }}
+                            {{ else }}
+                                {{ $embed.Set "description" (printf " Bahis için **%d** patatese ihtiyacın var.\n Sadece **%d** patatesin var. <a:coin:831311472528326696>" $bet (toInt (dbGet $.User.ID $db).Value)) }}
+                                {{ $embed.Set "color" 16488706 }}
+                                {{ $err = true }}
+                            {{ end }}
+                        {{ else }}
+                            {{ $embed.Set "description" (print "Komudu yeniden kullabilmek için **" (humanizeDurationSeconds ((dbGet $.User.ID "cd_coinflip").ExpiresAt.Sub currentTime)) "** beklemelisiniz. <a:coin:831311472528326696>") }}
+                            {{ $embed.Set "color" 16488706 }}
+                            {{ $err = true }}
+                        {{ end }}
+                    {{ else }}
+                        {{ $embed.Set "description" (printf "En yüksek bahis   **%d** patatestir! <a:coin:831311472528326696>" $maxbet)}}
+                        {{ $embed.Set "color" 16488706 }}
+                        {{ $err = true }}
+                    {{ end }}
+                {{ else }}
+                    {{ $embed.Set "description" (printf "En düşük bahis  **%d** patatestir! <a:coin:831311472528326696>" $minbet) }}
+                    {{ $embed.Set "color" 16488706 }}
+                    {{ $err = true }}
+                {{ end }}
+            {{ else }}
+                {{ $embed.Set "description" (printf "`%s` geçerli bir sayı değildir! <a:coin:831311472528326696>" (index $.CmdArgs 1)) }}
+                {{ $embed.Set "color" 16488706 }}
+                {{ $err = true }}
+            {{ end }}
+        {{ else }}
+            {{ $embed.Set "description" "**Yazı** ya da  **Tura** seçmek zorundasın. <a:coin:831311472528326696>" }}
+            {{ $embed.Set "color" 16488706 }}
+            {{ $err = true }}
+        {{ end }}
+    {{ else }}
+        {{ $embed.Set "description" (printf "Kullanım: **%syazıtura <yazı/tura> <bahis miktarı>** <a:coin:831311472528326696>" $prefix) }}
+        {{ $embed.Set "color" 16488706 }}
+        {{ $err = true }}
+    {{ end }}
+    {{ if $err }}
+        {{ sendMessage nil (cembed $embed) }}
+    {{ end }}
+{{ else }}
+    {{ $m = .ExecData.m }}
+    {{ $bet = .ExecData.b }}
+    {{ $cp = .ExecData.c }}
+    {{ $chance := randInt 1 3 }}
+    {{ $choosen := "" }}
+    {{ if eq $chance 1 }}
+        {{ $choosen = "yazı" }}
+        {{ $embed.Set "thumbnail" (sdict "url" $cap) }}
+    {{ else }}
+        {{ $choosen = "tura" }}
+        {{ $embed.Set "thumbnail" (sdict "url" $pajura)}}
+    {{ end }}
+    {{ if eq $cp $choosen }}
+        {{ $k := dbIncr $.User.ID $db $bet }}
+        {{ $embed.Set "description" (printf   "Kumarbaz **%syı** seçti. \nPara döndü ve **%s** çıktı.\n**-------------------**\n**- KAZANDIN! -**\n**Kâr** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n %d   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ %d "  $cp $choosen (mult $bet 2) (toInt $k)) }}
+        {{ $embed.Set "color" 16488706 }}
+        {{ $embed.Set "author" (sdict "name" (print "Zar Atma | Kumarbaz:" " " .User.Username ) ) }}
+{{$embbed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  "Yazı turadan" " **" (mult $bet 2) "** " " 🥔 kazandı.")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/707661790443733022/782710794634264616/d74906d39a1964e7d07555e7601b06ad.gif")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embbed}}
+    {{ else }}
+        {{ $k := dbIncr $.User.ID $db (mult $bet -1) }}
+        {{ $embed.Set "description" (printf   "Kumarbaz **%syı** seçti. \nPara döndü ve **%s** çıktı.\n**-------------------**\n**- Kaybettin :( -**\n**Zarar** ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**Patates**\n- %d   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ %d "  $cp $choosen $bet (toInt $k)) }}
+        {{ $embed.Set "color" 16711680 }}
+        {{ $embed.Set "author" (sdict "name" (print "Zar Atma | Kumarbaz:" " " .User.Username ) ) }}
+{{$embbed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  "Yazı turadan" " **" $bet "** " " 🥔 kaybetti.")
+   "color" 16711680
+  "thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/707661790443733022/782710794634264616/d74906d39a1964e7d07555e7601b06ad.gif")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embbed}}
+    {{ end }}
+    {{ dbSetExpire $.User.ID "cd_coinflip" true $cooldown }}
+    {{ dbDel $.User.ID "isrolling_cf" }}
+    {{ editMessage nil $m (cembed $embed) }}
+{{ end }}

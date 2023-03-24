@@ -1,0 +1,58 @@
+{{/*
+	Trigger: banbilgi
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "`!banbilgi <@kisi/id>"
+    (carg "userid" "User Ping")
+}}
+
+{{ $user := userArg ($args.Get 0) }}
+{{if and (dbGet $user.ID "bantarih") (not (dbGet $user.ID "durumsebep"))}}
+{{$embed := cembed 
+    "title" "📛  Ban Bilgi"
+    "description" ""
+    "fields" (cslice
+            (sdict "name" "Kişi:" "value" (print $user.Username " " "`" $user.ID "`") "inline" true)
+            (sdict "name" "Mod:" "value" (print "<@" (str (dbGet ($args.Get 0) "banmod").Value) ">" )  "inline" true)
+            (sdict "name" "Tarih:" "value" (print (str (dbGet ($args.Get 0) "bantarih").Value))  "inline" true)
+            (sdict "name" "Sebep:" "value" (print "```" (str (dbGet ($args.Get 0) "bansebep").Value) "```")  "inline" false)
+ 
+            )
+    "color" 16711680 
+    "thumbnail" (sdict "url" ($user.AvatarURL "1024"))
+    "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+    "footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+}}
+{{$a := sendMessageRetID nil $embed}}
+{{else if and (dbGet $user.ID "bantarih") (dbGet $user.ID "durumsebep")}}
+{{$embed := cembed 
+    "title" "📛  Ban Bilgi"
+    "description" ""
+    "fields" (cslice
+            (sdict "name" "Kişi:" "value" (print $user.Username " " "`" $user.ID "`") "inline" true)
+            (sdict "name" "Mod:" "value" (print "<@" (str (dbGet ($args.Get 0) "banmod").Value) ">" )  "inline" true)
+            (sdict "name" "Tarih:" "value" (print (str (dbGet ($args.Get 0) "bantarih").Value))  "inline" true)
+            (sdict "name" "Sebep:" "value" (print "```" (str (dbGet ($args.Get 0) "bansebep").Value) "```")  "inline" false)
+ 	    (sdict "name" "Durum:" "value" (print "```" (str (dbGet ($args.Get 0) "durumsebep").Value) "```")  "inline" false)
+ 
+            )
+    "color" 16711680 
+    "thumbnail" (sdict "url" ($user.AvatarURL "1024"))
+    "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+    "footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+}}
+{{$a := sendMessageRetID nil $embed}}
+{{else}}
+{{$embed := cembed 
+    "title" "📛  Ban Bilgi"
+    "description" "**Kişi hakkında ban bilgisi bulunamadı!**"
+    "color" 16711680 
+    "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+}}
+{{$a := sendMessageRetID nil $embed}}
+{{deleteTrigger 0}}
+{{end}}

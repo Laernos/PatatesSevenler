@@ -1,0 +1,32 @@
+{{/*
+	Trigger: ^!(kabulet|reddet)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if $pending := dbGet .User.ID "Proposal"}}      
+    {{if eq .Cmd "!kabulet"}}
+        {{dbSet .User.ID "Marriage" (toString (toString $pending.Value))}}
+        {{dbSet (toInt64 $pending.Value) "Marriage" (toString .User.ID)}}
+        {{dbDel .User.ID "Proposal"}}
+        {{$embed := (cembed 
+            "title" (print .User.Username "," " " (userArg $pending.Value).Username " " "kişisiyle dünya evine girrdii.") 
+   	    "color" 4437377
+	    "image" (sdict "url" "https://imgur.com/4t88uIj.gif")
+	    "footer" (sdict "text" "Mutluluklarr 💍🤵🏻👰🏻" "icon_url" "https://imgur.com/aHDM7fE.png") )
+        }}
+        {{sendMessage nil $embed}}
+    {{else if (eq .Cmd "!reddet")}}
+                {{$embed := (cembed 
+            "title" (print (userArg $pending.Value).Username " " "için başka kısmetler lazım.") 
+   	    "color" 16711680
+	    "image" (sdict "url" "https://imgur.com/nC6WTXm.gif"))
+        }}
+        {{sendMessage nil $embed}}
+        {{dbDel .User.ID "Proposal"}}
+    {{end}}
+{{else}}
+    {{print .User.Username " kimse sana evlilik teklifinde bulunmadı!"}}
+{{end}}

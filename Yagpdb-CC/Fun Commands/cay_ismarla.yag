@@ -1,0 +1,23 @@
+{{/*
+	Trigger: cayismarla
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "**Lütfen cay ismarlayacaginiz kişiyi etiketleyin ya da id'sini yazın!**\n Örnek Kullanım: `!aşkölçer <@kişi/id>`"
+    (carg "userid" "User Ping")
+}}
+{{$hugImages:=cslice "https://thumbs.gfycat.com/LiquidNeglectedAsiaticlesserfreshwaterclam-size_restricted.gif"}}
+
+{{ $user := userArg ($args.Get 0) }}
+{{ $gay := ($user.Mention) }}
+
+{{$howGay:=randInt 0 101}}{{$po:=0}}{{$co:=randInt 16777216}}{{$user:=.User}}{{$member:=.Member}}
+{{range .Guild.Roles}}
+	{{- if and (in $member.Roles .ID) .Color (lt $po .Position)}}
+		{{- $po =.Position}}{{$co =.Color}}
+	{{- end -}}
+{{end}}
+{{sendMessage nil (complexMessage "content" $user.Mention "embed" (cembed "color" $co "title" "ÇAYLARR GELDİİİİ" "author" (sdict "name"  .User.Username "icon_url" (.User.AvatarURL "64")) "image" (sdict "url" (index (shuffle $hugImages) 0)) "description" (print $user.Mention " ve " $gay " hemşerisine çay yolladı!")))}}

@@ -1,0 +1,37 @@
+{{/*
+	Trigger: av
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{ $user := .User }}
+{{ $args := parseArgs 0 "**Syntax:** `-avatar [user]`" (carg "userid" "user") }}
+{{ if $args.IsSet 0 }}
+	{{ $user = userArg ($args.Get 0) }}
+{{ end }}
+
+{{ $member := getMember $user.ID }}
+{{$Final:=0}}
+{{$Pos:=0}}
+{{range .Guild.Roles}}
+    {{- if in $member.Roles .ID -}}
+        {{- if and (lt $Pos .Position) (.Color) -}}
+            {{- $Pos = .Position -}}
+            {{- $Final = .Color -}}
+        {{- end -}}
+    {{- end -}}
+{{end}}
+
+
+{{$user := .User}}
+{{if ($args.Get 0)}}
+{{$user = userArg ($args.Get 0)}}
+{{end}}
+{{sendMessage nil (cembed
+ 	   "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+	"footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+	"description" (joinStr "" "[Avatar](" ($user.AvatarURL "4096") ")")
+        "color" $Final
+	"image" (sdict "url" ($user.AvatarURL "4096")))}}

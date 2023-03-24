@@ -1,0 +1,35 @@
+{{/*
+	Trigger: ^!(ödül|odul)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 3 "**Örnek Kullanım:** `!ödül <@kişi/id> <miktar> <sebep>`"
+    (carg "userid" "User Ping")
+    (carg "int" "deger" 1 1000000000)
+    (carg "string" "Reason")
+}}
+
+{{ $user := userArg ($args.Get 0) }}
+
+{{if and (not (or (targetHasRoleID ($args.Get 0) 560140473168297987) (targetHasRoleID ($args.Get 0) 704401505444298762) )) (eq .User.ID ($args.Get 0))}}
+{{$a := sendMessageRetID nil (print "> <:yetkili:868485731906113556> **" .User.Mention "**, Çaaakalll, kendini ödüllendiremezsiin Çaaakalll!!")}}
+{{deleteMessage nil $a 10}}
+{{else}}
+{{$z := dbIncr $user.ID "replo" ($args.Get 1)}}
+{{$b := sendMessageRetID nil (print "> <:diamond1:868501506620543047> **" $user.Username " " "**kişisi `" ($args.Get 2) "` sebebiyle **" (humanizeThousands ($args.Get 1)) "** coin ödüllendirildi! (`" (humanizeThousands (dbGet ($args.Get 0) "replo").Value) "🥔`)")}}
+
+{{$embed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", " " " $user.Mention " " "kişisini**" " " (humanizeThousands ($args.Get 1)) " " "** 🥔 ödüllendirdi.\n```" ($args.Get 2) "```")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://imgur.com/ihhZlCX.png")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$c := sendMessageRetID 816476665118195762 $embed}}
+{{end}}
+{{deleteTrigger 0}}

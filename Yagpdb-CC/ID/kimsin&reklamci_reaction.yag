@@ -1,0 +1,142 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if eq .Channel.ID 829472730071564298}}
+    {{$user := (.Reaction.UserID) }}
+    {{ $status := (index ((structToSdict (exec "whois" $user)).Get "Fields") 6).Value }}
+    {{$cid := 829472730071564298}}{{$mid := 829508201954279474}}{{$en := .Reaction.Emoji.Name}}
+    {{$reason := (dbGet .User.ID "bansebep").Value}}
+    {{if and (eq $en "🥺") ((targetHasRoleID $user 801530973467705395)) (not (reFind `(?i)durum` $reason))}}
+            {{editMessage $cid $mid (cembed
+            "title" "<:kisit:871115322093076551>  __KISITLAMA__  <:kisit:871115322093076551>"
+            "description" "**Ban sebebiniz durum reklam olmadıği için kendiniz kaldıramazsınız lütfen <#874266687296372746> kanalından ticket açınız!**"
+            "color" 16711680 
+            "thumbnail" (sdict "url" "https://imgur.com/ODnkL6k.png")
+            "author" (sdict "name"  (userArg $user).String "icon_url" ((userArg $user).AvatarURL "64")))}}
+    {{deleteMessageReaction nil $mid .User.ID "🥺"}}
+    {{else if and (eq $en "🥺") ((targetHasRoleID $user 801530973467705395)) (reFind `(?i)(discord.gg|gg/)` $status)}}
+            {{editMessage $cid $mid (cembed
+            "title" "<:kisit:871115322093076551>  __KISITLAMA__  <:kisit:871115322093076551>"
+            "description" "**Durumunuzdaki reklamı sildikten sonra aşağıdaki emojiye basarak kısıtlamanızı kaldırtabilirsiniz!**"
+            "fields" (cslice 
+            (sdict "name" "Durumunuz" "value" (print "```" $status "```") "inline" true)    ) 
+            "color" 16711680 
+            "thumbnail" (sdict "url" "https://imgur.com/6beZ8WK.gif")
+            "author" (sdict "name"  (userArg $user).String "icon_url" ((userArg $user).AvatarURL "64")))}}
+    {{deleteMessageReaction nil $mid .User.ID "🥺"}}
+    {{else if and (eq $en "🥺") ((targetHasRoleID $user 801530973467705395)) (not (reFind `(?i)(discord.gg|gg/)` $status))}}
+            {{editMessage $cid $mid (cembed 
+        "title" "<:kisit:871115322093076551>  __KISITLAMA__  <:kisit:871115322093076551>"
+            "description" "**Durumundan sunucu davet linkini kaldırdığın için 😡Reklamcı rolün alındı, aramıza yeniden hoş geldin! 🎉**"
+        "color" 4437377
+        "fields" (cslice 
+            (sdict "name" "Durumunuz" "value" (print "```" $status "```") "inline" true)    ) 
+    
+         "thumbnail" (sdict "url" "https://imgur.com/VPLxKeg.gif")
+         "author" (sdict "name"  (userArg $user).String "icon_url" ((userArg $user).AvatarURL "64"))
+        "footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+    )}}
+    {{deleteMessageReaction nil $mid .User.ID "🥺"}}
+    {{takeRoleID $user 801530973467705395}}
+    {{$x:=(cslice).AppendSlice (dbGet .User.ID "roller").Value}}
+    {{range $x}}
+    {{addRoleID .}}
+    {{end}}
+    {{dbDel .User.ID "roller"}}
+    {{dbDel .User.ID "bansebep"}}
+    {{dbDel .User.ID "banmod"}}
+    {{dbDel .User.ID "bantarih"}}
+    {{dbDel .User.ID "durumsebep"}}
+    {{$embed := cembed 
+        "title" ""
+        "description" (print .User.Mention " " "**durumundan sunucu davet linkini kaldırdığın için 😡Reklamcı rolün alındı, aramıza yeniden hoş geldin! 🎉**")
+        "color" 16579594
+        "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif")
+        "thumbnail" (sdict "url" "https://imgur.com/VPLxKeg.gif")
+    }}
+    
+    {{ sendDM $embed }}
+    
+    
+    {{$embed := cembed 
+        "title" "<:greenn:871138843510837249>  __KISITLAMA UNBAN__  <:greenn:871138843510837249>"
+        "description" (print "<:adam:870847900182265906> **KİŞİ: ** " .User.Mention ", " .User.String "\n<:logg:871124360918872064> " "**SEBEP**: Durum: `" $status "`")
+        "color" 4437378
+        "thumbnail" (sdict "url" (.User.AvatarURL "4096"))
+        "author" (sdict "name"  "YAGPDB.xyz#8760" "icon_url" "https://cdn.discordapp.com/avatars/204255221017214977/2fa57b425415134d4f8b279174131ad6.png?size=4096")
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+    }}
+    {{$a := sendMessageRetID 743867397416419498 $embed}}
+    {{end}}{{end}}
+    
+    {{$user := (dbGet .User.ID "kimsinkisidb").Value}}
+     {{$sudo := (userArg $user)}}
+    {{ $member := getMember $sudo.ID }}
+    {{$Final:=0}}
+    {{$Pos:=0}}
+    {{range .Guild.Roles}}
+        {{- if in $member.Roles .ID -}}
+            {{- if and (lt $Pos .Position) (.Color) -}}
+                {{- $Pos = .Position -}}
+                {{- $Final = .Color -}}
+            {{- end -}}
+        {{- end -}}
+    {{end}}
+    {{$twit := (str (dbGet $sudo.ID "twitter").Value)}}
+    {{$snap := (str (dbGet $sudo.ID "snapchat").Value)}}
+    {{$ig := (str (dbGet $sudo.ID "instagram").Value)}}
+    {{$dict :=sdict (dbGet 0 "kimsindb").Value}}
+    {{$kan := (str (dbGet $sudo.ID "kan").Value)}}
+    {{$burc := (str (dbGet $sudo.ID "burclar").Value)}}
+    {{$iliski := (str (dbGet $sudo.ID "iliski").Value)}}
+    
+    {{$Un :=""}}
+    {{range pastUsernames $sudo.ID 0}} 
+        {{- $Un = (print $Un "\n" (.Time.Format "Jan,06") ": " .Name) -}}
+    {{end}}
+    {{$mention :=  ""}}
+    {{if $marriage := dbGet $sudo.ID "Marriage"}} {{$mention = (print "<@" (toInt $marriage.Value) ">")}}
+    {{end}}
+    
+    {{$na := (dbGet $sudo.ID "muzikler")}}
+    {{ $actual := "" }}{{ $ad := "" }}
+    {{if $na}}
+    {{range $na.Value}}
+      {{ $actual = print $actual ", "  . }}
+    {{end}}
+    {{ $ad = slice $actual 1 }}
+    {{end}}
+    {{$key :=""}}
+    {{$count := ""}}
+    
+    {{$rep := ""}}
+    {{ $isimler:= (print "```" $Un "```") }}
+    {{if and (eq .Message.ID (toInt $dict.Msg)) (eq .User.ID (toInt $dict.User))}}
+      {{if eq .Reaction.Emoji.Name "▶️"}}
+    {{editMessage nil (toInt $dict.Msg) (cembed "description" "" 
+    "color" $Final
+        "fields" (cslice
+                (sdict "name" "Kan Grubu" "value" (or  $kan "<:cancel:856339137850638346>") "inline" true)
+                (sdict "name" "Burçlar" "value" (or $burc "<:cancel:856339137850638346>") "inline" true)
+                (sdict "name" "İlişki" "value" (or $mention $iliski "<:cancel:856339137850638346>") "inline" true)
+                (sdict "name" "Sosyal Medya" "value" (print  "<:insta:829699064534663219> : " " [" "" $ig "](https://www.instagram.com/" $ig "/)" "\n <:twitter:829699547336278067> : " " [" "" $twit "](https://twitter.com/" $twit ")" "\n <:snap:829698444154765402> : " " [" "" $snap "](https://www.snapchat.com/add/" $snap ")\n \n")   "inline" true)
+                (sdict "name" "Müzikler" "value" (or  $ad "<:cancel:856339137850638346>")  "inline" true)
+            (sdict "name" "Eski İsimleri" "value" (or $isimler "<:cancel:856339137850638346>")  "inline" false)
+                )
+    "author" (sdict "name"  (userArg $user).String "icon_url" ((userArg $user).AvatarURL "64"))
+    "footer" (sdict "text" " 📊  İstatistikler⠀🗑️ Mesajı sil " "icon_url" "") 
+    )}}
+    {{deleteAllMessageReactions nil (toInt $dict.Msg)}}
+    {{addMessageReactions nil (toInt $dict.Msg) "📊" "🗑️"}}
+     {{else if eq .Reaction.Emoji.Name "🗑️"}}
+    {{deleteMessage nil (toInt $dict.Msg) 0}}
+      {{end}}
+    {{end}}
+    
+    

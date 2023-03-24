@@ -1,0 +1,15 @@
+{{/*
+	Trigger: ^!(cuvalim|cuval|patateslerim|param|kasam|kasa|bakiyem|çuvalım|çuval|banka|bankam)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{ $name := "🥔" }} {{/* the name of the currency */}}
+{{ $args := parseArgs 0 "`!çuvalım [@kişi]`" (carg "userid" "userid") }}
+{{ $user := .User.Username }}
+{{ $userID := .User.ID }}
+{{ if .CmdArgs }} {{ $user = ((userArg ($args.Get 0)).String) }} {{ $userID = ($args.Get 0) }}
+{{ end}}
+{{ sendMessage nil (cembed "title" (print "Çuval") "description" (print " <:money:850591185257234463> **Miktar:** " (humanizeThousands (dbGet $userID "replo").Value) " 🥔") "author" (sdict "name" $user "icon_url" ((userArg $userID).AvatarURL "512"))  "thumbnail" (sdict "url" "https://imgur.com/pXn10Ss.png?width=475&height=475") "color" 4645612)}}

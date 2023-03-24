@@ -1,0 +1,9 @@
+{{/*
+	Trigger: kedi
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "Error" (carg "string" "phrase")}} {{$word := (urlescape ($args.Get 0))}} {{$url := (print "https://cataas.com/cat/says/" $word)}} {{$embed := cembed "image" (sdict "url" $url) "color" (randInt 16777216)}} {{sendMessage nil $embed}}

@@ -1,0 +1,37 @@
+{{/*
+	Trigger: (welcome|hosgeldin|hos geldin|hoşgeldin|hoş geldin|hos geldın|hoş geldiin|Hoş geldun|hoş gelduun|hege|hg)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$id:=0}}
+{{with (getMember (reFind `\d{17,19}` .Message.Content))}}
+    {{ $id =.User.ID }}
+{{end}}
+
+{{if not (dbGet .User.ID "welcomelist")}}
+    {{dbSet .User.ID "welcomelist" cslice}}
+{{end}}
+{{$welcomeList := cslice.AppendSlice (dbGet .User.ID "welcomelist").Value}}
+
+{{if in $welcomeList $id}}
+{{else if or (targetHasRoleID $id 560141746764513283) (targetHasRoleID $id 755894119020363837)}}
+{{else if or (targetHasRoleID $id 768471301689704458) (not (targetHasRoleID $id 560140743612694529))}}
+  {{$z := dbIncr .User.ID "replo"  100 }}
+  {{$a := sendMessageRetID nil (print "> <:hg:868520542192422932> **" .User.Username "**, " "**100** coin kazandın. (`" (humanizeThousands (dbGet .User.ID "replo").Value) "🥔`)")}}
+  {{deleteMessage nil $a 5}}
+{{$embed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", "  " "  " birisini selamladığı için **100** 🥔 kazandı.")
+   "color" 2948615
+  "thumbnail" (sdict "url" "https://imgur.com/B3wMfJC.png")
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $embed}}
+  {{$welcomeList = $welcomeList.Append $id}}
+  {{dbSet .User.ID "welcomelist" $welcomeList}}
+{{end}}

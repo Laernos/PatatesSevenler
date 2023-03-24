@@ -1,0 +1,23 @@
+{{/*
+	Trigger: askolcer
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "**Lütfen aşkınızı ölçeceğiniz kişiyi etiketleyin ya da id'sini yazın!**\n Örnek Kullanım: `!aşkölçer <@kişi/id>`"
+    (carg "userid" "User Ping")
+}}
+{{$hugImages:=cslice "https://i.pinimg.com/originals/2a/34/c9/2a34c95330d483685437ae5698b12fd9.gif"}}
+
+{{ $user := userArg ($args.Get 0) }}
+{{ $gay := ($user.Mention) }}
+
+{{$howGay:=randInt 0 101}}{{$po:=0}}{{$co:=randInt 16777216}}{{$user:=.User}}{{$member:=.Member}}
+{{range .Guild.Roles}}
+	{{- if and (in $member.Roles .ID) .Color (lt $po .Position)}}
+		{{- $po =.Position}}{{$co =.Color}}
+	{{- end -}}
+{{end}}
+{{sendMessage nil (complexMessage "content" $user.Mention "embed" (cembed "color" $co "title" "OOO GENÇ AŞIKLAR\nAŞK ÖLÇER" "author" (sdict "name"  .User.Username "icon_url" (.User.AvatarURL "64")) "image" (sdict "url" (index (shuffle $hugImages) 0)) "description" (print $user.Mention " ve " $gay " arasındaki aşk\n \n**" $howGay "% **🥰")))}}

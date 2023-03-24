@@ -1,0 +1,38 @@
+{{/*
+	Trigger: bosan
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if $marriage := dbGet .User.ID "Marriage"}}
+    {{if $get := dbGet .User.ID "Sequence"}}
+        {{if eq .StrippedMsg (toString (toInt $get.Value))}}
+            {{print .User.Mention " " "başarıyla <@" (toInt $marriage.Value) "> kişisinden boşanarak yeni aşklara yelken açtı! 🚢"}}
+            {{dbDel (toInt $marriage.Value) "Marriage"}}
+            {{dbDel .User.ID "Marriage"}}
+        {{else}}
+            Yanlış kod girildi!
+        {{end}}
+    {{else}}
+        {{$sequence := ""}} 
+        {{range (seq 0 4)}}
+        {{$sequence = (print $sequence (randInt 10))}} 
+        {{end}}
+{{$mention := ""}}
+{{if $marriage := dbGet .User.ID "Marriage"}} {{$mention = (print "<@" (toInt $marriage.Value) ">")}}
+{{end}}
+                    {{sendMessage nil (complexMessage  "content" (print $mention " " "lan koşş seninki seni terkediyoo!") "embed" (cembed
+                    "title" ""
+                    "description" (print $mention " " "**kişisinden boşanmak istediğine emin misin?**\n \n`Aşağıdaki kodu 60 saniye içerisinde doğru girerek onayla.` ```\n!boşan " $sequence "```")
+   		 "color" 16711680
+    		"thumbnail" (sdict "url" "https://i2.wp.com/expatpanda.com/wp-content/uploads/2018/11/tenor-1.gif")
+		"footer" (sdict "text" "Ayrılıklar patatesi çok üzüyoo :((" "icon_url" "https://imgur.com/aHDM7fE.png") 
+ ))
+                    }}
+        {{dbSetExpire .User.ID "Sequence" $sequence 60}}
+    {{end}}
+{{else}}
+    {{print .User.Username " " "önce evlenmeye ne dersin?"}}
+{{end}}

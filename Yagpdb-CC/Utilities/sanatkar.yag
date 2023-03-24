@@ -1,0 +1,52 @@
+{{/*
+	Trigger: .*
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$delete := false}}
+{{$react := true}}
+{{$emojis := cslice "uzgun:790766939252981770" "hangisi:790766947552985098" "gozcu:790766955669880832" "mutlu:790766963562774548" "yildizci:790766979362848768"}}
+
+
+
+{{$woulddelete1 := false}}{{$woulddelete2 := false}}{{$woulddelete3 := false}}
+{{range .Message.Attachments}}
+	{{if not (reFind `(?i)\.(?:jpg|jpeg|png|gif|tif|webp|mp4|webm|mov)` .Filename)}}
+		{{$woulddelete1 = true}}
+	{{end}}
+{{else}}
+	{{$woulddelete1 = true}}
+{{end}}
+
+{{range (reFindAll `https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)` .Message.Content)}}
+	{{range (reFindAll `(?i)https?:(?://([^/?#]*))?(?:[^?\n#\s]*?/[^?\n#\s]+\.(jpg|jpeg|png|gif|tif|webp|mp4|webm|mov))(?:\?([^?\n#\s]*))?(?:#(.*))?` .)}}
+	{{else}}
+		{{$woulddelete2 = true}}
+	{{end}}
+{{else}}
+	{{$woulddelete2 = true}}
+{{end}}
+
+{{sleep 5}}
+{{range .Message.Embeds}}
+	{{if ne .Type "video" "image" "gifv"}}
+		{{$woulddelete3 = true}}
+	{{end}}
+{{else}}
+	{{$woulddelete3 = true}}
+{{end}}
+
+{{if and $delete $woulddelete1 $woulddelete2 $woulddelete3}}
+	{{deleteTrigger 0}}
+{{end}}
+
+{{if and (or (not $woulddelete1) (not $woulddelete2) (not $woulddelete3)) $react}}
+	{{range $emojis}}{{addReactions .}}{{end}}
+{{end}}
+
+https://imgur.com/QCLnIsb.png
+
+

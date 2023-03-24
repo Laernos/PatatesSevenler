@@ -1,0 +1,122 @@
+{{/*
+	Trigger: Added + Removed reactions
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$cid := .Reaction.ChannelID}}{{$mid := .Reaction.MessageID}}{{$en := .Reaction.Emoji.Name}}{{$an := .Reaction.Emoji.ID}}
+{{$id := ""}}
+{{if (eq $en "♈" "♉" "♊" "♋" "♌" "♍" "♎" "♏" "♐" "♑" "♒" "♓")}}
+{{if (eq $en "♈")}}{{$id = "Koç"}}{{else if (eq $en "♉")}}{{$id = "Boğa"}}{{else if (eq $en "♊")}}{{$id = "İkizler"}}{{else if (eq $en "♋")}}{{$id = "Yengeç"}}{{else if (eq $en "♌")}}{{$id = "İkizler"}}{{else if (eq $en "♍")}}{{$id = "Başak"}}{{else if (eq $en "♎")}}{{$id = "Terazi"}}{{else if (eq $en "♏")}}{{$id = "Akrep"}}{{else if (eq $en "♐")}}{{$id = "Yay"}}{{else if (eq $en "♑")}}{{$id = "Oğlak"}}{{else if (eq $en "♒")}}{{$id = "Kova"}}{{else if (eq $en "♓")}}{{$id = "Balık"}}{{end}}{{dbSet .User.ID "burclar" $id}}{{end}}
+
+{{$kn := ""}}
+{{if (eq $mid 857647752280145920)}}
+{{if (eq $an 855223604971438141)}}
+{{$kn = "<:kanA:855223604971438141>:  A Rh (+)"}}
+
+{{else if (eq $an 855223605340012584)}}
+
+{{$kn = "<:kanAeksi:855223605340012584>: A Rh (-) "}}
+
+{{else if (eq $an 855223606107701329)}}
+
+{{$kn = "<:kanb:855223606107701329>: B Rh (+) "}}
+
+{{else if (eq $an 855223606434856970)}}
+
+{{$kn = "<:kanbeksi:855223606434856970>: B Rh (-) "}}
+
+{{else if (eq $an 855223605537144852)}}
+
+{{$kn = "<:kanab:855223605537144852>: AB Rh (+) "}}
+
+{{else if (eq $an 855223605872427038)}}
+
+{{$kn = "<:kanabeksi:855223605872427038>: AB Rh (-) "}}
+
+{{else if (eq $an 855223572054409227)}}
+
+{{$kn = "<:kan0:855223572054409227>: 0 Rh (+) "}}
+
+{{else if (eq $an 855223604760412190)}}
+
+{{$kn = "<:kan0eksi:855223604760412190>: 0 Rh (-)"}}
+{{end}}{{dbSet .User.ID "kan" $kn}}
+{{end}}
+
+{{$sx := ""}}
+{{if (eq $mid 857647771280867348)}}
+{{if (eq $an 855238672927424542)}}
+{{$sx = "<:rings1:855238672927424542> : Başım bağlı"}}
+
+{{else if (eq $an 855237748557611008)}}
+
+{{$sx = "<:boy:855237748557611008> : Yalnız"}}
+
+{{else if (eq $an 855236929204650035)}}
+
+{{$sx = "<:chat:855236929204650035> : Flörtöz "}}
+
+{{else if (eq $an 855236829559914536)}}
+
+{{$sx = "<:love:855236829559914536> : Kuma arıyor"}}
+
+{{else if (eq $an 855239095520460840)}}
+
+{{$sx = "<:heart1:855239095520460840> : Platonik"}}
+
+{{else if (eq $an 855236819200245801)}}
+
+{{$sx = "<:brokenheart:855236819200245801> : Allah korusun"}}
+{{end}}{{dbSet .User.ID "iliski" $sx}}
+{{end}}
+
+{{$muzikler:= 0}}{{$id:= 0}}
+{{if eq .Message.ID 857647821162807296}}
+{{if not (dbGet .User.ID "muzikler")}}
+    {{dbSet .User.ID "muzikler" cslice}}
+{{end}}
+{{$muzikler := cslice.AppendSlice (dbGet .User.ID "muzikler").Value}}
+{{if (eq $an 855435069938204692)}}
+{{$id = "Türk Sanat Müziği"}}
+{{else if (eq $an 855432376011849738)}}
+{{$id = "Klasik"}}
+{{else if (eq $an 855432388423450685)}}
+{{$id = "Jazz"}}
+{{else if (eq $an 855432439681646622)}}
+{{$id = "Pop"}}
+{{else if (eq $an 855432398120419378)}}
+{{$id = "K-pop"}}
+{{else if (eq $an 855433175967072276)}}
+{{$id = "Hip Hop"}}
+{{else if (eq $an 855432355438526474)}}
+{{$id = "Rap"}}
+{{else if (eq $an 855432342927835176)}}
+{{$id = "Elektro"}}
+{{else if (eq $an 855436410361085953)}}
+{{$id = "Rock"}}
+{{else if (eq $an 855434147183329280)}}
+{{$id = "Arabesk"}}
+{{end}}
+{{if not (in $muzikler $id)}}
+  {{$muzikler = $muzikler.Append $id}}
+  {{dbSet .User.ID "muzikler" $muzikler}}
+{{end}}
+{{if .ReactionAdded}}
+{{else}}
+{{$muzikler := or (dbGet .User.ID "muzikler").Value cslice}}
+{{$_muzikler := cslice}}
+{{range $muzikle := $muzikler}}
+{{  if ne $muzikle $id}}
+ {{   $_muzikler = $_muzikler.Append $muzikle}}
+ {{ end}}
+{{end}}
+{{$muzikler = cslice.AppendSlice $_muzikler}}
+{{dbSet .User.ID "muzikler" $muzikler}}
+{{end}}
+{{end}}
+
+
+

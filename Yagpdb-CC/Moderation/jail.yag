@@ -1,0 +1,120 @@
+{{/*
+	Trigger: banla
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$a:=parseArgs 1 "**Örnek Kullanım:** `!banla <@kişi/id> [sebep]`" (carg "userid" "U") (carg "string" "R")}}
+{{$b:=userArg ($a.Get 0)}}
+{{$c:=(print "`" ($a.Get 1) "`")}}
+{{if not ($a.Get 1)}}
+{{$c ="<:sebepyok:870841335878389880>"}}
+{{end}}
+{{$d:=707217352751710298}}
+{{$e:=0}}
+{{if (getMember ($b).ID)}}
+{{$e =(index ((structToSdict (exec "whois" $b.ID)).Get "Fields") 6).Value}}
+{{end}}
+{{$f:=(print $b.Mention " **kişisi " .User.Mention "  tarafından " $c " sebebiyle banlandı!**")}}
+{{$g:="https://imgur.com/pH00Lsc.png"}}
+{{$h:="<:ban:870833951806218250>  __BAN__  <:ban:870833951806218250>"}}
+{{$i:="743867397416419498"}}
+{{if and ($a.Get 1) (or (inFold ($a.Get 1) "durum reklam") (inFold ($a.Get 1) "banner reklam") (inFold ($a.Get 1) "hakkında reklam") (inFold ($a.Get 1) "hakkinda reklam"))}}
+{{$f =(print $b.Mention " **kişisi " .User.Mention "  tarafından " $c " sebebiyle kısıtlandı!**")}}
+{{$d =801530973467705395}}
+{{$g ="https://imgur.com/r2VOywK.png"}}
+{{$h ="<:kisit:871115322093076551>  __KISITLAMA__  <:kisit:871115322093076551>"}}
+{{else if and ($a.Get 1) (inFold ($a.Get 1) "ticket")}}
+{{$d =785872902284247060}}
+{{$f =(print $b.Mention " **artık ticket açamayacak.. Bu son ticketın evlat!**")}}
+{{$g ="https://imgur.com/ZlzjOei.png"}}
+{{$h ="<a:tickett:792222487617601556>  __TICKET BAN__  <a:tickett:792222487617601556>"}}
+{{end}}
+ {{if and (or (hasRoleID 560140473168297987) (hasRoleID 704401505444298762) (hasRoleID 719250769152442408)) (not (getMember ($b).ID))}}
+{{$j:=exec "ban" ($a.Get 0) $c}}
+{{$k:=cembed "title" "" "description" (print "<@" ($a.Get 0) "> **kişisi " .User.Mention "  tarafından " $c " sebebiyle ipden banlandı!**") "color" 16711680 "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif") "thumbnail" (sdict "url" "https://imgur.com/qJrp7UA.png")}}
+{{$l:=sendMessageRetID nil $k}}
+{{deleteMessage nil $l 30}}
+
+{{else if not (or (hasRoleID 560140473168297987) (hasRoleID 704401505444298762) (hasRoleID 719250769152442408) (hasRoleID 801530993982308402) (hasRoleID 801531017323479120) (hasRoleID 755869130812424333) (hasRoleID 801531016669429830))}}
+  {{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Yetkin yok kankam!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if eq .User.ID $b.ID}}
+  {{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Kendini banlayamazsin aq mali!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (not (hasRoleID 560140473168297987)) (not (hasRoleID 704401505444298762)) (or (targetHasRoleID $b.ID 560140473168297987) (targetHasRoleID $b.ID 704401505444298762) (targetHasRoleID $b.ID 719250769152442408) (targetHasRoleID $b.ID 801530993982308402) (targetHasRoleID $b.ID 801531017323479120) (targetHasRoleID $b.ID 755869130812424333) (targetHasRoleID $b.ID 801531016669429830))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Yetkilileri banlayamazsin aslan parcasi!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if (targetHasRoleID $b.ID 560141746764513283)}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Botları banlayamazsın!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (targetHasRoleID $b.ID 785872902284247060) ($a.Get 1) (inFold ($a.Get 1) "ticket")}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Ticket Banlı birisini yeniden banlayamazsın!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (targetHasRoleID $b.ID 801530973467705395) ($a.Get 1) (inFold ($a.Get 1) "durum")}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Kisitlanmis birisini yeniden kisitlayamazsin!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (targetHasRoleID $b.ID 707217352751710298) (not (inFold ($a.Get 1) "ticket"))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Banlı birisini yeniden banlayamazsın!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and ($a.Get 1) (inFold ($a.Get 1) "durum") (targetHasRoleID $b.ID 801530973467705395)}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Kısıtlı birisini yeniden kısıtlayamazsın!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and ($a.Get 1) (inFold ($a.Get 1) "ticket") (targetHasRoleID $b.ID 785872902284247060)}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **TIcket banli birisini yeniden banlayamazsin!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (not (hasRoleID 560140473168297987)) (not (hasRoleID 704401505444298762)) (not (hasRoleID 719250769152442408)) (not (hasRoleID 755869130812424333)) (or (hasRoleID 801530993982308402) (hasRoleID 801531017323479120) (hasRoleID 801531016669429830)) (not ($a.Get 1))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Bir sebep belirtmek zorundasınız!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (not (hasRoleID 560140473168297987)) (not (hasRoleID 704401505444298762)) (not (hasRoleID 719250769152442408)) (or (hasRoleID 801531017323479120) (hasRoleID 801531016669429830)) ($a.Get 1) (not (inFold ($a.Get 1) "ticket"))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Sadece ticket ban yetkiniz bulunmaktadır!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and (not (hasRoleID 560140473168297987)) (not (hasRoleID 704401505444298762)) (not (hasRoleID 719250769152442408)) (not (hasRoleID 755869130812424333)) (not (hasRoleID 801530993982308402)) ($a.Get 1) (not (or (inFold ($a.Get 1) "ticket") (inFold ($a.Get 1) "durum")))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Sadece ticket ve durum reklam ban yetkiniz vardir!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and ($a.Get 1) (inFold ($a.Get 1) "ticket")}}
+{{giveRoleID $b.ID $d}}
+{{$k:=cembed "title" "" "description" (print $f) "color" 16711680 "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif") "thumbnail" (sdict "url" (print $g))}}
+{{$l:=sendMessageRetID nil $k}}
+{{deleteMessage nil $l 30}}
+{{$k:=cembed "title" (print $h) "description" (print "<:adam:870847900182265906> **KİŞİ: ** " $b.Mention ", " $b.String "\n<:logg:871124360918872064> " "[**SEBEP**](" (exec "logs") ")" ": " $c ) "color" 16711680 "thumbnail" (sdict "url" ($b.AvatarURL "4096")) "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "64")) "footer" (sdict "text" (print "🆔" " " "" $b.ID)) "timestamp" currentTime}}
+{{$n:=sendMessageRetID $i $k}}
+{{deleteTrigger 0}}
+{{else if and (not (hasRoleID 560140473168297987)) (not (hasRoleID 704401505444298762)) (not (hasRoleID 719250769152442408)) (not (hasRoleID 801530993982308402)) (not (inFold ($a.Get 1) "durum")) (or (targetHasRoleID $b.ID 596296252623421441) (targetHasRoleID $b.ID 560141638354075671) (not (or (targetHasRoleID $b.ID 755894119020363837) (targetHasRoleID $b.ID 746405466485293148) (targetHasRoleID $b.ID 746405518976745573) (targetHasRoleID $b.ID 784905145778962462) (targetHasRoleID $b.ID 746405744907255878) (targetHasRoleID $b.ID 781751628927729694) (targetHasRoleID $b.ID 746405670286393375) (targetHasRoleID $b.ID 801530917599576145) (targetHasRoleID $b.ID 801530998705094666) (targetHasRoleID $b.ID 746411101171875850) (targetHasRoleID $b.ID 787860860394668042) (targetHasRoleID $b.ID 770625128777777152) (targetHasRoleID $b.ID 746405612115722270) (targetHasRoleID $b.ID 746406206398005440) (targetHasRoleID $b.ID 748369791680643094) (targetHasRoleID $b.ID 752253974551330950) (targetHasRoleID $b.ID 752254454132244500))))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Sadece şüpheli veya kayıtsız sesli bir odada olanları ve ticket ban yetkiniz vardir!**")}}
+  {{deleteMessage nil $m 5}}
+{{else if and ($a.Get 1) (inFold ($a.Get 1) "durum") (not (reFind `(?i)(discord.gg|gg/)` $e))}}
+{{$m:=sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Durumunda reklam olmayan birisini kısıtlayamazsın!**")}}
+  {{deleteMessage nil $m 5}}
+{{else}}
+{{giveRoleID $b.ID $d}}
+{{$k:=cembed "title" "" "description" (print $f) "color" 16711680 "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif") "thumbnail" (sdict "url" (print $g))}}
+{{$l:=sendMessageRetID nil $k}}
+{{deleteMessage nil $l 30}}
+{{$o:=getMember ($b).ID}}
+{{if not (dbGet $b.ID "roller")}}
+{{dbSet $b.ID "roller" $o.Roles}}
+{{end}}
+{{setRoles $b.ID (cslice $d)}}
+
+{{$p:=formatTime currentTime "Jan 02, 2006"}}
+{{dbSet ($a.Get 0) "bansebep" ($a.Get 1)}}
+{{dbSet ($a.Get 0) "banmod" (str (.User.ID))}}
+{{dbSet ($a.Get 0) "bantarih" $p}}
+{{dbSet ($a.Get 0) "durumsebep" $e}}
+{{$k:=cembed "title" (print $h) "description" (print "<:adam:870847900182265906> **KİŞİ: ** " $b.Mention ", " $b.String "\n<:logg:871124360918872064> " "[**SEBEP**](" (exec "logs") ")" ": " $c ) "color" 16711680 "thumbnail" (sdict "url" ($b.AvatarURL "4096")) "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "64")) "footer" (sdict "text" (print "🆔" " " "" $b.ID)) "timestamp" currentTime}}
+{{$n:=sendMessageRetID $i $k}}
+{{deleteTrigger 0}}
+{{if not (and ($a.Get 1) (or (inFold ($a.Get 1) "durum reklam") (inFold ($a.Get 1) "banner reklam") (inFold ($a.Get 1) "hakkında reklam") (inFold ($a.Get 1) "hakkinda reklam")))}}
+{{if not (dbGet 0 "bantest")}}
+  {{dbSet 0 "bantest" cslice}}
+{{end}}
+{{$q:=cslice.AppendSlice (dbGet 0 "bantest").Value}}
+{{if not (in $q $b.ID)}}
+{{$q =$q.Append $b.ID}}
+{{dbSet 0 "bantest" $q}}
+{{end}}
+{{end}}
+{{end}}

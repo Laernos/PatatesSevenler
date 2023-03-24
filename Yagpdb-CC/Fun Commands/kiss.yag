@@ -1,0 +1,32 @@
+{{/*
+	Trigger: op
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$desc:=""}}{{$title:=""}}{{$user:=""}}{{$footer:=print .User.Username " " (dbIncr .User.ID "op" 1) " defa öptü!"}}{{$color:=123456}}{{$position:=0}}{{$hugImages:=cslice "https://media.tenor.com/images/536feb2229b55c1657add7630ef4ffdb/tenor.gif" "https://cdn.discordapp.com/attachments/785136323567681576/795844423144833054/tenor_4.gif" "https://cdn.discordapp.com/attachments/785136323567681576/795844292559765564/tenor_3.gif" "https://cdn.discordapp.com/attachments/785136323567681576/795844151861182474/tenor_2.gif" "https://cdn.discordapp.com/attachments/785136323567681576/795843877398380544/tenor_1.gif" "https://cdn.discordapp.com/attachments/785136323567681576/795843717197201428/tenor.gif"}}
+{{range .Guild.Roles}}
+	{{- if and (in $.Member.Roles .ID) .Color (lt $position .Position)}}
+		{{- $position =.Position}}{{$color =.Color}}
+	{{- end -}}
+{{end}}
+{{if .CmdArgs}}
+	{{$user =userArg (index .CmdArgs 0)}}
+	{{if $user}}
+		{{if gt (len .CmdArgs) 1}}
+			{{$desc =joinStr " " (slice .CmdArgs 1)}}
+		{{end}}
+		{{if ne $user.ID .User.ID}}
+			{{$title =print .User.Username " , " $user.Username "  kişisiyle muck muck 😘"}}{{$footer =print $footer "\n" $user.Username " " (dbIncr $user.ID "op" 1) " defa öpüldü!"}}
+		{{else}}
+			{{$title =print "Yıkık " .User.Username " kendisini öptü 😘"}}
+		{{end}}
+	{{else}}
+		{{$title =print "Yıkık " .User.Username " kendisini öptü 😘"}}{{$desc =.StrippedMsg}}
+	{{end}}
+{{else}}
+	{{$title =print "Yıkık " .User.Username " kendisini öptü 😘"}}
+{{end}}
+{{sendMessage nil (cembed "title" $title "description" $desc "image" (sdict "url" (index (shuffle $hugImages) 0)) "color" $color "author" (sdict "name"  .User.Username "icon_url" (.User.AvatarURL "64")) "footer" (sdict "text" $footer))}}

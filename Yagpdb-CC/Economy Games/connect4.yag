@@ -1,0 +1,100 @@
+{{/*
+	Trigger: \A(?:\!|<@!?204255221017214977>)\s*(?:c(?:on(?:nect)?)?4)(?: +|\z)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "Daha fazla bilgi için `!connect4 yardım` yazın." (carg "string" "type") (carg "int" "bet")}}
+{{$bet := ($args.Get 1)}}
+{{ $db := "replo" }}
+
+{{/* Grid Create */}}
+{{define "board_maker"}}
+		{{- $board := cslice }}{{- $out := "" -}}
+		{{- range seq 0 6 }} {{/* 6 rows */}}
+		{{- $columns := cslice }}
+		{{- $rows := "" }}
+		{{- range seq 0 7 }}{{/* 7 columns */}}
+			{{- $columns = $columns.Append 0}}
+			{{- $rows = print $rows "⚫ "}}
+		{{- end}}
+		{{- $board = $board.Append $columns}}
+		{{- $out = print $rows "\n" $out -}}
+		{{- end}}
+		{{- $out := print $out "1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣"}}
+		{{- $embed := sdict "title" "Connect4" "description" $out "color" 0x0045e6 "footer" (sdict "text" "")}}
+		{{- .Set "board" $board}}
+		{{- .Set "embed" $embed}}
+{{ end}}
+
+{{ $help := cembed "title" "Connect4/con4/c4 Yardım" "description" "> **Nasıl Oynanır?**\n> • Her oyuncuya ayrı renk jetonlar verilecektir (🔴  veya 🟡)\n> • Üst üste dört yapan ilk kişi __kazanacak__\n> • Tüm slotlar kazanan belirlenmeden doldurulursa, oyun __berabere__  olarak sonuçlanacaktır.\n\n\n> **Komutlar**\n> `!connect4 <@kisi/id> [bahis miktarı]`\n> **↳** birisine meydan okursunuz\n> `!connnect4 <kabulet/reddet>`\n> **↳** gelen bir meydan okumayı kabul eder veya reddedersiniz\n\n> Jeton Yerleştirmek İçin\n> **↳** Sayı emojilerine tepki verin\n> Ayrılmak İçin\n> **↳** <a:r_leave:844556617085485058> emojisine tepki verin" "color" 0xbdf2f0 "thumbnail" (sdict "url" "https://i.ibb.co/wr3Rxzh/7614604.png")}}
+{{ $errorMsg := ""}}{{ $data := sdict}}{{ $reply := false}}
+{{ $p1 := ""}}{{ $p2 := ""}}
+
+{{/* Setting limits */}}
+{{if ($args.Get 1)}}
+
+{{if gt $bet (toInt (dbGet $.User.ID $db).Value)}}
+	{{ $errorMsg = (print "> " .User.Mention " **Yeterli patatesiniz bulunmamaktadır!** <a:attimzar:831249832235630633>")}}
+{{else if gt $bet 1000}}
+	{{ $errorMsg = (print "> " .User.Mention " " "**En yüksek bahis 1000 patatestir!** <a:attimzar:831249832235630633>")}}
+{{ else if dbGet 2021 "connect4"}}
+	{{ $errorMsg = "Bir oyun hala devam ediyor. Lütfen bitmesini bekleyin\n> Ayrılmak için, <a:r_leave:844556617085485058> emojisine tepki verin."}}{{end}}
+{{ else if $db := dbGet 2021 "c4cooldown"}}
+		{{ $data = $db.Value}}
+		{{ $p1 = ($data.p1|getMember).User}}
+		{{ $p2 = ($data.p2|getMember).User}}
+		{{ if and (eq $p1.ID .User.ID) .Message.Mentions }} {{/* If the user sent a challenge to someone already*/}}
+				{{ $errorMsg = print "> Halihazırda devam eden bir meydan okumanız var. Lütfen **" ($db.ExpiresAt.Sub currentTime|humanizeDurationSeconds) "** sonra yeniden deneyiniz."}}
+		{{ else if eq $p2.ID .User.ID}}
+				{{ $reply = true }}
+		{{ end }}
+{{ dbSetExpire 2021 "connecto" (sdict "bet" $bet) 60}}
+{{end}}
+
+{{/* Processing Input */}}
+{{ with .StrippedMsg }}
+		{{ if eq (.|lower) "yardım"}}
+				{{$errorMsg = ""}}
+				{{sendMessage nil $help}}
+		{{  else if $reply }}
+				{{ if not $errorMsg }}
+						{{ dbDel 2021 "c4cooldown" }}
+						{{ if reFind `(?i)(?:confirm|accept|kabulet)` . }}
+								{{ $temp := sdict}}
+								{{ template "board_maker" $temp}}
+								{{ $temp.embed.Set "author" (sdict "name" (print $p1.Username "'s sırası") "icon_url" ($p1.AvatarURL "256"))}}
+								{{ $temp.embed.Set "fields" (cslice (sdict "name" "Oyuncu 1" "value" (print "> " $p1.Mention) "inline" true)
+								(sdict "name" "Oyuncu 2" "value" $p2.Mention "inline" true))}}
+								{{ $msgID := sendMessageRetID nil (complexMessage "content" (print "> Bir connect4 oyunu başlatıldı\n🔴┃" $p1.Mention ", Lütfen bir boşluğu seçin") "embed" $temp.embed)}}
+								{{ addMessageReactions nil $msgID "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣" "7️⃣" "a:r_leave:844556617085485058"}}
+								{{ dbSet 2021 "connect4" (sdict "players" (cslice "offset" $data.p1 $data.p2) "turn" 1 "board" $temp.board "msgID" $msgID "time" currentTime)}}
+						{{ else if reFind `(?i)(?:deny|refuse|decline|reddet)` . }}
+								{{ sendMessage nil (print $p1.Mention ", meydan okumanız reddedildi.")}}
+						{{ else }}
+								{{ sendMessage nil "Bilinmeyen Yanıt. Meydan okuma iptal edildi"}}
+						{{ end }}
+				{{ end }}
+		{{ else }}
+				{{ with reFind `\d{17,19}` .}}
+						{{ if not $errorMsg }}
+								{{ $p2 := .|toInt64|userArg}}
+								{{ if $p2 }}
+										{{ dbSetExpire 2021 "c4cooldown" (sdict "p1" $.User.ID "p2" $p2.ID) 20}}
+										{{ sendMessage nil (printf "%s, %s size connect4 oyununda meydan okudu! (20s)\nYanıtlamak için `!connect4 (kabulet/reddet)`" $p2.Mention $.User.Mention)}} 
+								{{ else }}
+										{{ $errorMsg = "Error: Invalid User" }}
+								{{ end }}
+						{{ end }}
+				{{ else }}
+						{{ $errorMsg = "Bilinmeyen Argüman\nDaha fazla bilgi için `!connect4 yardım` yazın." }}
+				{{ end }}
+		{{ end }}
+{{ else }}
+		{{ $errorMsg = "" }}
+		{{ sendMessage nil $help }}
+{{ end }}
+
+{{ with $errorMsg}}{{ sendMessage nil . }}{{ end }}

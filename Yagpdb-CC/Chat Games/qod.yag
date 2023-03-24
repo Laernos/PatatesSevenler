@@ -1,0 +1,149 @@
+{{/*
+	Trigger: 24
+	Trigger Type: Hourly Interval
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$1:= "Bir sirkte olsaydın hangi hayvan olmak isterdin?"}}
+{{$2:= "Birisine verdiğin en kötü tavsiye nedir?"}}
+{{$3:= "Bir düğünde asla söylenmemesi gereken söz nedir?"}}
+{{$4:= "Şimdiye kadar duyduğun en kötü tavlama cümlesi nedir?"}}
+{{$5:= "Cebinde yalnızca bir tür yiyecek saklayabilseydin, ne taşırdın?"}}
+{{$6:= "Şimdiye kadar aldığın en kötü hediye nedir ve neden?"}}
+{{$7:= "Eğer bir çiftlik hayvanı olsaydın, hangisi olurdun ve neden?"}}
+{{$8:= "Şimdiye kadar yaşadığın en kötü ilk buluşma anısı nedir?"}}
+{{$9:= "Hiç sosyal medyada birinisini stalkladın mı?"}}
+{{$10:= "Yakalanmadan yasa dışı bir şey yapabilseydin ne yapardın?"}}
+{{$11:= "Şimdiye kadar denediğin en tuhaf yemek kombinasyonu nedir?"}}
+{{$12:= "Hayali bir arkadaşın var mıydı? Adı neydi?"}}
+{{$13:= "En sevdiğin komedyen kim?"}}
+{{$14:= "Biri sana 100 lira verse, ne alırdın?"}}
+{{$15:= "Her gün kahvaltıda tatlı yeme şansın olsaydı, hangi tatlıyı seçerdin?"}}
+{{$16:= "Sabah uyandığında aklına gelen ilk şey nedir?"}}
+{{$17:= "Hayvanat bahçesindeki en çok hangi hayvanı seviyorsun?"}}
+{{$18:= "Arkadaşın üzgünse, onu daha iyi hissettirmek için ne yaparsın?"}}
+{{$19:= "Yeni bir dondurma aroması icat etme fırsatın olsaydı, bu ne olurdu?"}}
+{{$20:= "En sevdiğin kelime nedir?"}}
+{{$21:= "Soğuk havayı mı yoksa sıcak havayı mı tercih edersin?"}}
+{{$22:= "Ünlü olmak ister miydin? Neden?"}}
+{{$23:= "Bundan on yıl sonra kendini nerede görüyosun?"}}
+{{$24:= "Bir insanın sahip olabileceği en iyi özellikler sizce nedir?"}}
+{{$25:= "Dövme yaptırır mısın? Ne yaptırırdın?"}}
+{{$26:= "Sence birisiyle cikmaya başlamak için ideal yaş kaçtır?"}}
+{{$27:= "Dünyanın herhangi bir yerine gidebilseydin, nereyi seçerdin ve neden?"}}
+{{$28:= "Sence nasıl öleceksin ya da nasil ölmek isterdin?"}}
+{{$29:= "Şimdiye kadar aldığın en büyük risk nedir?"}}
+{{$30:= "Biri sana içinde ölüm tarihinin olduğu bir zarf verse zarfı açar mıydın?"}}
+{{$31:= "Hangi kitab üzerinde büyük bir etki bıraktı?"}}
+{{$32:= "Anne ve babandan öğrendiğin hayat tavsiyesi nedir?"}}
+{{$33:= "Şimdiye kadar başardığın en zor şey neydi?"}}
+{{$34:= "Geleceğin hakkında seni en çok ne korkutuyor?"}}
+{{$35:= "Her zaman yapmak isteyip de korktuğun şey nedir?"}}
+{{$36:= "Tartışmanın ilişkinin bir parçası olduğunu düşünüyor musun?"}}
+{{$37:= "Hayatın bir film olsaydı hangi ünlü seni oynardı?"}}
+{{$38:= "Pek çok insanın senin hakkında bilmediği şey nedir?"}}
+{{$39:= "Çocukken yapmayı en çok sevdiğin şey neydi?"}}
+{{$40:= "En çok hangi yemeği pişirmeyi seviyorsun?"}}
+{{$41:= "En sevdiğin kitap nedir?"}}
+{{$42:= "Hayalindeki meslek nedir?"}}
+{{$43:= "Göbek adın var mı?"}}
+{{$44:= "Hangi özel yeteneğe sahip olmak isterdin?"}}
+{{$45:= "Emekli olduğunda kendini nerede yaşarken görüyorsun?"}}
+{{$46:= "En sevdiğin hafta sonu aktivitesi nedir?"}}
+{{$47:= "Hiç evcil hayvanın oldu mu? Olmasını ister miydin?"}}
+{{$48:= "Yaşayan ya da yaşamayan biriyle akşam yemeği yiyebilseydin, bu kim olurdu?"}}
+{{$49:= "Kedileri mi yoksa köpekleri mi daha çok seviyorsun?"}}
+{{$50:= "İnternette paylastığın en saçma şey nedir?"}}
+{{$51:= "Öldüğünde ne olarak yeniden dirilmeyi isterdin?"}}
+{{$52:= "Bir günlüğüne kiminle hayatını değiş tokuş yapmak isterdin?"}}
+{{$53:= "Dünyanın herhangi bir yerinde yaşayabilseydin, nerede yaşamak isterdin?"}}
+{{$54:= "Şimdiye kadar aldığın en garip hediye neydi?"}}
+{{$55:= "Aldığın en iyi iltifat neydi?"}}
+{{$56:= "Bir ev yangınından sadece bir eşyanı kurtarabilseydin, bu ne olurdu?"}}
+{{$57:= "Hayatının geri kalanı boyunca sadece bunu yiyebilirim dediğin yemek nedir?"}}
+{{$58:= "Piyangoyu kazansaydın, paranı ilk harcayacağın şey ne olurdu?"}}
+{{$59:= "Defalarca hangi filmi izleyebilirsin?"}}
+{{$60:= "Kendi ismini seçebilseydin, ismini ne koyardın?"}}
+{{$61:= "Hangi zaman dilimine gitmek isterdin?"}}
+{{$62:= "Kendini üç kelimeyle tarif edebilseydin, bu kelimeler ne olurdu?"}}
+{{$63:= "Hangi enstrümanı çalmak isterdin?"}}
+{{$64:= "Bir teknede mi dağda mı yoksa bir adada mı yaşamak isterdin?"}}
+{{$65:= "Hayvan olabilseydin, hangisi olurdun ve neden?"}}
+{{$66:= "Herhangi bir yaşına geri dönebilseydin, hangi yaşını seçerdin?"}}
+{{$67:= "Hiç madalya ya da bir ödül kazandın mı?"}}
+{{$68:= "Telefonunu eline almadan ne kadar dayanabilirsin?"}}
+{{$69:= "Hangi kötü alışkanlıklarını bırakabilmeyi isterdin?"}}
+{{$70:= "Birinin yalan söylediğini anlayabilir misin?"}}
+{{$71:= "Kıskanç birisi misin?"}}
+{{$72:= "Birisi sana geleceği söylemeyi teklif etse, kabul eder miydin?"}}
+{{$73:= "Daha önce hiçbir şey çaldın mı?"}}
+{{$74:= "Telefonundan bir sosyal medya uygulamasını kaldıracak olsaydın, hangisini kaldırırdın ve neden?"}}
+{{$75:= "En utanç verici anın nedir?"}}
+{{$76:= "İdam edilecek olsaydın, isteyeceğin yemek ne olurdu?"}}
+{{$77:= "13 yaşındaki halinle konuşabilseydin ona  ne derdin?"}}
+{{$78:= "Seni en çok  kızdıran şey nedir?"}}
+{{$79:= "içinde bulunduğun uçak düşecek olsaydı, ilk kimi arardın?"}}
+{{$80:= "Bu sunucu hakkında ne düşünüyorsun?"}}
+{{$81:= "Bugün seni kim güldürdü?"}}
+{{$82:= "Bugün yeni bir şey denedin mi?"}}
+{{$83:= "Bugün her şey planladığın gibi miydi?"}}
+{{$84:= "Bugünün havası sana nasıl hissettirdi?"}}
+{{$85:= "Kendin için başka bir isim seçebilseydin, bu ne olurdu?"}}
+{{$86:= "Bir robot icat etmiş olsaydın, bu robot neler yapabilirdi?"}}
+{{$87:= "Şimdiye kadar yediğin en tuhaf şey nedir?"}}
+{{$88:= "Gün içinde fazladan bir saatin daha olsaydı ne yapardın?"}}
+{{$89:= "Bir cin sana 3 dilek hakkı verseydi neleri dilerdin?"}}
+{{$90:= "Eğer odanın renklerini yeniden boyayabilseydin, hangi renkleri seçerdin?"}}
+{{$91:= "En sevdiğin film veya dizi nedir?"}}
+{{$92:= "En iyi arkadaşını özel yapan nedir?"}}
+{{$93:= "Gitmeyi çok istediğin ama iptal edilen bir etkinlik oldu mu?"}}
+{{$94:= "Ülkenin başkanı olsaydın, işleri şimdiki başkandan nasıl daha farklı yapardın?"}}
+{{$95:= "Kişiliğin hakkında en çok neyi seviyorsun?"}}
+{{$96:= "En büyük korkun nedir?"}}
+{{$97:= "Uçabiliyor olsaydın, nerelere uçardın?"}}
+{{$98:= "Şimdiye kadar gittiğin en kirli yer neresiydi?"}}
+{{$99:= "En çok hangi aile üyesini seviyorsun?"}}
+{{$100:= "Hangi yeni becerileri kazanmak isterdin?"}}
+{{$101:= "Önümüzdeki yıl için hedeflerin neler?"}}
+{{$102:= "Yeni bir müzik aleti öğrenebilseydin, hangisini öğrenmek isterdin?"}}
+{{$103:= "Bir kitabın sonunu değiştirebilirseydin, nasıl değiştirirdin?"}}
+{{$104:= "Hayallerindeki tatil nasıl bir tatil?"}}
+{{$105:= "Sence ilk işin ne olacak?"}}
+{{$106:= "Bir günlüğüne görünmez olabilseydin, o gün ne yapardın?"}}
+{{$107:= "Gizli bir yeteneğin var mı?"}}
+{{$108:= "Onsuz yaşayamayacağın bir şey seçmen gerekse, bu ne olurdu?"}}
+{{$109:= "Arkadaşlarınla ne yapmaktan hoşlanırsın?"}}
+{{$110:= "Dünyadaki herkesin uyması gereken bir kural koyman gerekseydi, bu ne olurdu?"}}
+{{$111:= "Evinde değiştirmek istediğin bir kural olsaydı bu ne olurdu?"}}
+{{$112:= "Sence bir günün mükemmel olması için ne gerekiyor?"}}
+{{$113:= "Sen köpek balığısını gördüüün?"}}
+{{$114:= "Hiç uyurgezerlik yaptın mı?"}}
+{{$115:= "Hiç denize işedin mi?"}}
+{{$116:= "Tanrı'nın var olduğuna inanıyor musunuz?"}}
+{{$117:= "Hiç film izlerken ağladın mı?"}}
+{{$118:= "Akıllı telefonların hiç icat edilmemesini ister miydin?"}}
+{{$119:= "Teknen veya yatın olsa adını ne koyardın?"}}
+{{$120:= "Hayvanlar konuşabilseydi, hangisi en kaba olanı olurdu?"}}
+{{$121:= "Yaşlandığında, çocuklarının senden ne hakkında hikayeler anlatmanı isteyeceğini düşünüyorsunuz?"}}
+{{$122:= "Hayatını en iyi anlatan film hangisidir?"}}
+{{$123:= "Tanışıp konuştuğun en ilginç kişi kimdi?"}}
+{{$124:= "Zamanda geriye gidip ebeveynlerine sen doğmadan önce öğüt verebilseydin, onlara ne öğüt verirdin?"}}
+{{$125:= "Öğrenmek zorunda kaldığın en zor ders neydi?"}}
+{{$126:= "Şu anda gerçekten popüler olan ama 5 yıl sonra herkesin geriye bakıp beğendiği için utanacağı şey nedir?"}}
+{{$127:= "En çok değer verdiğin eşyan nedir?"}}
+{{$128:= "Mezar taşında ne yazsın isterdin?"}}
+{{$129:= "Sevmek için kendini zorladığın ancak bir türlü sevemedigin şey nedir?"}}
+{{$130:= "Nefret ettiğin ama yine de kullandığın bir uygulama var mı?"}}
+
+ {{ $c := ( cslice $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20 $21 $22 $23 $24 $25 $26 $27 $28 $29 $30 $31 $32 $33 $34 $35 $36 $37 $38 $39 $40 $41 $42 $43 $44 $45 $46 $47 $48 $49 $50 $51 $52 $53 $54 $55 $56 $57 $58 $59 $60 $61 $62 $63 $64 $65 $66 $67 $68 $69 $70 $71 $72 $73 $74 $75 $76 $77 $78 $79 $80 $81 $82 $83 $84 $85 $86 $87 $88 $89 $90 $91 $92 $93 $94 $95 $96 $97 $98 $99 $100 $101 $102 $103 $104 $105 $106 $107 $108 $109 $110 $110 $111 $112 $113 $114 $115 $116 $117 $18 $119 $120 $121 $122 $123 $124 $125 $126 $127 $128 $129 $130 ) }}
+ {{ $br := (index (shuffle $c) 0)}}
+{{$x := sendMessageNoEscapeRetID 819774785944813599 (complexMessage "content" "<@&801530998076342272>" "embed" (cembed
+"title" "<:49lgbt:717604780645679127>  Günün Sorusu" 
+"description" (print "⠀\n**" $br "**" )
+"color" 16711680 
+"thumbnail" (sdict "url" "https://cdn.discordapp.com/attachments/814148673013284895/815165474698035200/iu-removebg-preview1.png")) )}}
+{{addMessageReactions 819774785944813599 $x "🛎️"}}
+{{editChannelTopic 819774785944813599 (print " " $br " " )}}
+{{dbDel 0 "soruodul"}}

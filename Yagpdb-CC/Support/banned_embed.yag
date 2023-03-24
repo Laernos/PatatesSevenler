@@ -1,0 +1,18 @@
+{{/*
+	Trigger: sssban
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$x := sendMessageRetID nil (cembed
+"title" "Sık Sorulan Sorular"
+ "description" "Aşağıdaki emojilere basarak soruların cevaplarını öğrenebilirsiniz!" 
+"author" (sdict "name" "DESTEK" "url" "https://www.youtube.com/watch?v=q7uyKYeGPdE" "icon_url" "https://imgur.com/TdzqysZ.gif") 
+"footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+"fields" (cslice 
+        (sdict "name" "⠀" "value" "**1️⃣ Neredeyim?\n2️⃣ Neden ban yedim?\n3️⃣ Ban affı var mı?\n4️⃣ Hayır bu bir hata ben suçsuzum!\n5️⃣ Çık gir yapsam?**" "inline" true) 
+    ) 
+"color" 16711680)}}
+{{addMessageReactions nil $x "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣"}}

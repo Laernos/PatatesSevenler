@@ -1,0 +1,120 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$user := (.Reaction.UserID) }}
+{{$cid := 833314146250129439}}{{$mid := ""}}{{$en := .Reaction.Emoji.Name}}{{$an := .Reaction.Emoji.ID}}
+{{$coin := (dbGet $user "replo").Value}}
+{{$id:= ""}}
+{{$rol:= ""}}
+{{$renklistesi:= ""}}
+{{$embed := ""}}
+{{$f := ""}}{{$ff := ""}}
+{{$r := ""}}
+{{$w := ""}}
+{{$roller := cslice  742929006189346937 748741408227328100 748741293475102750 748743181658751109 748743486664081449 748744657214898217 748274435827695789 748274403309125654 801531015889682433 801531014979649557 750537989532418081 750542146536472668 752252668885467238 750534281532801105 750538226116067408 752974102926590073 752974599850819728 801531000550588446 801530999292297216 792074437897486386 749353858693726379 749360419751329883 749360210283462726 749360627557859368 749360753798021140 749360824707186798 748274507222876191 748274376180236380 749338009018695852 801531014756171797 749360904738701422 750539584143884378 750542470328090695 750541922006990849 750539853862535238 750539685998362694 752974410113089716 752974840507400293 801530999573708861 748609472770998454 751426724369137686}}
+
+{{if not (dbGet .User.ID "renklistesi")}}
+    {{dbSet .User.ID "renklistesi" cslice}}
+{{end}}
+
+{{$renklistesi := cslice.AppendSlice (dbGet .User.ID "renklistesi").Value}}
+
+{{if eq .Message.ID 866352594070405160}}
+{{if eq $en "1️⃣"}}{{$id = "1️⃣"}}{{$rol = cslice 742929006189346937 749353858693726379}}{{else if eq $en "2️⃣"}}{{$id = "2️⃣"}}{{$rol = cslice 748741408227328100 749360419751329883}}{{else if eq $en "3️⃣"}}{{$id = "3️⃣"}}{{$rol = cslice 748741293475102750 749360210283462726}}{{else if eq $en "4️⃣"}}{{$id = "4️⃣"}}{{$rol = cslice 748743181658751109 749360627557859368}}{{else if eq $en "5️⃣"}}{{$id = "5️⃣"}}{{$rol = cslice 748743486664081449 749360753798021140}}{{else if eq $en "6️⃣"}}{{$id = "6️⃣"}}{{$rol = cslice 748744657214898217 749360824707186798}}{{else if eq $en "7️⃣"}}{{$id = "7️⃣"}}{{$rol = cslice 748274435827695789 748274507222876191}}{{else if eq $en "8️⃣"}}{{$id = "8️⃣"}}{{$rol = cslice 748274403309125654 748274376180236380}}{{else if eq $en "9️⃣"}}{{$id = "9️⃣"}}{{$rol = cslice 801531015889682433 749338009018695852}}{{else if eq $en "🔟"}}{{$id = "🔟"}}{{$rol = cslice 801531014979649557 801531014756171797}}{{end}}{{$mid = "866352594070405160"}}{{$f = "5,000"}}{{$ff = 5000}}{{$r = 16447993}}{{$w = "https://imgur.com/BZdgkxJ.png"}}
+{{$embed = sdict
+    "title" "<a:chain:718347214123958284>⠀ AYRAÇLAR ⠀<a:chain:718347214123958284>"
+    "description" "```1️⃣ ・・・・・・・・・・・・・・・```"
+    "fields" (cslice
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```2️⃣ »»»————————⍟⍟————————«««```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```3️⃣ ｡☆✼★━━━━━━━━━★✼☆｡```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```4️⃣ ‿︵‿︵‿︵‿︵‿︵‿︵‿︵‿```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```5️⃣ ▼△▼△▼△▼△▼△▼△▼△▼△▼△▼△▼△```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```6️⃣ ততততততততততততততততততত```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```7️⃣ •❅──────✧❅✦✦❅✧──────❅•```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```8️⃣ ⚛》》》》》》◆《《《《《《⚛```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```9️⃣ ❢◥ ▬▬▬▬▬▬♫♪♪♪♫▬▬▬▬▬▬ ◤❢```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "```🔟 ◑ ━━━━━\\(•◡•)/━━━━━ ◐```" "inline" false )             )
+    "color" 16447993
+    "image" (sdict "url" "https://cdn.discordapp.com/attachments/785136323567681576/838426271213027348/divider.gif")
+     "footer" (sdict "text" "Her bir ayrac 2000 coindir. " "icon_url" "https://imgur.com/BZdgkxJ.png")
+	}}
+{{end}}
+
+{{if eq .Message.ID 866353275628552192}}
+{{if eq $en "🥔"}}{{$id = "🥔"}}{{$rol = cslice 750537989532418081 750539584143884378}}{{else if eq $en "🔥"}}{{$id = "🔥"}}{{$rol = cslice 750542146536472668 750542470328090695}}{{else if eq $en "💰"}}{{$id = "💰"}}{{$rol = cslice 752252668885467238 750541922006990849}}{{else if eq $en "🌸"}}{{$id = "🌸"}}{{$rol = cslice 750534281532801105 750539853862535238}}{{else if eq $an 866121033340813322}}{{$id = "❤️️"}}{{$rol = cslice 750538226116067408 750539685998362694}}{{else if eq $en "🍋"}}{{$id = "🍋"}}{{$rol = cslice 752974102926590073 752974410113089716}}{{else if eq $en "🍉"}}{{$id = "🍉"}}{{$rol = cslice 752974599850819728 752974840507400293}}{{else if eq $en "♿"}}{{$id = "♿"}}{{$rol = cslice 801531000550588446 801530999573708861}}{{else if eq $en "💩"}}{{$id = "💩"}}{{$rol = cslice 801530999292297216 748609472770998454}}{{else if eq $en "⭐"}}{{$id = "⭐"}}{{$rol = cslice 792074437897486386 751426724369137686}}{{end}}{{$mid = "866353275628552192"}}{{$f = "15,000"}}{{$ff = 15000}}{{$r = 595008}}{{$w = "https://imgur.com/7UuDGyR.png"}}
+{{$embed = sdict
+"title" "<a:chain2:865981623840931861>⠀ ÖZEL AYRAÇLAR ⠀<a:chain2:865981623840931861>"
+    "description" "``` 🥔 🥔 🥔 🥔 🥔 🥔 🥔 🥔 🥔```"
+    "fields" (cslice
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` 💰 💰 💰 💰 💰 💰 💰 💰 💰```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` ❤️️ 💙 🧡 💚 💛 💜 ❤️️ 💙 🧡```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` 🍋 🍋 🍋 🍋 🍋 🍋 🍋 🍋 🍋```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` 🍉 🍉 🍉 🍉 🍉 🍉 🍉 🍉 🍉```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` ♿ ♿ ♿ ♿ ♿ ♿ ♿ ♿ ♿```" "inline" false)
+            (sdict "name" "━━━━━━━━━━━━━━━━━━" "value" "``` 💩 💩 💩 💩 💩 💩 💩 💩 💩```" "inline" false )             )
+    "color" 595008
+    "image" (sdict "url" "https://cdn.discordapp.com/attachments/785136323567681576/838426271213027348/divider.gif")
+     "footer" (sdict "text" "Her bir ayrac 2000 coindir. " "icon_url" "https://imgur.com/7UuDGyR.png")
+	}}
+{{end}}
+
+{{if and (or (in $renklistesi $id) (ge (toInt $coin) $ff))}}
+{{range $roller}}
+        {{if (not (in $rol .))}}
+            {{removeRoleID .}}
+        {{end}}
+    {{end}}       {{end}}  
+
+{{if (in $renklistesi $id)}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "ayracı sende zaten olduğu için verildi güle güle kullan.") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{range $rol }}
+{{giveRoleID $.User.ID .}}
+   {{end}}
+{{sleep 5}}
+{{$embed.Set "footer" (sdict "text" (print "Ücret:" " " $f " " "🥔") "icon_url" (print $w))}}
+{{editMessage $cid $mid (cembed $embed)}}
+
+{{else if  (ge (toInt $coin) $ff)}}
+{{$embed.Set "color" 4649232}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "ayracını satın aldın keselerine bereket.") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{$z := dbIncr .User.ID "replo" (toInt (print "-" ($ff)))}}
+{{range $rol }}
+{{giveRoleID $.User.ID .}}{{end}}
+  {{$renklistesi = $renklistesi.Append $id}}
+  {{dbSet .User.ID "renklistesi" $renklistesi}}
+{{sleep 5}}
+{{$embed.Set "color" $r}}
+{{$embed.Set "footer" (sdict "text" (print "Ücret:" " " $f " " "🥔") "icon_url" (print $w))}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{$emmbed := cembed 
+   "title" ""
+   "description" (print .User.Mention ", " $id " " "ayracını" " **" $f "** " "🥔 ödeyerek satın aldı.")
+   "color" 16711680
+   "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+   "timestamp" currentTime
+}}
+{{$b := sendMessageRetID 816476665118195762 $emmbed}}
+
+{{else if  (lt (toInt $coin) $ff)}}
+{{$embed.Set "color" 16711680}}
+{{$embed.Set "footer" (sdict "text" (print .User.Username ", " $id " " "ayracını alabilmek için yeterli coinin yok!") "icon_url" (.User.AvatarURL "256"))}}
+		{{editMessage $cid $mid (cembed $embed)}}
+{{sleep 5}}
+{{$embed.Set "footer" (sdict "text" (print "Ücret:" " " $f " " "🥔") "icon_url" (print $w))}}
+{{$embed.Set "color" $r}}
+{{editMessage $cid $mid (cembed $embed)}}
+{{deleteMessageReaction $cid $mid .User.ID .Reaction.Emoji.Name}}
+{{end}}
+
+ 

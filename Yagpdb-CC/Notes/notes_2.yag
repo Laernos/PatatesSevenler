@@ -1,0 +1,132 @@
+{{/*
+	Trigger: ^!(notal|notsil)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if eq .Cmd "!notal"}}
+    {{$args := parseArgs 2 "**Örnek:** `!notal <notismi> <notunuz>`"
+      (carg "string" "isim")
+      (carg "string" "not")}}
+    
+    {{$not1 := (str (dbGet .User.ID "not1isim").Value)}}
+    {{$not2 := (str (dbGet .User.ID "not2isim").Value)}}
+    {{$not3 := (str (dbGet .User.ID "not3isim").Value)}}
+    
+    {{if and ($not1) (eq ($args.Get 0) $not1)}}
+    {{$embed := cembed 
+        "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+        "description" (print .User.Mention " " "`" ($args.Get 0) "` zaten isminde bir notunuz var!")
+        "color" 16711680
+        }}
+    {{$a := sendMessageRetID nil $embed}}
+    {{deleteTrigger 0}}
+    {{deleteMessage nil $a 15}}
+    {{else if and ($not2) (eq ($args.Get 0) $not2)}}
+    {{$embed := cembed 
+        "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+        "description" (print .User.Mention " " "`" ($args.Get 0) "` zaten isminde bir notunuz var!")
+        "color" 16711680
+        }}
+    {{$a := sendMessageRetID nil $embed}}
+    {{deleteTrigger 0}}
+    {{deleteMessage nil $a 15}}
+    {{else if and ($not3) (eq ($args.Get 0) $not3)}}
+    {{$embed := cembed 
+        "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+        "description" (print .User.Mention " " "`" ($args.Get 0) "` zaten isminde bir notunuz var!")
+        "color" 16711680
+        }}
+    {{$a := sendMessageRetID nil $embed}}
+    {{deleteTrigger 0}}
+    {{deleteMessage nil $a 15}}
+    {{else if not ($not1)}}
+    {{dbSet .User.ID "not1isim" ($args.Get 0)}}
+    {{dbSet .User.ID "not1" ($args.Get 1)}}
+    {{$time := formatTime currentTime "02/01/2006"}}
+    {{dbSet .User.ID "not1tarih" $time}}
+    {{$a := sendMessageRetID nil (print  .User.Mention " " "Notunuz kaydedildi! Okumak için `!notlarım`")}}
+    {{deleteMessage nil $a 10}}
+    {{deleteTrigger 0}}
+    {{$embed := cembed 
+        "title" "Not Kaydedildi"
+        "description" (print "**" ($args.Get 0) "**\n```" ($args.Get 1) "```")
+        "color" 16711680
+       "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+        }}
+    {{$d := sendMessageRetID 830770595121332254 $embed}}
+    {{else if not ($not2)}}
+    {{dbSet .User.ID "not2isim" ($args.Get 0)}}
+    {{dbSet .User.ID "not2" ($args.Get 1)}}
+    {{$time := formatTime currentTime "02/01/2006"}}
+    {{dbSet .User.ID "not2tarih" $time}}
+    {{$a := sendMessageRetID nil (print  .User.Mention " " "Notunuz kaydedildi! Okumak için `!notlarım`")}}
+    {{deleteMessage nil $a 10}}
+    {{deleteTrigger 0}}
+    {{$embed := cembed 
+        "title" "Not Kaydedildi"
+        "description" (print "**" ($args.Get 0) "**\n```" ($args.Get 1) "```")
+        "color" 16711680
+       "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+        }}
+    {{$d := sendMessageRetID 830770595121332254 $embed}}
+    {{else if not ($not3)}}
+    {{dbSet .User.ID "not3isim" ($args.Get 0)}}
+    {{dbSet .User.ID "not3" ($args.Get 1)}}
+    {{$time := formatTime currentTime "02/01/2006"}}
+    {{dbSet .User.ID "not3tarih" $time}}
+    {{$a := sendMessageRetID nil (print  .User.Mention " " "Notunuz kaydedildi! Okumak için `!notlarım`")}}
+    {{deleteMessage nil $a 10}}
+    {{deleteTrigger 0}}
+    {{$embed := cembed 
+        "title" "Not Kaydedildi"
+        "description" (print "**" ($args.Get 0) "**\n```" ($args.Get 1) "```")
+        "color" 16711680
+       "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+       "footer" (sdict "text" (print "🆔" " " "" .User.ID))
+       "timestamp" currentTime
+        }}
+    {{$d := sendMessageRetID 830770595121332254 $embed}}
+    {{else}}
+    3 notunuzun ucunu de doldurunuz.
+    {{end}}{{end}}
+    
+    {{$not1 := (str (dbGet .User.ID "not1isim").Value)}}
+    {{$not2 := (str (dbGet .User.ID "not2isim").Value)}}
+    {{$not3 := (str (dbGet .User.ID "not3isim").Value)}}
+    
+     {{if eq .Cmd "!notsil"}}
+    {{$args := parseArgs 2 "Notunuzun ismini giriniz."
+      (carg "string" "notismi")}}
+    
+    {{if and ($not1) (eq ($args.Get 0) $not1)}}
+    {{dbDel .User.ID "not1isim"}}
+    {{dbDel .User.ID "not1"}}
+    {{.User.Mention}} `{{$args.Get 0}}` adlı notunuz silindi.
+    {{else if and (dbGet .User.ID "not2isim") (eq ($args.Get 0) $not2)}}
+    {{dbDel .User.ID "not2isim"}}
+    {{dbDel .User.ID "not2"}}
+    {{.User.Mention}} `{{$args.Get 0}}` adlı notunuz silindi.
+    {{else if and (dbGet .User.ID "not3isim") (eq ($args.Get 0) $not3)}}
+    {{dbDel .User.ID "not3isim"}}
+    {{dbDel .User.ID "not3"}}
+    {{.User.Mention}} `{{$args.Get 0}}` adlı notunuz silindi.
+    {{else}}
+    {{$embed := cembed 
+        "title" "<a:41uyari:717625116800057365>  DİKKAT  <a:41uyari:717625116800057365>"
+        "description" (print .User.Mention " " "`" ($args.Get 0) "` isminde bir notunuz bulunamadı!")
+        "color" 16711680
+        }}
+    {{$a := sendMessageRetID nil $embed}}
+    {{deleteTrigger 0}}
+    {{deleteMessage nil $a 15}}
+    {{end}}{{end}}
+    
+    
+    

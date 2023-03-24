@@ -1,0 +1,132 @@
+{{/*
+	Trigger: ^!(banac|banaç)
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "**Örnek Kullanım:** `!banaç <@kişi/id> [sebep]`"
+    (carg "userid" "User Ping")
+    (carg "string" "Reason")
+}}
+
+{{ $user := userArg ($args.Get 0) }}
+{{ $reason := (print "`" ($args.Get 1) "`")}}
+{{if not ($args.Get 1)}}
+{{$reason =  "<:sebepyok:870841335878389880>" }}
+{{end}}
+{{ $status := (index ((structToSdict (exec "whois" $user.ID)).Get "Fields") 6).Value }}
+
+
+{{ $dec := (print $user.Mention " **kişisinin banı " .User.Mention "  tarafından "  $reason " sebebiyle affedilmiştir!**")}}
+{{$rol := 707217352751710298}}
+{{ $th := "https://imgur.com/FsaeNWM.png"}}
+{{ $t := "<:greenn:871138843510837249>  __UNBAN__  <:greenn:871138843510837249>"}}
+{{ $mid := "743867397416419498"}}
+
+
+{{if (targetHasRoleID $user.ID 801530973467705395)}}
+{{ $dec = (print $user.Mention " **kişisinin kısıtlaması " .User.Mention "  tarafından "  $reason " sebebiyle kaldırılmıştır!**")}}
+{{ $rol = 801530973467705395}}
+{{ $th = "https://imgur.com/FsaeNWM.png"}}
+{{ $t = "<:greenn:871138843510837249>  __KISITLAMA UNBAN__ <:greenn:871138843510837249>"}}
+
+
+{{else if and (not (targetHasRoleID $user.ID 707217352751710298)) (targetHasRoleID $user.ID 785872902284247060)}}
+{{ $dec = (print $user.Mention " **kişisinin ticket banı " .User.Mention "  tarafından "  $reason " sebebiyle kaldırılmıştır!**")}}
+{{ $rol = 785872902284247060}}
+{{ $th = "https://imgur.com/FsaeNWM.png"}}
+{{ $t = "<:greenn:871138843510837249>  __TICKET UNBAN__ <:greenn:871138843510837249>"}}
+{{end}}
+
+{{if not (or (hasRoleID 560140473168297987) (hasRoleID 704401505444298762) (hasRoleID 719250769152442408))}}
+  {{$d := sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **Yetkin yok kankam!**")}}
+  {{deleteMessage nil $d 5}}
+{{else if not (or (targetHasRoleID $user.ID 707217352751710298) (targetHasRoleID $user.ID 801530973467705395) (targetHasRoleID $user.ID 785872902284247060))}}
+{{$d := sendMessageRetID nil (print "> <:yetkili:868485731906113556> " .User.Mention ", **kişisi banlanmış veya kısıtlanmış değil!**")}}
+  {{deleteMessage nil $d 5}}
+{{else if (reFind `(?i)(discord.gg|gg/)` $status)}}
+  {{$d := sendMessageRetID nil (print "> <:yetkili:868485731906113556> " $user.Mention ", **kişisinin durumunda hala reklam bulunmaktadır!**\n `" $status "`")}}
+  {{deleteMessage nil $d 10}}
+
+{{else if  (targetHasRoleID $user.ID 785872902284247060)}}
+
+{{$embed := cembed 
+    "title" ""
+    "description" (print $dec)
+    "color" 4437377
+    "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif")
+    "thumbnail" (sdict "url" (print $th))
+}}
+{{$b := sendMessageRetID nil $embed}}
+{{deleteMessage nil $b 30}}
+
+{{if (dbGet $user.ID "roller")}}
+{{$x:=(cslice).AppendSlice (dbGet $user.ID "roller").Value}}
+{{range $x}}
+{{giveRoleID $user.ID .}}
+{{end}}{{end}}
+{{takeRoleID $user 785872902284247060}}
+{{takeRoleID $user 707217352751710298}}
+{{takeRoleID $user 801530973467705395}}
+{{dbDel $user.ID "roller"}}
+{{$embed := cembed 
+    "title" (print $t)
+    "description" (print "<:adam:870847900182265906> **KİŞİ: ** " $user.Mention ", " $user.String "\n<:logg:871124360918872064> " "[**SEBEP**](" (exec "logs") ")" ": " $reason )
+    "color" 4437378
+    "thumbnail" (sdict "url" ($user.AvatarURL "4096"))
+    "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" $user.ID))
+   "timestamp" currentTime
+}}
+{{$c := sendMessageRetID $mid $embed}}
+{{deleteTrigger 0}}
+
+{{else}}
+
+{{$embed := cembed 
+    "title" ""
+    "description" (print $dec)
+    "color" 4437377
+    "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif")
+    "thumbnail" (sdict "url" (print $th))
+}}
+{{$b := sendMessageRetID nil $embed}}
+{{deleteMessage nil $b 30}}
+
+{{$x:=(cslice).AppendSlice (dbGet $user.ID "roller").Value}}
+{{range $x}}
+{{giveRoleID $user.ID .}}
+{{end}}
+{{takeRoleID $user $rol}}
+{{takeRoleID $user 785872902284247060}}
+{{takeRoleID $user 707217352751710298}}
+{{takeRoleID $user 801530973467705395}}
+{{dbDel $user.ID "roller"}}
+{{dbDel $user.ID "bansebep"}}
+{{dbDel $user.ID "banmod"}}
+{{dbDel $user.ID "bantarih"}}
+{{dbDel $user.ID "durumsebep"}}
+
+{{$embed := cembed 
+    "title" (print $t)
+    "description" (print "<:adam:870847900182265906> **KİŞİ: ** " $user.Mention ", " $user.String "\n<:logg:871124360918872064> " "[**SEBEP**](" (exec "logs") ")" ": " $reason )
+    "color" 4437378
+    "thumbnail" (sdict "url" ($user.AvatarURL "4096"))
+    "author" (sdict "name"  .User.String "icon_url" (.User.AvatarURL "64"))
+   "footer" (sdict "text" (print "🆔" " " "" $user.ID))
+   "timestamp" currentTime
+}}
+{{$c := sendMessageRetID $mid $embed}}
+{{deleteTrigger 0}}
+{{$bantest := or (dbGet 0 "bantest").Value cslice}}
+{{$_bantest := cslice}}
+{{range $bantes := $bantest}}
+{{  if ne $bantes $user.ID}}
+ {{   $_bantest = $_bantest.Append $bantes}}
+ {{ end}}
+{{end}}
+{{$bantest = cslice.AppendSlice $_bantest}}
+{{dbSet 0 "bantest" $bantest}}
+{{end}}

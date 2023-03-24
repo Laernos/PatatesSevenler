@@ -1,0 +1,20 @@
+{{/*
+	Trigger: twitter
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$args := parseArgs 1 "**Örnek Kullanım:** `!twitter <hesabınız>`"
+    (carg "string" "twit")
+}}
+{{dbSet .User.ID "twitter" ($args.Get 0)}}
+{{$embed := cembed 
+    "title" "<:twitter:829699547336278067>  Twitter  <:twitter:829699547336278067>"
+    "description" (print .User.Mention " Twitter hesabınız" " `" (str (dbGet .User.ID "twitter").Value) "` " "olarak kimliğinize eklenmistir.")
+    "color" 16711680
+	}}
+{{$d := sendMessageRetID nil $embed}}
+{{deleteMessage nil $d 15}}
+{{$a := sendMessageRetID 786000208706273360 (print " ___" .User.Mention "___\n> <:twitter:829699547336278067> `" ($args.Get 0) "`")}}

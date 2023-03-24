@@ -1,0 +1,44 @@
+{{/*
+	Trigger: evlen
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{if not ($pending := dbGet .User.ID "Marriage")}}
+    {{if .Message.Mentions}}
+        {{$target := (index .Message.Mentions 0)}}
+            {{if $targetmarriage := dbGet $target.ID "marriage"}}
+                {{print $target.Username " zaten evli birisi!"}}
+            {{else}}
+                {{if $targetpending := dbGet $target.ID "Proposal"}}
+                    {{print $target.Username " zaten beklemede olan bir teklife sahip!"}}
+                {{else}}
+                    {{if eq $target.ID .User.ID}}
+                        {{print "Biliyorum yalnızsın ama kendinle evlenemezsin, YIKIIKK!"}}
+                    {{else}}
+                    {{$embed := (cembed 
+                    "title" (print .User.Username "," " " $target.Username " " "kişisiyle evlenmek istiyor.") 
+                    "description" ""
+   		 "color" 16711680
+		"image" (sdict "url" "https://imgur.com/kncxcZ9.gif")
+		"footer" (sdict "text" "Teklifin 2 dakika sonra süresi dolacak." "icon_url" "https://imgur.com/aHDM7fE.png") 
+                    "fields" (cslice
+                        (sdict "name" "Şimdi ne olacak?" "value" "Teklifi **!kabulet** veya **!reddet** ile yanıtlayabilirsiniz." "inline" false))
+                                )
+                    }}
+                {{sendMessage nil $embed}}
+                    {{dbSetExpire $target.ID "Proposal" (str .User.ID) 120}}
+                {{end}}
+            {{end}}
+        {{end}}
+    {{else}}
+        Örnek Kullanım: `!evlen @kişi`
+     {{end}}
+{{else}}
+{{$mention := ""}}
+{{if $marriage := dbGet .User.ID "Marriage"}} {{$mention = (print "<@" (toInt $marriage.Value) ">")}}
+{{end}}
+{{sendMessage nil (print "**Evliyken evlenmek? Kuma mı arıyosun hayırdır?**\n" $mention " " "seninki çapkın çıktı söylim.") }}
+{{end}}

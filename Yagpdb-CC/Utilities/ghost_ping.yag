@@ -1,0 +1,74 @@
+{{/*
+	Trigger: <@!?\d{17,19}>
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{ $CHECK := true }}
+{{ $LOG := true }}
+{{ $user := userArg  .ExecData.author }}
+{{ if .ExecData }}
+	{{ $mentions := "" }} {{ $ping := false }}
+	{{ if ($m := getMessage nil .ExecData.message) }}
+		{{ if not $m.Mentions }}
+			{{ $ping = true }}
+		{{ end }}
+	{{ else }}
+		{{ $ping = true }}
+	{{ end }}
+
+	{{ if $ping }}
+		{{ if gt (len .ExecData.mentions) 1 }}
+			{{ range .ExecData.mentions }}
+				{{- $mentions = joinStr ">, <@" $mentions . -}}
+			{{ end }}
+		{{ else }}
+			{{ $mentions = index .ExecData.mentions 0 }}
+		{{ end }}
+
+		{{ $col := 16777215 }} {{ $p := 0 }} {{ $r := .Member.Roles }}
+		{{ range .Guild.Roles }}
+			{{- if and (in $r .ID) (.Color) (lt $p .Position) -}}
+				{{- $p = .Position -}}
+				{{- $col = .Color -}}
+			{{- end -}}
+		{{ end }}
+
+		{{ $log := "" }}
+		{{ if $LOG }}
+			{{ $log = print "\n**Loglar:** [Mesaj Logları](" (exec "logs") ")" }}
+		{{ end }}
+
+		{{ $embed := cembed
+			"description" (print "**Kişi: **<@" .ExecData.author ">\n**Kanal:** <#" .Channel.ID ">\n**Mesaj:**\n" .ExecData.content "\n\n**Etiketlenenler:** <@" $mentions ">" $log)
+			"color" $col
+  			  "author" (sdict "name"  $user.String "icon_url" ($user.AvatarURL "64"))
+			"footer" (sdict "text" (print "🆔 " .ExecData.author ))
+			"timestamp" currentTime }}
+
+		{{ $msgContent := print "" }}
+
+		{{ sendMessage 813083124762148955 (complexMessage "content" $msgContent "embed" $embed) }}
+	{{ else }}
+		{{ if and $CHECK (not .ExecData.break) }}
+			{{ $ids := cslice }}
+
+			{{ range .Message.Mentions }}
+				{{- $ids = $ids.Append (str .ID) -}}
+			{{ end }}
+
+			{{ execCC .CCID nil 5 (sdict "message" .Message.ID "author" .Message.Author.ID "mentions" $ids "content" .Message.Content "break" true) }}
+		{{ end }}
+	{{ end }}
+{{ else }}
+	{{ if .Message.Mentions }}
+		{{ $ids := cslice }}
+		{{ range .Message.Mentions }}
+			{{ $ids = $ids.Append (str .ID) }}
+		{{ end }}
+
+		{{ execCC .CCID nil 5 (sdict "message" .Message.ID "author" .Message.Author.ID "mentions" $ids "content" .Message.Content "break" false) }}
+	{{ end }}
+{{ end }}

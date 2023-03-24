@@ -1,0 +1,180 @@
+{{/*
+	Trigger: .*
+	Trigger Type: Regex
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$a:=.Message.Author}}
+{{$b:=false}}
+{{$c:=1}}
+{{$d:=print "🤩 Sunucumuzu boostladığın için teşekkürler!" $a.Mention}}
+{{$e:=`🎉`}}
+{{$f:=print "🤩 Sunucumuzu boostladığın için teşekkürler!" $a.Mention " :tada:"}}
+{{$g:=`🎉`}}
+{{$h:=print "🤩 Sunucumuzu boostladığın için teşekkürler!" $a.Mention " <:PandaLove:700744046209007677>"}}
+{{$i:=`:PandaExcited:700744312907890806`}}
+{{$j:=print "🤩 Sunucumuzu boostladığın için teşekkürler!" $a.Mention " <:happypeepo:705145174434775121>"}}
+{{$k:=`:Poggers:705145645710835722`}}
+{{$l:=.Message.Type}}
+{{if or (eq $l 8) (eq $l 9) (eq $l 10) (eq $l 11)}}
+{{$m:=""}}
+{{$n:=``}}
+     {{if eq $l 8}}
+     {{$m =$d}}
+     {{$n =$e}}
+          {{else if eq $l 9}}
+          {{$m =$f}}
+          {{$n =$g}}
+          {{else if eq $l 10}}
+          {{$m =$h}}
+          {{$n =$i}}
+     {{else if eq $l 11}}
+     {{$m =$j}}
+     {{$n =$i}}
+{{end}}
+
+{{sendMessage 592651311665643530 $m}}
+{{addReactions $n}}
+
+{{$o:=cembed "title" "" "description" (print $a.Mention ", sunucuyu boostladığı için **50,000** 🥔 kazandı.") "color" 2948615 "author" (sdict "name" $a.String "icon_url" ($a.AvatarURL "64")) "footer" (sdict "text" (print "🆔" " " "" $a.ID)) "timestamp" currentTime}}
+{{$p:=sendMessageRetID 816476665118195762 $o}}
+{{$q:=dbIncr $a.ID "replo" 50000}}
+ {{$r:=sendMessageRetID 817587040254165033 (print "**" $a.Mention " " "**Sunucuyu boostladı!")}}
+{{end}}
+
+{{$s:=.User.ID}}
+{{$t:=(index ((structToSdict (exec "whois" $s)).Get "Fields") 6).Value}}
+{{$u:=583373453218807858}}
+{{$v:=801530973467705395}}
+{{$w:=707217352751710298}}
+{{$x:=0}}{{$y:=0}}{{$z:=0}}{{$A:=0}}{{$B:=0}}
+
+{{if and (or (and (reFind `(?i)patatessevenler.com` $t) (not (hasRoleID $u))) (and (not (reFind `(?i)patatessevenler.com` $t)) (hasRoleID $u)))}}
+    {{if and (reFind `(?i)patatessevenler.com` $t) (not (hasRoleID $u))}}
+        {{giveRoleID $s $u}}
+        {{$x =(print .User.Mention " " "**durumuna [patatessevenler.com](https://patatessevenler.com) yazarak bizleri desteklediğin için 🔥Alfa Patates rolünü kazandın!**")}}
+        {{$y ="kazandi"}}
+    {{else if and (not (reFind `(?i)patatessevenler.com` $t)) (hasRoleID $u)}}
+        {{takeRoleID $s $u}}
+        {{$x =(print .User.Mention " " "**durumundan [patatessevenler.com](https://patatessevenler.com) yazısını sildiğin için malesef 🔥Alfa Patates rolünü kaybettin!**")}}
+        {{$y ="kaybetti"}}
+    {{end}}
+
+ {{$o:=cembed "title" "" "description" (print $x) "color" 16579594 "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif") "thumbnail" (sdict "url" "https://imgur.com/SmcZ3Vq.gif")}}
+{{$r:=sendMessageRetID nil $o}}
+{{deleteMessage nil $r 10}}
+
+{{$o:=cembed "title" "<a:status:807849044244168724> DURUM" "description" (print .User.Mention " " "**durumu ile <@&583373453218807858> rolünü " $y " !**\n`" $t "`") "color" 4437377 "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "64")) "thumbnail" (sdict "url" "https://imgur.com/uSNlKmw.png") "footer" (sdict "text" (print "🆔" " " "" .User.ID)) "timestamp" currentTime}}
+{{$r:=sendMessageRetID 808037798664732682 $o}}
+{{end}}
+
+{{if and (not (hasRoleID $w)) (or (and (reFind `(?i)(c7k|allahini|allahını)` $t) (not (hasRoleID $w))) (and (reFind `(?i)(discord.gg|gg/)` $t) (not (hasRoleID $v))) (and (not (reFind `(?i)(discord.gg|gg/)` $t)) (hasRoleID $v)))}}
+    {{if and (reFind `(?i)(discord.gg|gg/)` $t) (not (hasRoleID $v))}}
+        {{giveRoleID $s $v}}
+        {{$x =(print .User.Mention " " "**durumuna sunucu davet linki yazdığın için sunucudan kısıtlanarak 😡Reklamcı rolünü aldın!**\n`" $t "`")}}
+        {{$z ="<:kisit:871115322093076551>  __KISITLAMA__  <:kisit:871115322093076551>"}}
+        {{$B ="https://imgur.com/r2VOywK.png"}}
+        {{$A =16711680}}
+        {{$C:=formatTime currentTime "Jan 02, 2006"}}
+            {{dbSet .User.ID "bansebep" "Durum Reklam"}}
+            {{dbSet .User.ID "banmod" "204255221017214977"}}
+            {{dbSet .User.ID "bantarih" $C}}
+            {{dbSet .User.ID "durumsebep" $t}}
+                {{$E:=getMember .User.ID}}
+                {{dbSet .User.ID "roller" $E.Roles}}
+                {{setRoles $s (cslice $v)}}
+    {{else if and (not (reFind `(?i)(discord.gg|gg/)` $t)) (hasRoleID $v)}}
+        {{$x =(print .User.Mention " " "**durumundan sunucu davet linkini kaldırdığın için 😡Reklamcı rolün alındı, aramıza yeniden hoş geldin! 🎉**")}}
+        {{$z ="<:greenn:871138843510837249>  __KISITLAMA UNBAN__  <:greenn:871138843510837249>"}}
+        {{$B ="https://imgur.com/FsaeNWM.png"}}
+        {{$A =4437378}}
+            {{dbDel .User.ID "bansebep"}}
+            {{dbDel .User.ID "banmod"}}
+            {{dbDel .User.ID "bantarih"}}
+            {{dbDel .User.ID "durumsebep"}}
+                {{$F:=(cslice).AppendSlice (dbGet .User.ID "roller").Value}}
+                {{range $F}}
+                {{giveRoleID $s .}}
+                {{end}}
+                {{takeRoleID $s $v}}
+    {{else if and (reFind `(?i)(c7k|allahini|allahını)` $t) (not (hasRoleID $w))}}
+        {{giveRoleID $s $w}}
+        {{$x =(print .User.Mention " **kişisi 🤖 Oto Mod tarafından `Durumda Yasaklı Kelime Kullanımı` sebebiyle banlandı!**")}}
+        {{$z ="<:ban:870833951806218250>  __BAN__  <:ban:870833951806218250>"}}
+        {{$B ="https://imgur.com/pH00Lsc.png"}}
+        {{$A =16711680}}
+        {{$C:=formatTime currentTime "Jan 02, 2006"}}
+            {{dbSet .User.ID "bansebep" "Durumda Yasaklı Kelime"}}
+            {{dbSet .User.ID "banmod" "204255221017214977"}}
+            {{dbSet .User.ID "bantarih" $C}}
+            {{dbSet .User.ID "durumsebep" $t}}
+                {{$E:=getMember .User.ID}}
+                {{dbSet .User.ID "roller" $E.Roles}}
+                {{setRoles $s (cslice $w)}}
+    {{end}}
+
+{{$o:=cembed "title" "" "description" (print $x) "color" $A "author" (sdict "name" "Patates Sevenler Yönetim" "icon_url" "https://imgur.com/rZn87bF.gif") "thumbnail" (sdict "url" (print $B))}}
+{{$r:=sendMessageRetID nil $o}}
+{{deleteMessage nil $r 10}}
+
+{{$G:=cembed "title" (print $z) "description" (print "<:adam:870847900182265906> **KİŞİ: ** " .User.Mention ", " .User.String "\n<:logg:871124360918872064> " "**SEBEP**: Durum: `" $t "`") "color" $A "thumbnail" (sdict "url" (.User.AvatarURL "4096")) "author" (sdict "name" "YAGPDB.xyz#8760" "icon_url" "https://cdn.discordapp.com/avatars/204255221017214977/2fa57b425415134d4f8b279174131ad6.png?size=4096") "footer" (sdict "text" (print "🆔" " " "" .User.ID)) "timestamp" currentTime}}
+{{$r:=sendMessageRetID 743867397416419498 $G}}
+{{sendDM $G}}
+{{end}}
+
+{{$H:=10}} 
+{{$I:=20}}
+{{if (reFind `(?i)patatessevenler.com` $t)}}
+    {{$H =50}} 
+    {{$I =60}}
+{{end}}
+{{$J:=60}}
+{{if not (dbGet .User.ID "messagecooldown")}}
+{{$K:=randInt $H $I}}
+{{$L:=dbIncr .User.ID "replo" $K}}
+{{dbSetExpire .User.ID "messagecooldown" 1 $J}}
+{{end}}
+
+{{$a:="🥔"}}
+    {{$b:=""}}
+    {{$c:=""}}
+    {{if or (hasRoleID 719250769152442408) (hasRoleID 801530993982308402) (hasRoleID 801531017323479120) (hasRoleID 755869130812424333) (hasRoleID 801531016669429830)}}
+    {{if hasRoleID 719250769152442408}}
+        {{$c =10000}}{{$b ="Sekreter"}}
+    {{else if hasRoleID 801530993982308402}}
+        {{$c =8000}}{{$b ="Danışman"}}
+    {{else if hasRoleID 801531017323479120}}
+        {{$c =6000}}{{$b ="Etkinlikci"}}
+    {{else if hasRoleID 755869130812424333}}
+        {{$c =4000}}{{$b ="Kayıtçı"}}
+    {{else if hasRoleID 801531016669429830}}
+        {{$c =2000}}{{$b ="Partnerci"}}
+    {{end}}
+
+    {{if eq (toInt (dbGet .User.ID "dailycooldownn").Value) 0}}
+        {{$d:=dbIncr .User.ID "replo" $c}} 
+        {{dbSetExpire .User.ID "dailycooldownn" 1 604800}}
+        {{$e:=(cembed "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512")) "title" (print "Haftalık " $b " Maaşı") "color" 2948615 "description" (print "Maaşınız olan" " **" $c "** " " " $a " " "çuvalınıza yatırılmıştır."))}}
+        {{$f:=sendMessageRetID nil $e}}
+        {{deleteMessage nil $f 15}}
+        {{$g:=(cembed "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512")) "title" (print "Haftalık " $b " Maaşı") "color" 2948615 "description" (print .User.Mention " " "**" $c "** " " " $a " " "olan maaşı çuvalına yatırılmıştır."))}}
+        {{$h:=sendMessageRetID 816476665118195762 $g}}
+    {{end}}{{end}}
+
+{{if gt (toInt (dbGet .User.ID "replo").Value) 1000}}
+{{$M:="🥔"}}
+{{$N:=50}}
+{{if eq (toInt (dbGet .User.ID "dailycooldowwn").Value) 0}}
+{{$r:=(dbGet .User.ID "replo").Value}}
+{{$p:=(round (mult $r 0.90))}}
+{{$A:=sub $r $p}}
+{{dbSet .User.ID "replo" $p}}
+{{dbSetExpire .User.ID "dailycooldowwn" 1 604800}}
+{{$o:=(cembed "author" (sdict "name" (print "Vergi: " .User.Username) "icon_url" "https://imgur.com/vq1bX3o.png") "title" "" "color" 16711680 "description" (print "Verginiz olan" " **" $A "** " " " $M " " " kesilmiştir."))}}
+{{$P:=sendMessageRetID nil $o}}
+{{deleteMessage nil $P 15}}
+{{$Q:=(cembed "author" (sdict "name" .User.String "icon_url" (.User.AvatarURL "512")) "title" "" "color" 16711680 "description" (print .User.Mention ", " "**" $A "** " " " $M " " "olan vergisini ödemiştir."))}}
+{{$A:=sendMessageRetID 816476665118195762 $Q}}
+{{end}}{{end}}

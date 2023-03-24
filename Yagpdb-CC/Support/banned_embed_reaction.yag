@@ -1,0 +1,102 @@
+{{/*
+	Trigger: Added reactions only
+	Trigger Type: Reaction
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$x := sendMessageRetID nil (cembed
+"title" "Sık Sorulan Sorular"
+ "description" "Aşağıdaki emojilere basarak soruların cevaplarını öğrenebilirsiniz!" 
+"author" (sdict "name" "DESTEK" "url" "https://www.youtube.com/watch?v=q7uyKYeGPdE" "icon_url" "https://imgur.com/TdzqysZ.gif") 
+"footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+"fields" (cslice 
+        (sdict "name" "⠀" "value" "**1️⃣ Neredeyim?\n2️⃣ Neden ban yedim?\n3️⃣ Ban affı var mı?\n4️⃣ Hayır bu bir hata ben suçsuzum!\n5️⃣ Çık gir yapsam?**" "inline" true) 
+    ) 
+"color" 16711680)}}
+{{addMessageReactions nil $x "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣"}}
+
+{{$cid := .Reaction.ChannelID}}{{$mid := .Reaction.MessageID}}{{$en := .Reaction.Emoji.Name}}
+{{if eq .Message.Author.ID 204255221017214977}}
+	{{if (eq $en "1️⃣")}}
+		{{editMessage $cid $mid (cembed
+		"title" "1️⃣ Neredeyim?"
+		"description" "**Aramıza hoş geldin kader mahkumu kardeşimiz burası kimselerin olmadığı sadece güçlülerin hayatta kalabildiği bir alemdir.**"
+		"fields" (cslice 
+		(sdict "name" "📿 Hayatta Kalmak" "value" "1   | Ezilme Ez.\n2  | Kimseye acıma.\n3  | Sadece kendini düşün.\n4  | Fuat abiden uzak dur.\n⠀\n** <a:41uyari:717625116800057365> Acıma yetime döner koyar götüne!**" "inline" true)    ) 
+		"color" 0xffd984)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "❌"}}
+{{ $user := (.Reaction.UserID) }}
+	{{else if and (eq $en "2️⃣") (dbGet .Reaction.UserID "bantarih")}}
+{{ $user := (.Reaction.UserID) }}
+		{{editMessage $cid $mid (cembed
+		"title" "2️⃣ Neden ban yedim? "
+		"description" "**Birde utanmadan soruyo musun? Bilmem yemişsindir bir boklar!**"
+		"fields" (cslice 
+		(sdict "name" "📜│Patates Sevenler Anayasası" "value" "1  | Kışkırtıcı kelime kullanmak ve başkalarına saldırgan söylemlerde bulunmak.\n2  | Herhangi bir discord sunucusu reklamı yasaktır. (dm, durum, chat)\n3  | Davet ettiğiniz kişilerden sorumlusunuzdur.\n4  | Cinsel, kan, vahşet içerikli paylaşımlar yasak.\n5  | İllegal sayılacak işler yasak.\n6  | Din, dil, ırk ve siyaset içerikli konularda abartıya kaçmak kesinlikle yasaktır.\n6  | Herhangi bir odadaki insanları rahatsız etmek, trollemek yasaktır.\n7  | Büyük harf kullanımını abartmak yasaktır.\n8  | Gruplaşıp insanlara rahatsızlık vermek yasaktır.\n9  | Spam yasak.\n ⠀\n ** :octagonal_sign:  Ban Bilgi**" "inline" false) 
+	    (sdict "name" "Kişi:" "value" (print "<@" $user ">" " " "`" $user "`") "inline" true)
+            (sdict "name" "Mod:" "value" (print "<@" (str (dbGet ($user) "banmod").Value) ">" )  "inline" true)
+            (sdict "name" "Tarih:" "value" (print (str (dbGet ($user) "bantarih").Value))  "inline" true)
+            (sdict "name" "Sebep:" "value" (print "```" (str (dbGet ($user) "bansebep").Value) "```")  "inline" false)
+
+            )
+		"color" 0xffd984)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "❌"}}
+	{{else if and (eq $en "2️⃣") (not (dbGet .Reaction.UserID "bantarih"))}}
+{{ $user := (.Reaction.UserID) }}
+		{{editMessage $cid $mid (cembed
+		"title" "2️⃣ Neden ban yedim? "
+		"description" "**Birde utanmadan soruyo musun? Bilmem yemişsindir bir boklar!**"
+		"fields" (cslice 
+		(sdict "name" "📜│Patates Sevenler Anayasası" "value" "1  | Kışkırtıcı kelime kullanmak ve başkalarına saldırgan söylemlerde bulunmak.\n2  | Herhangi bir discord sunucusu reklamı yasaktır. (dm, durum, chat)\n3  | Davet ettiğiniz kişilerden sorumlusunuzdur.\n4  | Cinsel, kan, vahşet içerikli paylaşımlar yasak.\n5  | İllegal sayılacak işler yasak.\n6  | Din, dil, ırk ve siyaset içerikli konularda abartıya kaçmak kesinlikle yasaktır.\n6  | Herhangi bir odadaki insanları rahatsız etmek, trollemek yasaktır.\n7  | Büyük harf kullanımını abartmak yasaktır.\n8  | Gruplaşıp insanlara rahatsızlık vermek yasaktır.\n9  | Spam yasak.\n ⠀\n ** :octagonal_sign:  Ban Bilgi**" "inline" false) 
+	    (sdict "name" "Kişi:" "value" (print "<@" $user ">" " " "`" $user "`") "inline" true)
+            (sdict "name" "Sebep:" "value" (print "``` Ban Bilgisi Bulunamadı! ```")  "inline" false)
+
+            )
+		"color" 0xffd984)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "❌"}}
+	{{else if (eq $en "3️⃣")}}
+		{{editMessage $cid $mid (cembed
+		"title" "3️⃣ Ban affı var mı?"
+		"description" "**😲 Woww hala yaşıyo musun? Sanırım fuat abiyle iyi anlaşmışsınız.**"
+		"fields" (cslice 
+		(sdict "name" "Af mı o da ne? Yeniyo mu?" "value" "Buradan kaçış yok evlat, buraya bir düştün mü artık buraya aitsin ancak tabiki de bazılarına ayrıcalıklar var yok değil, buradan kaçmanın tek yolu havalandırmadan tırmanarak sunuya boost basmak ama dikkat et sakın gardiyanlara gözükme!\n ⠀\n **<a:41uyari:717625116800057365> Parayı veren düdüğü çalar!**" "inline" true)    ) 
+		"color" 0xffd984)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "❌"}}
+	{{else if (eq $en "4️⃣")}}
+		{{editMessage $cid $mid (cembed
+		"title" "4️⃣ Hayır bu bir hata ben suçsuzum!"
+		"description" "**Hayatının geriye kalan kısmını fuat abiyle geçireceksin**"
+		"fields" (cslice 
+		(sdict "name" "🤣 Yemee biziii" "value" "Ahh be evlat buradan kimler geldi geçti bir bilsen! Ne troller, ne spamcılar ama hiçbirine inanmadılar. Ah bir de reklamcılar yok mu. işte onlar fuat abinin canını en çok sıkanlardır ve fuat abinin canını sıkmak istemezsin!\n⠀\n <a:41uyari:717625116800057365> Sabununu sakın düşürme!" "inline" true)    ) 
+		"color" 0xffd984)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "❌"}}
+	{{else if (eq $en "5️⃣")}}
+		{{editMessage $cid $mid (cembed
+		"title" "5️⃣ Çık gir yapsam?"
+		"description" "**Gardiyanlar Yakalayın şunuuu!**"
+		"fields" (cslice 
+		(sdict "name" "🔫 Öldün Çık" "value" "Neden böyle yaptın ki ahh benim küçük beyinli mahkumum. Kaçmaya çalışırken gardiyanlar tarafından vurularak ip ban yedin. Fuat abi seni çok özliyecek. (RIP)\n⠀\n <a:41uyari:717625116800057365> **KAÇIS YOK DEMİŞTiM!**" "inline" true)    ) 
+		"color" 0xffd984)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "❌"}}
+	{{else if (eq $en "❌")}}
+		{{editMessage $cid $mid (cembed
+		"title" "Sık Sorulan Sorular"
+		 "description" "Aşağıdaki emojilere basarak soruların cevaplarını öğrenebilirsiniz!" 
+		"author" (sdict "name" "DESTEK" "url" "https://www.youtube.com/watch?v=q7uyKYeGPdE" "icon_url" "https://imgur.com/TdzqysZ.gif") 
+		"footer" (sdict "text" "Patates Gibi Her Halinizle Güzel Olun!!" "icon_url" "https://imgur.com/aHDM7fE.png") 
+		"fields" (cslice 
+		(sdict "name" "⠀" "value" "**1️⃣ Neredeyim?\n2️⃣ Neden ban yedim?\n3️⃣ Ban affı var mı?\n4️⃣ Hayır bu bir hata ben suçsuzum!\n5️⃣ Çık gir yapsam?**" "inline" true)    ) 
+		"color" 16711680)}}
+		{{deleteAllMessageReactions $cid $mid}}
+		{{addMessageReactions $cid $mid "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣"}}
+
+	{{end}}
+{{end}}
