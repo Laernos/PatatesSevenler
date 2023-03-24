@@ -13,11 +13,11 @@
 
 ## Links
 
-* [Website](https://patates-website.vercel.app/)
-* [Dashboard](https://dashboard-html.vercel.app/)
+* 🌐 [Website](https://patates-website.vercel.app/)
+* ⚙️ [Dashboard](https://dashboard-html.vercel.app/)
 
-* [Documentation for Members](https://laernos.gitbook.io/patates-sevenler/)
-* [Documentation for Moderators](https://laernos.gitbook.io/mod-docs/)
+* 📖 [Documentation for Members](https://laernos.gitbook.io/patates-sevenler/)
+* 📖 [Documentation for Moderators](https://laernos.gitbook.io/mod-docs/)
 
 ## License
 
@@ -25,6 +25,6 @@ This repository is licensed under the [MIT](LICENSE) If you plan to use any part
 
 ## Support
 
-__This repository is no longer supported!__
+⛔️__This repository is no longer supported!__⛔️
 
 While this repository may no longer be actively maintained, We hope that it will continue to serve as a resource for those who may find it valuable. We will continue to make it available for viewing and reference, but We cannot provide any support or updates going forward.
