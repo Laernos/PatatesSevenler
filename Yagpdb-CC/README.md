@@ -6,6 +6,5 @@ https://yagpdb.xyz/manage/560140367362523136/customcommands
 
 - [Open Folder](https://github.com/Laernos/PatatesSevenler/tree/main/Yagpdb-CC/Anti-Ad)  
 **•** [ad_catcher]([Counting/Main_counting_cc.yag](https://github.com/Laernos/PatatesSevenler/blob/main/Yagpdb-CC/Anti-Ad/ad_catcher.yag)) - asdasd
-  
 **•** [add_info_grabber]([Counting/counter.yag](https://github.com/Laernos/PatatesSevenler/blob/main/Yagpdb-CC/Anti-Ad/ad_info_grabber.yag)) - asdasd
 
