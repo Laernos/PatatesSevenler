@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Discord](https://img.shields.io/discord/560140367362523136?logo=discord&logoColor=ffffff&style=flat-square)](https://discord.gg/csVq5dFXTr)
 
-<p align="left"><a href="discord.gg/csVq5dFXTr"><img src="https://discord.com/api/guilds/560140367362523136/widget.png?style=banner2"/></a></p>
+<p align="left"><a href="https://discord.gg/csVq5dFXTr"><img src="https://discord.com/api/guilds/560140367362523136/widget.png?style=banner2"/></a></p>
 
 
 ![Logo](https://i.imgur.com/OaqveQp.png)
