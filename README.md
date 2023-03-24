@@ -4,8 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Discord](https://img.shields.io/discord/560140367362523136?logo=discord&logoColor=ffffff&style=flat-square)](https://discord.gg/csVq5dFXTr)
 
-
-# Patates Sevenler Discord Server
+<p align="left"><a href="https://discord.gg/pPwxX8Q"><img src="https://discord.com/api/guilds/560140367362523136/widget.png?style=banner2"/></a></p>
 
 
 ![Logo](https://i.imgur.com/OaqveQp.png)
