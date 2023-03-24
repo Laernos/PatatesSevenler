@@ -6,7 +6,6 @@
 
 
 # Patates Sevenler Discord Server
-.
 
 
 ![Logo](https://i.imgur.com/OaqveQp.png)
