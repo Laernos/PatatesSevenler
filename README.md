@@ -15,7 +15,7 @@ This repository is dedicated to the open sourcing of a Discord server. By doing 
 
 The server was created with great effort and attention to detail and served as a hub for the Discord community. Over the years, the server grew in popularity and became a space for thousands of people to connect, share ideas, and build friendships. Now, we want to share our hard work and expertise with others, hoping to create more vibrant and thriving communities.
 
-The repository contains everything needed to replicate the original server, including the [website](https://github.com/Laernos/PatatesSevenler/tree/main/Website), [dashboard](https://github.com/Laernos/PatatesSevenler/tree/main/Dashboard), [bot](https://github.com/Laernos/PatatesSevenler/tree/main/Yagpdb-CC) codes, [visuals](https://github.com/Laernos/PatatesSevenler/tree/main/Visuals), and [templates](https://github.com/Laernos/PatatesSevenler/releases/tag/Templates) for various channels and features.
+The repository contains everything needed to replicate the original server, including the [website](https://github.com/Laernos/PatatesSevenler/tree/main/Website), [dashboard](https://github.com/Laernos/PatatesSevenler/tree/main/Dashboard), [bot](https://github.com/Laernos/PatatesSevenler/tree/main/Yagpdb-CC) codes, [visuals](https://github.com/Laernos/PatatesSevenler/tree/main/Visuals), and [templates](https://github.com/Laernos/PatatesSevenler/releases) for various channels and features.
 
 
 
