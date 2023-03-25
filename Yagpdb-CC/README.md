@@ -18,4 +18,4 @@ Repeat the above steps for each custom command that you want to add to your serv
 To use these custom commands, simply type the command in a text channel on your Discord server. The bot will then execute the command and respond with the result. The exact usage and syntax of each custom command may vary, so be sure to read the comments for each command before using it.
 
 ## Disclaimer
-Please note that I am not responsible for any issues that may arise from the use of this code. It is your responsibility to ensure that the code is secure and does not violate any rules or regulations. Use this code at your own risk.
+Please note that the code in this repository is provided as-is and without any warranty. It is your responsibility to ensure that the code is secure and does not violate any rules or regulations. Use this code at your own risk.
