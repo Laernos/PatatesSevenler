@@ -10,6 +10,15 @@
 ![Logo](https://i.imgur.com/OaqveQp.png)
 
 
+## ABOUT
+
+This repository dedicated to the open-sourcing of a Discord server. By doing that We hope to inspire others to create their own communities.
+
+The server was created with a great deal of effort and attention to detail, and served as a hub for the all Discord community. Over the years, the server grew in popularity and became a space for people to connect, share ideas, and build friendships. Now, We want to share our hard work and expertise with others, in the hopes of creating more vibrant and thriving communities.
+
+The repository contains everything needed to replicate the original server, including website codes, bot codes, visual's pdf files and templates for various channels and features. 
+
+
 ## Links
 
 * 🌐 [Website](https://patates-website.vercel.app/)
