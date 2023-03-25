@@ -24,8 +24,8 @@ The repository contains everything needed to replicate the original server, incl
 * 🌐 [Website](https://patates-website.vercel.app/)
 * ⚙️ [Dashboard](https://dashboard-html.vercel.app/)
 
-* 📖 [Documentation for Members](https://laernos.gitbook.io/patates-sevenler/)
-* 📖 [Documentation for Moderators](https://laernos.gitbook.io/mod-docs/)
+* 📖 [Members Documentation](https://laernos.gitbook.io/patates-sevenler/)
+* 📖 [Moderators Documentation](https://laernos.gitbook.io/mod-docs/)
 
 ### Socials
 * [Youtube](https://www.youtube.com/@patatessevenler6376)
