@@ -37,4 +37,4 @@ This repository is licensed under the [MIT](LICENSE) If you plan to use any part
 
 ## Support
 
-While this repository may no longer be actively maintained, We hope that it will continue to serve as a resource for those who may find it valuable. We will continue to make it available for viewing and reference, but We cannot provide any support or updates going forward.
+While this repository may no longer be actively maintained, we hope that it will continue to serve as a resource for those who may find it valuable. We will continue to make it available for viewing and reference, but we cannot provide any support or updates going forward.
