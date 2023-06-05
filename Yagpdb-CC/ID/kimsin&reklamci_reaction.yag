@@ -125,7 +125,7 @@
                 (sdict "name" "Kan Grubu" "value" (or  $kan "<:cancel:856339137850638346>") "inline" true)
                 (sdict "name" "Burçlar" "value" (or $burc "<:cancel:856339137850638346>") "inline" true)
                 (sdict "name" "İlişki" "value" (or $mention $iliski "<:cancel:856339137850638346>") "inline" true)
-                (sdict "name" "Sosyal Medya" "value" (print  "<:insta:829699064534663219> : " " [" "" $ig "](https://www.instagram.com/" $ig "/)" "\n <:twitter:829699547336278067> : " " [" "" $twit "](https://twitter.com/" $twit ")" "\n <:snap:829698444154765402> : " " [" "" $snap "](https://www.snapchat.com/add/" $snap ")\n \n")   "inline" true)
+                                (sdict "name" "Sosyal Medya" "value" (print  "<:insta:829699064534663219> : " " [" "" ( or $ig "<:cancel:856339137850638346>") "](https://www.instagram.com/" $ig "/)" "\n <:twitter:829699547336278067> : " " [" "" (or $twit "<:cancel:856339137850638346>") "](https://twitter.com/" $twit ")" "\n <:snap:829698444154765402> : " " [" "" (or $snap "<:cancel:856339137850638346>") "](https://www.snapchat.com/add/" $snap ")\n \n")   "inline" true)
                 (sdict "name" "Müzikler" "value" (or  $ad "<:cancel:856339137850638346>")  "inline" true)
             (sdict "name" "Eski İsimleri" "value" (or $isimler "<:cancel:856339137850638346>")  "inline" false)
                 )
