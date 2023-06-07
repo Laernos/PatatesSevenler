@@ -1,0 +1,36 @@
+{{/*
+	Trigger: topcount
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{$page := 1}}{{$id := 0}}
+{{if .CmdArgs}}
+	{{$page = toInt (index .CmdArgs 0)}}
+	{{if lt $page 1}}
+		{{$page = 1}}
+	{{end}}
+{{end}}
+
+{{$num_per_page := 10}}
+{{$skip := mult (sub $page 1) $num_per_page}}
+
+
+{{$text := ""}}{{$count := add $skip 1}}
+{{range (dbTopEntries `counting_tracker` 10 $skip)}}
+	{{$member := getMember .UserID}}
+	{{if $member}}
+		{{$text = joinStr "\n" $text (printf "#%-4d %5d - %-20s" $count (toInt .Value) $member.User)}}
+	{{else}}
+		{{$text = joinStr "\n" $text (printf "#%-4d %5d - %-20d" $count (toInt .Value) .UserID)}}
+	{{end}}
+	{{$count = add $count 1}}
+{{end}}
+
+
+{{if $text}}
+	{{$embed := cembed "author" (sdict "name" "Sayım Sıralaması" "icon_url" (print "https://cdn.discordapp.com/emojis/714491414100181092.png?author=" .User.ID "?messageid=" .Message.ID)) "description" (print "```# -- Sayımlar -- Üyeler\n" $text "```") "footer" (sdict "text" (print " Sayfa: " $page)) "color" (randInt 0 16777216)}}
+	{{addMessageReactions nil (sendMessageRetID nil $embed) "⬅️" "➡️" "🗑️"}}
+{{end}}

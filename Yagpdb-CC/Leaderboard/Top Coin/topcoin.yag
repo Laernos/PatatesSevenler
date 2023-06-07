@@ -1,0 +1,129 @@
+{{/*
+	Trigger: topcoin
+	Trigger Type: Command
+	
+	Copyright (c): Laernos
+	Repository: https://github.com/Laernos/PatatesSevenler
+*/}}
+
+{{/* Configuration variables */}}
+{{ $guildIconSize := 64 }}					{{/* Size of the guild icon */}}
+{{ $iconSize := 128 }}						{{/* Size of the embed icon */}}
+{{ $thumbnailURL := "https://i.imgur.com/mJ7zu6k.png" }}	{{/* Use a self-hosted image */}}
+{{ $emojiID := 868544354715856966 }} 		{{/* Copy the emoji ID you'd like to use for the icon and paste it here */}}
+
+{{/* Instantiate variables */}}
+{{ $page := 1 }} {{/* Default page to start at */}}
+{{ $pageCount := toInt (roundCeil (fdiv (dbCount "replo") 10)) }} {{/* Number of pages */}}
+{{ with reFind `\d+` (joinStr " " .CmdArgs) }} {{ $page = . | toInt }} {{ end }} {{/* If the user provided a page, change $page variable to that */}}
+{{ $skip := mult (sub $page 1) 10 }} {{/* Amount of entries to skip */}}
+{{ $users := dbTopEntries "replo" 10 $skip }} {{/* Retrieve the relevant DB entries with the parameters provided */}}
+{{ $guildIconURL := printf "https://cdn.discordapp.com/icons/%d/%s.png" .Guild.ID .Guild.Icon }}
+{{ $iconURL := printf "https://cdn.discordapp.com/emojis/%d.png?v=1" $emojiID }}
+{{ $iconURL = printf "%s&size=%d" $iconURL $iconSize }}
+{{ $guildIconURL = printf "%s?size=%d" $guildIconURL $guildIconSize }}
+
+{{ if not (len $users) }}
+	Bu sayfada hiçbir üye bulunamadı! {{/* If there were no users, return */}}
+{{ else }}
+	{{ $rank := $skip }} {{/* Instantiate rank variable with value of $skip */}}
+	{{ $displayRanks := "" }}
+	{{ $displayNames := "" }}
+	{{ $displayLevels := "" }}
+	{{- range $users -}}
+		{{ $xp := toInt .Value }} {{/* XP for this user entry */}}
+		{{ $rank = add $rank 1 }} {{/* Increment rank variable */}}
+		
+		{{/* Initialize Ordinal Formatter */}}
+		{{ $medal := "" }}
+		{{ $markdownBefore := "" }}
+		{{ $markdownAfter := "" }}
+		{{ $suff := "" }}
+
+		{{/* Get Medal and Formatting Chars */}}
+		{{ if (eq (toInt $rank) 1) }}
+			{{ $medal = ":first_place:" }}
+			{{ $markdownBefore = "_**__" }}
+			{{ $markdownAfter = "__**_" }}
+		{{ else if (eq (toInt $rank) 2) }}
+			{{ $medal = ":second_place:" }}
+			{{ $markdownBefore = "__**" }}
+			{{ $markdownAfter = "**__" }}
+		{{ else if (eq (toInt $rank) 3) }}
+			{{ $medal = ":third_place:" }}
+			{{ $markdownBefore = "_**" }}
+			{{ $markdownAfter = "**_" }}
+		{{ else if (and (gt (toInt $rank) 3) (le (toInt $rank) 10)) }}
+			{{ $medal = ":medal:" }}
+			{{ $markdownBefore = "_" }}
+			{{ $markdownAfter = "_" }}
+		{{ end }}
+
+		{{/* Get Ordinal Suffix */}}
+		{{ $ones := toInt (mod (toInt $rank) 10) }}
+		{{ $tens := toInt (mod (roundFloor (fdiv (toInt $rank) 10)) 10) }}
+		{{ if (eq $tens 1) }}
+			{{ $suff = "th" }}
+		{{ else }}
+			{{ if (eq $ones 1) }}
+				{{ $suff = "st" }}
+			{{ else if (eq $ones 2) }}
+				{{ $suff = "nd" }}
+			{{ else if (eq $ones 3) }}
+				{{ $suff = "rd" }}
+			{{ else }}
+				{{ $suff = "th" }}
+			{{ end }}
+		{{ end }}
+
+		{{ $rankStr := printf "%s %s%d%s%s" $medal $markdownBefore (toInt $rank) $suff $markdownAfter 
+		}} {{/* Ordinal format rank. */}}
+
+		{{ $displayRanks = printf "%s\n%s"
+			$displayRanks $rankStr 
+		}} {{/* Format ranks column */}}
+
+		{{ $displayNames = printf "%s\n[%s](https://discordapp.com/users/%d/)" 
+			$displayNames .User.Username .User.ID
+		}} {{/* Format users column */}}
+
+		{{ $displayLevels = printf "%s\n %d"
+			$displayLevels $xp
+		}} {{/* Format levels column */}}
+
+	{{- end -}}
+
+	{{ $id := sendMessageRetID nil (cembed
+		"title" nil
+		"author" (sdict
+			"name" "Coin Sıralaması"
+			"icon_url" $iconURL
+		)
+		"thumbnail" (sdict "url" $thumbnailURL)
+		"color" 14232643
+		"description" nil
+		"fields" (cslice
+			(sdict
+				"name" "Rank"
+				"value" $displayRanks
+				"inline" true
+			)
+			(sdict
+				"name" "Üyeler"
+				"value" $displayNames
+				"inline" true
+			)
+			(sdict
+				"name" "Coin Miktarı"
+				"value" $displayLevels
+				"inline" true
+			)
+		)
+		"footer" (sdict
+			"icon_url" $guildIconURL 
+			"text" (printf "Sayfa  %d - %d\t%s " $page $pageCount .Guild.Name)
+		)
+	) }} {{/* Construct and send the embed */}}
+	{{ addMessageReactions nil $id "◀️" "▶️" }} {{/* Add reactions for pagination */}}
+{{dbSet 0 "re" (sdict "Msg" (str $id) "User" (str .User.ID))}}
+{{ end }}
