@@ -15,7 +15,7 @@
 <br>
 
 <h3 align="center">
-<a href=patates-website.vercel.app/>🌐 Websitesi</a> |
+<a href=https://patates-website.vercel.app/>🌐 Websitesi</a> |
 <a href=https://dashboard-html.vercel.app/>⚙️ Kontrol Paneli</a> |
 <a href=https://laernos.gitbook.io/patates-sevenler>📖 Üye Rehberi</a> |
 <a href=https://laernos.gitbook.io/mod-docs/>📖 Yetkili Rehberi</a>
