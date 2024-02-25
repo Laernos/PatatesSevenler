@@ -4,7 +4,7 @@
   <summary>Language</summary>
   <p>Selecting a different language will adapt all website content to your chosen language or redirect you to the respective language-specific version of the site.</p>
   <p><b>&gt;🇺🇸|English&lt;</b><br>
-  <a href="https://github.com/Laernos/PatatesSevenler/blob/main/RREADME.tr.md">🇹🇷|Türkçe</a></p>
+  <a href="https://github.com/Laernos/PatatesSevenler/blob/main/README.tr.md">🇹🇷|Türkçe</a></p>
 </details>
 
 <p align="center">
