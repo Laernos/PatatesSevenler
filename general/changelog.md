@@ -210,7 +210,7 @@ Dükkanı kapattık mrq!
 * Bakim rolunun  `🪐│roller` `👀│görünüm` `❓│sss` `🤯│öneri 📚│bilgilendirme` `💯sayı_tahmin` `🎉Sonraki Bump:` kanallarini, `| 💰 KUMAR 💰|` ve `| 🌟 PPLİK GİFLER 🌟|` kategorilerinin tum kanallarini goruntuleyebilme hatasi giderildi.
 * `⛔│sikayet` kanalının ismi `⛔│şikayet` olarak duzeltildi.
 * `🙋kendini_tanit` kanalının  ismi `🙋kendini_tanıt` olarak duzeltildi.
-* [Dashboard ](dashboard.md)dokumantasyonundaki bir kac yazim yanlisi duzeltildi.
+* [Dashboard ](../nasil-yapilir/dashboard.md)dokumantasyonundaki bir kac yazim yanlisi duzeltildi.
 
 ## 13/6/2021
 

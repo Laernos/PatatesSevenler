@@ -16,7 +16,7 @@ Sunucudaki üye sayısını görüntüler.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (53).png" alt="">
+<img src="../../.gitbook/assets/image (53).png" alt="">
 
 </div>
 
@@ -32,6 +32,6 @@ yardım
 
 <div align="left">
 
-<img src="../.gitbook/assets/Screenshot 2021-10-30 193646.png" alt="🏅│yükselenler">
+<img src="../../.gitbook/assets/Screenshot 2021-10-30 193646.png" alt="🏅│yükselenler">
 
 </div>

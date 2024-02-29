@@ -19,6 +19,6 @@
 
 <div align="left">
 
-<img src="../../.gitbook/assets/image (14).png" alt="">
+<img src="../../../.gitbook/assets/image (14).png" alt="">
 
 </div>

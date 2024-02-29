@@ -1,31 +1,40 @@
 # Table of contents
 
 * [Patates Sevenler Discord Sunucusunun Dokümanları](README.md)
-* [Dashboard](dashboard.md)
-* [Yetkili Alım](yetkili-alim.md)
-* [Kurallar](kurallar.md)
-* [Sık Sorulan Sorular](sik-sorulan-sorular/README.md)
-  * [Genel Sorular](sik-sorulan-sorular/genel-sorular.md)
-  * [Kural Soruları](sik-sorulan-sorular/kural-sorulari.md)
-  * [Kayıt Soruları](sik-sorulan-sorular/kayit-sorulari.md)
-  * [Patates Coin Soruları](sik-sorulan-sorular/patates-coin-sorulari.md)
+
+## General
+
+* [Yetkili Alım](general/yetkili-alim.md)
+* [Kurallar](general/kurallar.md)
+* [Changelog](general/changelog.md)
+
+***
+
 * [Kayıt](kayit.md)
-* [Komutlar](komutlar/README.md)
-  * [⚙️Genel Komutlar](komutlar/genel-komutlar.md)
-  * [🕵🏻‍♂️Kimlik Komutları](komutlar/kimlik-komutlari.md)
-  * [🏆Level Komutları](komutlar/level-komutlari.md)
-  * [🔨İşlevsellik Komutları](komutlar/tools-and-utilities.md)
-  * [🎮Eğlence Komutları](komutlar/eglence-komutlari.md)
-  * [📈Ekonomi Komutları](komutlar/ekonomi-komutlari.md)
-  * [💰Kumar Komutları](komutlar/kumar/README.md)
-    * [🌕 Yazı Tura](komutlar/kumar/yazi-tura.md)
-    * [🎰 Slot Makinesi](komutlar/kumar/slot-makinesi.md)
-    * [🎲 Zar At](komutlar/kumar/zar-at.md)
-    * [🏇 Ganyan](komutlar/kumar/ganyan.md)
-    * [🔴 Connect4](komutlar/kumar/connect4.md)
-    * [🃏 Blackjack](komutlar/kumar/blackjack.md)
-    * [✂ Taş & Kağıt & Makas](komutlar/kumar/tas-and-kagit-and-makas.md)
-* [Changelog](changelog.md)
+
+## 🛠️ NASIL YAPILIR
+
+* [Dashboard](nasil-yapilir/dashboard.md)
+* [Komutlar](nasil-yapilir/komutlar/README.md)
+  * [⚙️Genel Komutlar](nasil-yapilir/komutlar/genel-komutlar.md)
+  * [🕵🏻‍♂️Kimlik Komutları](nasil-yapilir/komutlar/kimlik-komutlari.md)
+  * [🏆Level Komutları](nasil-yapilir/komutlar/level-komutlari.md)
+  * [🔨İşlevsellik Komutları](nasil-yapilir/komutlar/tools-and-utilities.md)
+  * [🎮Eğlence Komutları](nasil-yapilir/komutlar/eglence-komutlari.md)
+  * [📈Ekonomi Komutları](nasil-yapilir/komutlar/ekonomi-komutlari.md)
+  * [💰Kumar Komutları](nasil-yapilir/komutlar/kumar/README.md)
+    * [🌕 Yazı Tura](nasil-yapilir/komutlar/kumar/yazi-tura.md)
+    * [🎰 Slot Makinesi](nasil-yapilir/komutlar/kumar/slot-makinesi.md)
+    * [🎲 Zar At](nasil-yapilir/komutlar/kumar/zar-at.md)
+    * [🏇 Ganyan](nasil-yapilir/komutlar/kumar/ganyan.md)
+    * [🔴 Connect4](nasil-yapilir/komutlar/kumar/connect4.md)
+    * [🃏 Blackjack](nasil-yapilir/komutlar/kumar/blackjack.md)
+    * [✂️ Taş & Kağıt & Makas](nasil-yapilir/komutlar/kumar/tas-and-kagit-and-makas.md)
+* [Sık Sorulan Sorular](nasil-yapilir/sik-sorulan-sorular/README.md)
+  * [Genel Sorular](nasil-yapilir/sik-sorulan-sorular/genel-sorular.md)
+  * [Kural Soruları](nasil-yapilir/sik-sorulan-sorular/kural-sorulari.md)
+  * [Kayıt Soruları](nasil-yapilir/sik-sorulan-sorular/kayit-sorulari.md)
+  * [Patates Coin Soruları](nasil-yapilir/sik-sorulan-sorular/patates-coin-sorulari.md)
 
 ## 🪙 Patates Coin <a href="#patates-coin-1" id="patates-coin-1"></a>
 
@@ -42,13 +51,13 @@
 * [Sayımlar](leveller/sayimlar.md)
 * [Y̶ı̶l̶d̶ı̶z̶l̶a̶r̶](leveller/yildizlar.md)
 
-## 📝 Formlar
+## 📝 Başvuru Formları
 
-* [Yetkili Başvuru](formlar/yetkili-basvuru.md)
-* [Partnerlik](formlar/partnerlik.md)
-* [Promosyon](formlar/promosyon.md)
+* [Yetkili](basvuru-formlari/yetkili.md)
+* [Partnerlik](basvuru-formlari/partnerlik.md)
+* [Promosyon](basvuru-formlari/promosyon.md)
 
-## ⚙ Diğer
+## ⚙️ Diğer
 
 * [Sorunlar](diger/sorunlar.md)
 * [Yapılacaklar](diger/yapilacaklar.md)

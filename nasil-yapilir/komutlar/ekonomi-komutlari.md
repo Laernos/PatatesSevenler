@@ -32,7 +32,7 @@ bakiyem
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (57).png" alt="">
+<img src="../../.gitbook/assets/image (57).png" alt="">
 
 </div>
 
@@ -48,13 +48,13 @@ Belirttiğiniz kişiye istediğiniz miktarda patates coin gönderirsiniz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (55).png" alt="">
+<img src="../../.gitbook/assets/image (55).png" alt="">
 
 </div>
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (52).png" alt="">
+<img src="../../.gitbook/assets/image (52).png" alt="">
 
 </div>
 
@@ -74,7 +74,7 @@ Her 2 saatte bir kullanarak coin kazanırsınız ama dikkat edin eğer şanssız
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (27).png" alt="">
+<img src="../../.gitbook/assets/image (27).png" alt="">
 
 </div>
 
@@ -90,6 +90,6 @@ Bir sonraki vergi verme tarihine ne kadar süre kaldığını görürsünüz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (59).png" alt="">
+<img src="../../.gitbook/assets/image (59).png" alt="">
 
 </div>

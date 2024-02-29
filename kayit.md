@@ -24,6 +24,6 @@
 
 ![](<.gitbook/assets/Screenshot 2021-10-30 191049.png>) ![](<.gitbook/assets/Screenshot 2021-10-30 191828.png>)
 
-{% content-ref url="sik-sorulan-sorular/kayit-sorulari.md" %}
-[kayit-sorulari.md](sik-sorulan-sorular/kayit-sorulari.md)
+{% content-ref url="nasil-yapilir/sik-sorulan-sorular/kayit-sorulari.md" %}
+[kayit-sorulari.md](nasil-yapilir/sik-sorulan-sorular/kayit-sorulari.md)
 {% endcontent-ref %}

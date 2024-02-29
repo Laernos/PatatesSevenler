@@ -1,5 +1,5 @@
 ---
-cover: .gitbook/assets/1_PyM5eBfN3YXjuZzKgyRa_g (1).png
+cover: ../.gitbook/assets/1_PyM5eBfN3YXjuZzKgyRa_g (1).png
 coverY: 19.660947222269836
 ---
 
@@ -7,8 +7,8 @@ coverY: 19.660947222269836
 
 ## [Yetkili Olmak İçin Tıkla!](https://patatessevenler.com/yetkili-alim)
 
-{% content-ref url="formlar/yetkili-basvuru.md" %}
-[yetkili-basvuru.md](formlar/yetkili-basvuru.md)
+{% content-ref url="../basvuru-formlari/yetkili.md" %}
+[yetkili.md](../basvuru-formlari/yetkili.md)
 {% endcontent-ref %}
 
 | Yetki                   | Kontenjan |

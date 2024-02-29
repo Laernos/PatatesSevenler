@@ -16,7 +16,7 @@ Kendinizle ya da etiketlediğiniz kişiyle sarılırsınız.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (25).png" alt="">
+<img src="../../.gitbook/assets/image (25).png" alt="">
 
 </div>
 
@@ -32,7 +32,7 @@ Kendini ya da etiketlediğiniz kişiyi öpersiniz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (63).png" alt="">
+<img src="../../.gitbook/assets/image (63).png" alt="">
 
 </div>
 
@@ -48,7 +48,7 @@ Kendinizi ya da etiketlediğiniz kişiyi uyutursunuz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (47).png" alt="">
+<img src="../../.gitbook/assets/image (47).png" alt="">
 
 </div>
 
@@ -64,6 +64,6 @@ Kendinizi ya da etiketlediğiniz kişiye çay ısmarlarsınız.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (16).png" alt="">
+<img src="../../.gitbook/assets/image (16).png" alt="">
 
 </div>

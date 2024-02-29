@@ -17,7 +17,7 @@
 ```
 {% endcode %}
 
-![](<../../.gitbook/assets/image (2).png>)![](<../../.gitbook/assets/image (36).png>)![](<../../.gitbook/assets/image (4).png>)
+![](<../../../.gitbook/assets/image (2).png>)![](<../../../.gitbook/assets/image (36).png>)![](<../../../.gitbook/assets/image (4).png>)
 
 {% embed url="https://www.youtube.com/watch?v=-ehOKk4T158" %}
 Slot Makinesi Tanıtım

@@ -1,6 +1,6 @@
 # Kurallar
 
-![](<.gitbook/assets/image (19).png>)
+![](<../.gitbook/assets/image (19).png>)
 
 {% hint style="warning" %}
 **Patates Sevenler Anayasası**\

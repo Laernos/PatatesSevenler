@@ -16,11 +16,11 @@ Sunucudaki üyenin discorda ne zaman kayıt olduğundan tut eğer kayıtlıysa i
 
 <div align="left">
 
-<img src="../.gitbook/assets/Screenshot 2021-10-30 191049.png" alt="">
+<img src="../../.gitbook/assets/Screenshot 2021-10-30 191049.png" alt="">
 
  
 
-<img src="../.gitbook/assets/Screenshot 2021-10-30 191828.png" alt="">
+<img src="../../.gitbook/assets/Screenshot 2021-10-30 191828.png" alt="">
 
 </div>
 
@@ -36,7 +36,7 @@ Sunucudaki üyenin discord avatarını büyüterek görüntüler.
 
 <div align="left">
 
-<img src="../.gitbook/assets/Screenshot 2021-10-30 192150.png" alt="">
+<img src="../../.gitbook/assets/Screenshot 2021-10-30 192150.png" alt="">
 
 </div>
 
@@ -52,7 +52,7 @@ Sunucudaki üyenin ban bilgisini öğrenirsiniz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/Screenshot 2021-10-30 192504.png" alt="">
+<img src="../../.gitbook/assets/Screenshot 2021-10-30 192504.png" alt="">
 
 </div>
 
@@ -68,7 +68,7 @@ Kimliğinize instagram hesabınızı eklersiniz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (22).png" alt="">
+<img src="../../.gitbook/assets/image (22).png" alt="">
 
 </div>
 
@@ -84,7 +84,7 @@ Kimliğinize Twitter hesabınızı eklersiniz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (43).png" alt="">
+<img src="../../.gitbook/assets/image (43).png" alt="">
 
 </div>
 
@@ -100,7 +100,7 @@ Kimliğinize Snapchat hesabınızı eklersiniz.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (33).png" alt="">
+<img src="../../.gitbook/assets/image (33).png" alt="">
 
 </div>
 

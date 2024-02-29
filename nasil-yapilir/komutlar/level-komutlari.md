@@ -10,7 +10,7 @@ Sunucunun Genel ve haftalık olmak üzere ilk 5 chat ve sesli sıralamasındaki 
 ```
 {% endcode %}
 
-<img src="../.gitbook/assets/image (42).png" alt="" data-size="original">
+<img src="../../.gitbook/assets/image (42).png" alt="" data-size="original">
 
 ## Stat
 
@@ -24,7 +24,7 @@ Belirtilen üyenin tüm ses ve chat istatiklerini gösterir.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (30).png" alt="">
+<img src="../../.gitbook/assets/image (30).png" alt="">
 
 </div>
 
@@ -40,7 +40,7 @@ Kendinizin veya başka birinin sunucu sıralama kartını görüntüleyin.
 
 <div align="left">
 
-<img src="../.gitbook/assets/rank.png" alt="">
+<img src="../../.gitbook/assets/rank.png" alt="">
 
 </div>
 
@@ -56,7 +56,7 @@ En fazla sunucu puanına veya global XP'ye sahip üyeleri görüntüleyin.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (15).png" alt="">
+<img src="../../.gitbook/assets/image (15).png" alt="">
 
 </div>
 
@@ -92,7 +92,7 @@ En fazla sayım puanına sahip üyelerin listesini görüntüleyin.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (38).png" alt="">
+<img src="../../.gitbook/assets/image (38).png" alt="">
 
 </div>
 
@@ -108,7 +108,7 @@ En fazla coine sahip üyelerin listesini görüntüleyin.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (31).png" alt="">
+<img src="../../.gitbook/assets/image (31).png" alt="">
 
 </div>
 
@@ -124,6 +124,6 @@ En fazla coine sahip üyelerin listesini görüntüleyin.
 
 <div align="left">
 
-<img src="../.gitbook/assets/image (32).png" alt="">
+<img src="../../.gitbook/assets/image (32).png" alt="">
 
 </div>

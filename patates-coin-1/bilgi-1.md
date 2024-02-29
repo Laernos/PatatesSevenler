@@ -66,7 +66,7 @@ Patates Sevenler Casino Tanıtım
 
 &#x20;<img src="https://cdn.discordapp.com/emojis/831311472528326696.gif?v=1" alt=":coin~1:" data-size="line"> **3** — **COİN KOMUTLARI NELERDİR?**
 
-{% content-ref url="../komutlar/ekonomi-komutlari.md" %}
-[ekonomi-komutlari.md](../komutlar/ekonomi-komutlari.md)
+{% content-ref url="../nasil-yapilir/komutlar/ekonomi-komutlari.md" %}
+[ekonomi-komutlari.md](../nasil-yapilir/komutlar/ekonomi-komutlari.md)
 {% endcontent-ref %}
 

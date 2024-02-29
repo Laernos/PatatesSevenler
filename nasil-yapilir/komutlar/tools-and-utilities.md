@@ -14,7 +14,7 @@ Sunucu içerisindeki not defterinizi görüntüler ve eğer not ismi belirtirsen
 ```
 {% endcode %}
 
-<img src="../.gitbook/assets/image (11).png" alt="" data-size="original"><img src="../.gitbook/assets/image (13).png" alt="" data-size="original">
+<img src="../../.gitbook/assets/image (11).png" alt="" data-size="original"><img src="../../.gitbook/assets/image (13).png" alt="" data-size="original">
 
 ## Not Alma
 
