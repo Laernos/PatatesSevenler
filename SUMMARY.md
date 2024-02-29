@@ -2,11 +2,11 @@
 
 * [Patates Sevenler Discord Sunucusunun Dokümanları](README.md)
 
-## General
+## Genel
 
-* [Yetkili Alım](general/yetkili-alim.md)
-* [Kurallar](general/kurallar.md)
-* [Changelog](general/changelog.md)
+* [Yetkili Alım](genel/yetkili-alim.md)
+* [Kurallar](genel/kurallar.md)
+* [Değişiklik Kaydı](genel/degisiklik-kaydi.md)
 
 ## 🛠️ NASIL YAPILIR
 

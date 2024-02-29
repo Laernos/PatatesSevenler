@@ -4,13 +4,7 @@ description: >-
   öğrenebilirsiniz.
 ---
 
-# Changelog
-
-{% hint style="danger" %}
-Dükkanı kapattık mrq!
-
-* No longer supported!
-{% endhint %}
+# Değişiklik Kaydı
 
 ## 12/10/2021
 
