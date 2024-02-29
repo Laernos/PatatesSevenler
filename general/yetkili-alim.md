@@ -5,7 +5,7 @@ coverY: 19.660947222269836
 
 # Yetkili Alım
 
-## [Yetkili Olmak İçin Tıkla!](https://patatessevenler.com/yetkili-alim)
+## [Yetkili Olmak İçin Tıkla!](https://patates-website.vercel.app/yetkili-alim.html)
 
 {% content-ref url="../basvuru-formlari/yetkili.md" %}
 [yetkili.md](../basvuru-formlari/yetkili.md)
