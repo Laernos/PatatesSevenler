@@ -8,10 +8,6 @@
 * [Kurallar](general/kurallar.md)
 * [Changelog](general/changelog.md)
 
-***
-
-* [Kayıt](kayit.md)
-
 ## 🛠️ NASIL YAPILIR
 
 * [Dashboard](nasil-yapilir/dashboard.md)
