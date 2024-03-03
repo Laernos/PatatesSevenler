@@ -1,5 +1,3 @@
-<p align="left"><a href="https://discord.gg/csVq5dFXTr"><img src="https://discord.com/api/guilds/560140367362523136/widget.png?style=banner2"/></a></p>
-
 <details>
   <summary>Dil</summary>
   <p>Farklı bir dil seçmek, tüm web sitesi içeriğini seçtiğiniz dile uyarlayacak veya sizi site'nin ilgili dil özgü spesifik versiyonuna yönlendirecektir.</p>
