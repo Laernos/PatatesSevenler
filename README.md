@@ -1,5 +1,3 @@
-<p align="left"><a href="https://discord.gg/csVq5dFXTr"><img src="https://discord.com/api/guilds/560140367362523136/widget.png?style=banner2"/></a></p>
-
 <details>
   <summary>Language</summary>
   <p>Selecting a different language will adapt all website content to your chosen language or redirect you to the respective language-specific version of the site.</p>
