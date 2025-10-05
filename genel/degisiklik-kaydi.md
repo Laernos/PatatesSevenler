@@ -12,8 +12,6 @@ description: >-
 
 * 🌟 PPLİK GİFLER 🌟, 💈 PARTNERLİK 💈 ve 📰 HABERLER 📰 kategorileri arsive kaldirildilar.
 * 🤐Tanışıksız Patates rolunun tum yaptirimlari kaldirildi.
-* K\*rt patates rolu 🌾Çiftçi Patates olarak yeniden isimlendirildi
-* Gay patates rolu 🎩Boy Patates olarak yeniden isimlendirildi.
 * &#x20;Giriste random olarka atilan hos geldin mesaji sadece hos geldiin yazicak sekilde degistirildi.
 
 ## 25/9/2021
